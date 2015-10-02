@@ -1,13 +1,10 @@
 package com.antigenomics.vdjstruct;
 
 import java.util.Vector;
-import java.util.Arrays;
-import java.util.Collections;
-import java.io.BufferedWriter;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.FileWriter;
-import java.io.FileReader;
+import com.milaboratory.core.alignment.Aligner;
+import com.milaboratory.core.alignment.BLASTMatrix;
+import com.milaboratory.core.alignment.LinearGapAlignmentScoring;
+import com.milaboratory.core.sequence.AminoAcidSequence;
 
 public class Utilities
 {	
@@ -49,8 +46,14 @@ public class Utilities
 		}
 		return cols[index2][len_a];
 	}
-	
-	private static int[][] strAlignmentDetailed(String a, String b)
+
+	public static float DetailedAlignment(AminoAcidSequence a, AminoAcidSequence b)
+	{
+		return Aligner.alignGlobalLinear(
+				new LinearGapAlignmentScoring<>(AminoAcidSequence.ALPHABET, BLASTMatrix.BLOSUM45.getMatrix(), -8), a, b
+		).getScore();
+	}
+	/*private static int[][] strAlignmentDetailed(String a, String b)
 	{
 		int len_a = a.length();
 		int len_b = b.length();
@@ -93,10 +96,7 @@ public class Utilities
 								result[0][i] = 2;
 								j--;
 							}
-							/*else
-							{
-								
-							}*/
+
 				}
 				else
 				{
@@ -118,14 +118,6 @@ public class Utilities
 				}
 				else
 					result[0][--i] = -1;
-				/*	
-				for (int k = 0; k < result[0].length; k++)	
-					System.out.print(result[0][k]+" ");
-				System.out.println();
-				for (int k = 0; k < result[1].length; k++)	
-					System.out.print(result[1][k]+" ");
-				System.out.println();	
-				System.out.println();*/
 		}
 		return result; // -1: deletion; 0: nothing; 1: insertion; 2: substitution
 	}
@@ -145,7 +137,7 @@ public class Utilities
 				dist += (double)ar[1][i]*ins;
 		}
 		return (dist/(double)a.length()+dist/(double)b.length())*1000.0;
-	}
+	}*/
 	
 	public static int Min3(int a, int b, int c)
 	{
@@ -168,8 +160,8 @@ public class Utilities
 	
 	public static void main(String[] args)
 	{
-		String s1 = new String("qwertkjeekjfheeeelkjhlkjhlkjhpjjjjj");
-		String s2 = new String("qwertkj;lkj;ljklkj;;lkj;ll");
+		//String s1 = new String("qwertkjeekjfheeeelkjhlkjhlkjhpjjjjj");
+		//String s2 = new String("qwertkj;lkj;ljklkj;;lkj;ll");
 		/*
 		int len_a = s1.length();
 		int len_b = s2.length();
@@ -193,12 +185,12 @@ public class Utilities
 		
 		
 		
-		int [][] a = strAlignmentDetailed(s1, s2);
+		/*int [][] a = strAlignmentDetailed(s1, s2);
 		for (int i = 0; i < a[0].length; i++)
 		{
 			System.out.print(a[0][i]+"\t");
 			System.out.println();
-		}
+		}*/
 		
 		/*for (int i = 0; i < s1.length(); i++)
 		{
@@ -206,7 +198,7 @@ public class Utilities
 				System.out.print(cols[i][j]+" ");
 			System.out.println();
 		}*/
-		System.out.println("UpDist: "+strDistanceUpgraded(s1, s2, 1.0, 1.0, 1.0));
-		System.out.println("OldDist: "+EditorialDistance(s1, s2));
+		//System.out.println("UpDist: "+strDistanceUpgraded(s1, s2, 1.0, 1.0, 1.0));
+		//System.out.println("OldDist: "+EditorialDistance(s1, s2));
 	}
 }

@@ -1,5 +1,7 @@
 package com.antigenomics.vdjstruct;
 
+import com.milaboratory.core.sequence.AminoAcidSequence;
+
 import java.util.Vector;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -51,7 +53,7 @@ public class Graph
 		{
 			for (int j = i; j < Size; j++)
 			{
-				if (Array.get(i).Antigen.equals(Array.get(j).Antigen))
+				if (Array.get(i).getAntigen().equals(Array.get(j).getAntigen()))
 				{
 					Data[i][j] = 0;
 					Data[j][i] = 0;
@@ -71,8 +73,8 @@ public class Graph
 		{
 			for (int j = i; j < Size; j++)
 			{
-				String CDR3_i = Array.get(i).CDR3;
-				String CDR3_j = Array.get(j).CDR3;
+				String CDR3_i = Array.get(i).getCDR3().toString();
+				String CDR3_j = Array.get(j).getCDR3().toString();
 				double dist = (double)Utilities.EditorialDistance(CDR3_i, CDR3_j);
 				double thres = Variable.EditDistThesh;
 				if ((dist/(double)CDR3_i.length() < thres) || (dist/(double)CDR3_j.length() < thres))
@@ -95,8 +97,8 @@ public class Graph
 		{
 			for (int j = i; j < Size; j++)
 			{
-				String CDR3_i = Array.get(i).CDR3;
-				String CDR3_j = Array.get(j).CDR3;
+				String CDR3_i = Array.get(i).getCDR3().toString();
+				String CDR3_j = Array.get(j).getCDR3().toString();
 				int dist = Utilities.EditorialDistance(CDR3_i, CDR3_j);
 				int maxlen = Math.max(CDR3_i.length(), CDR3_j.length());
 				int minlen = Math.min(CDR3_i.length(), CDR3_j.length());
@@ -105,16 +107,19 @@ public class Graph
 			}
 		}
 	}
-	
+
 	private void UpgradedHeatMap(Vector<Chain> Array)
 	{
 		for (int i = 0; i < Size; i++)
 		{
 			for (int j = i; j < Size; j++)
 			{
-				String CDR3_i = Array.get(i).CDR3;
-				String CDR3_j = Array.get(j).CDR3;
-				Data[i][j] = (int)Utilities.strDistanceUpgraded(CDR3_i, CDR3_j, 1.0, 1.0, 1.0);
+				int len_i = Array.get(i).getCDR3().size();
+				int len_j = Array.get(i).getCDR3().size();
+				AminoAcidSequence CDR3_i = Array.get(i).getCDR3();
+				AminoAcidSequence CDR3_j = Array.get(j).getCDR3();
+				//System.out.print(Utilities.DetailedAlignment(CDR3_i, CDR3_j)+" ");
+				Data[i][j] = (int)((10.0 - Utilities.DetailedAlignment(CDR3_i, CDR3_j)/(double)(len_i+len_j))*1000.0);
 				Data[j][i] = Data[i][j];
 			}
 		}

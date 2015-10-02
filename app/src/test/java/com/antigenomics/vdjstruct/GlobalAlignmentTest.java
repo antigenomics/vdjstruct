@@ -11,8 +11,8 @@ public class GlobalAlignmentTest {
     @Test
     @SuppressWarnings("unchecked")
     public void test() {
-        AminoAcidSequence cdr3a = new AminoAcidSequence("CAGSLSWGGFYNEQFF"),
-                cdr3b = new AminoAcidSequence("CARSWAGGPRDEQYF");
+        AminoAcidSequence cdr3a = new AminoAcidSequence("CAGSLSWGGFYNEQFFCCC"),
+                cdr3b = new AminoAcidSequence("CAGSLSWGGFYNEQFFCCC");
         
         /*
          * Linear gap penalty, penalty for total number of gaps
@@ -36,7 +36,7 @@ public class GlobalAlignmentTest {
         System.out.println(
                 Aligner.alignGlobalLinear(
                         new LinearGapAlignmentScoring<>(AminoAcidSequence.ALPHABET, BLASTMatrix.BLOSUM45.getMatrix(), -5), cdr3a, cdr3b
-                ).getAlignmentHelper()
+                ).getScore()
         );
 
         System.out.println("\nAffine gap m=1,mm=-3,o=-5,e=-1");

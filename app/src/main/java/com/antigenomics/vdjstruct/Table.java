@@ -7,6 +7,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.FileWriter;
 import java.io.FileReader;
+import com.milaboratory.core.sequence.AminoAcidSequence;
 
 public class Table
 {
@@ -15,61 +16,9 @@ public class Table
 	
 	public Vector<Chain> AlphaArray;
 	public Vector<Chain> BetaArray;
-	
+
 	public Graph AlphaGraph;
 	public Graph BetaGraph;
-	
-	public Vector<Claster> Clasters;
-	
-	public void ClasterObvious()
-	{
-		Clasters = new Vector<>();
-		
-		if (AlphaArray != null)
-			if (!AlphaArray.isEmpty())
-			{
-				Vector<Chain> AlphaCopy = (Vector<Chain>)AlphaArray.clone();
-				Claster bufer = new Claster();
-				
-				for (int i = 0; i < AlphaCopy.size();)
-				{
-					for (int j = i + 1; j < AlphaCopy.size(); j++)
-					{
-						if (AlphaCopy.get(i).Antigen.equals(AlphaCopy.get(j).Antigen))
-						{
-							bufer.AddChain(AlphaCopy.get(j));
-							AlphaCopy.remove(j);
-						}
-					}
-					AlphaCopy.remove(i);
-					Clasters.addElement(bufer);
-				}
-			}
-			
-		if (BetaArray != null)
-			if (!BetaArray.isEmpty())
-			{
-				Vector<Chain> BetaCopy = (Vector<Chain>)BetaArray.clone();
-				Claster bufer = new Claster();
-				
-				for (int i = 0; i < BetaCopy.size();)
-				{
-					for (int j = i + 1; j < BetaCopy.size(); j++)
-					{
-						if (BetaCopy.get(i).Antigen.equals(BetaCopy.get(j).Antigen))
-						{
-							bufer.AddChain(BetaCopy.get(j));
-							BetaCopy.remove(j);
-							//System.out.println(BetaCopy.size()+"| j = "+j+"| i= "+i);
-						}
-					}
-					BetaCopy.remove(i);
-					Clasters.addElement(bufer);
-				}
-			}
-	}
-	
-	//public void ClasterSimilarity
 	
 //===================================================================================
 //================= Routine functions ===============================================
@@ -85,7 +34,7 @@ public class Table
 		int aflag = 0;
 		BetaNum = 0;
 		AlphaNum = 0;
-		while((line = file.readLine()) != null) /////// !!!!!!!!!!!!!!!!!!
+		while((line = file.readLine()) != null)
 		{
 			String[] list = line.split("\t");
 			if (list[3].equals("TRB"))
@@ -98,19 +47,19 @@ public class Table
 				if (!list[8].equals("."))
 				{
 					BetaArray.addElement(new Chain("TRB",
-						".",
-						".",
-						new int[]{-2, -2},
-						list[1],
-						new int[]{-2, -2},
-						list[2],
-						new int[]{-2, -2},
-						".",
-						new int[]{-2, -2},
-						".",
-						list[0]));
-					BetaArray.get(i).Number = i;
-					BetaArray.get(i).Antigen = list[8];
+							".",
+							i,
+							".",
+							new int[]{-2, -2},
+							list[1],
+							new int[]{-2, -2},
+							list[2],
+							new int[]{-2, -2},
+							".",
+							new int[]{-2, -2},
+							".",
+							new AminoAcidSequence(list[0].replaceAll(" ", "")),
+							new AminoAcidSequence(list[8].replaceAll(" ", ""))));
 					BetaNum++;
 					i++;
 				}
@@ -126,19 +75,19 @@ public class Table
 					if (!list[8].equals("."))
 					{
 						AlphaArray.addElement(new Chain("TRA",
-							".",
-							".",
-							new int[]{-2, -2},
-							list[1],
-							new int[]{-2, -2},
-							list[2],
-							new int[]{-2, -2},
-							".",
-							new int[]{-2, -2},
-							".",
-							list[0]));
-						AlphaArray.get(i).Number = i;
-						AlphaArray.get(i).Antigen = list[8];
+								".",
+								i,
+								".",
+								new int[]{-2, -2},
+								list[1],
+								new int[]{-2, -2},
+								list[2],
+								new int[]{-2, -2},
+								".",
+								new int[]{-2, -2},
+								".",
+								new AminoAcidSequence(list[0]),
+								new AminoAcidSequence(list[8])));
 						AlphaNum++;
 						i++;
 					}
@@ -197,7 +146,8 @@ public class Table
 			if (flag != 0)
 			{
 				AlphaArray.addElement(new Chain("TRA",
-					list[1], 
+					list[1],
+						i,
 					list[2], 
 					new int[]{array[0], array[1]},
 					list[5],
@@ -207,8 +157,8 @@ public class Table
 					list[14],
 					new int[]{-2, -2},
 					".",
-					list[15]));
-				AlphaArray.get(i).Number = i;
+						new AminoAcidSequence(list[15]),
+						null));
 				i++;
 			}
 			flag = 1;
@@ -251,7 +201,8 @@ public class Table
 			if (flag != 0)
 			{
 				BetaArray.addElement(new Chain("TRB",
-					list[1], 
+					list[1],
+						i,
 					list[2], 
 					new int[]{array[0], array[1]},
 					list[5],
@@ -261,8 +212,8 @@ public class Table
 					list[11],
 					new int[]{array[6], array[7]},
 					list[14],
-					list[15]));
-				BetaArray.get(i).Number = i;
+						new AminoAcidSequence(list[15]),
+						null));
 				i++;
 			}
 			flag = 1;
