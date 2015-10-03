@@ -86,8 +86,8 @@ public class Table
 								".",
 								new int[]{-2, -2},
 								".",
-								new AminoAcidSequence(list[0]),
-								new AminoAcidSequence(list[8])));
+								new AminoAcidSequence(list[0].replaceAll(" ", "")),
+								new AminoAcidSequence(list[8].replaceAll(" ", ""))));
 						AlphaNum++;
 						i++;
 					}
@@ -97,20 +97,25 @@ public class Table
 		{
 			Collections.sort(AlphaArray, Chain.sortByCDR());
 			for (int j = 0; j < AlphaArray.size()-1; j++)
-				if (Chain.sortByCDR().compare(AlphaArray.get(j), AlphaArray.get(j+1)) == 0)
+				if (Chain.sortByCDR().compare(AlphaArray.get(j), AlphaArray.get(j+1)) == 0) {
 					AlphaArray.remove(j--);
+					AlphaNum--;
+				}
 			Collections.sort(AlphaArray, Chain.sortById());
 		}
 		if (BetaNum != 0)
 		{
 			Collections.sort(BetaArray, Chain.sortByCDR());
+			/*for (int k = 0; k < BetaArray.size(); k++)
+				System.out.println(BetaArray.get(k).getCDR3().toString());*/
 			for (int j = 0; j < BetaArray.size()-1; j++)
-				if (Chain.sortByCDR().compare(BetaArray.get(j), BetaArray.get(j+1)) == 0)
+				if (Chain.sortByCDR().compare(BetaArray.get(j), BetaArray.get(j+1)) == 0) {
 					BetaArray.remove(j--);
+					BetaNum--;
+				}
 			Collections.sort(BetaArray, Chain.sortById());
 		}
 	}
-	
 	public void AlphaRead(String fileName) throws IOException
 	{
 		BufferedReader file = new BufferedReader(new FileReader(fileName));
