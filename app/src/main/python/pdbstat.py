@@ -37,7 +37,7 @@ def getCDR3Indices(struct, cdr3):
 			for i in range(ind, ind+len(cdr3)):
 				res.append(pp[i])
 			return res
-		chid += 1	
+		chid += 1
 	print '\n'+cdr3+' not found in '+str(struct.get_id())+'!\n'
 	return []
 
@@ -45,18 +45,21 @@ def calcDistMatrix(pname, cdr3, peptide_chain):
 	mat = [[]]
 	indlist = []
 	mat[0].append(pname)
-	for i in range(0, len(cdr3)):
-		name = cdr3[i].get_resname()
-		if (Polypeptide.is_aa(name)):
-			mat[0].append(name)
-			indlist.append(i)		
-	for presidue in peptide_chain:
-		name = presidue.get_resname()
-		if (Polypeptide.is_aa(name)):
-			mat.append([])
-			mat[len(mat)-1].append(name)
-			for i in indlist:
-				mat[len(mat)-1].append(residuesMinDist(cdr3[i], presidue))
+	if (len(cdr3) == 0):
+		mat[0].append('CDR3 NOT FOUND!')	
+	else:
+		for i in range(0, len(cdr3)):
+			name = cdr3[i].get_resname()
+			if (Polypeptide.is_aa(name)):
+				mat[0].append(name)
+				indlist.append(i)
+		for presidue in peptide_chain:
+			name = presidue.get_resname()
+			if (Polypeptide.is_aa(name)):
+				mat.append([])
+				mat[len(mat)-1].append(name)
+				for i in indlist:
+					mat[len(mat)-1].append(residuesMinDist(cdr3[i], presidue))
 	return mat
 
 def definePeptideChain(chains, struct):
@@ -113,16 +116,27 @@ rts = open('generated/pdbcdr3_proc/dist_mats.txt', 'w')
 for item in datadist:	
 	structure = parser.get_structure(item, '../pdbs/'+item+'.pdb')
 	cdr3seqlist = datadist[item]
-	cdr3reslist = []
-	for i in range(1, len(cdr3seqlist)):
-		cdr3reslist.append(getCDR3Indices(structure, cdr3seqlist[i]))
 	peptide = structure[0][definePeptideChain(cdr3seqlist[0], structure)]
-	matrices = []
-	for cdr3res in cdr3reslist:
-		matrices.append(calcDistMatrix(item, cdr3res, peptide))
-	for matrix in matrices:
-		fwriteMatrix(rts, matrix)
-		rts.write('\n')
+	if (len(peptide) > 20):
+		line = item+'\tTOO MANY AMINO ACIDS ('+str(len(peptide))+') TO BE A PEPTIDE :(\n\n'
+		print line
+		rts.write(line)
+	else:
+		cdr3reslist = []
+		for i in range(1, len(cdr3seqlist)):
+			cdr3reslist.append(getCDR3Indices(structure, cdr3seqlist[i]))
+		matrices = []
+		for cdr3res in cdr3reslist:
+			matrices.append(calcDistMatrix(item, cdr3res, peptide))
+		for matrix in matrices:
+			fwriteMatrix(rts, matrix)
+			rts.write('\n')
+
+#builder = PPBuilder()	
+#peps = builder.build_peptides(structure[0]['E'])
+#for p in peps:
+#	print p.get_sequence()
+#	print "=========="
 
 rts.close()
 
