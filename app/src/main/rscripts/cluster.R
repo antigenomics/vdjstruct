@@ -67,7 +67,6 @@ lines(density(sils), col="red")
 abline(v = mean(si[,3]), col="red", lwd=6)
 
 
-
 # Cluster num graphs
 n <- 20
 mydist <- rep(0,n)
