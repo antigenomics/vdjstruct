@@ -55,19 +55,21 @@ def calcDistMatrix(pname, pept1, pept2, symflag):
 	mat = [[pname]]
 	indlist = []
 	if (not symflag):
-		mat.append([''])
+		#mat.append(['/'])
+		mat[0] = ['/']
 	else:
-		mat.append([])
+		#mat.append([])
+		mat[0] = []
 		
 	if (len(pept1) == 0):
 		if (flag):
-			mat[1].append('CDR3 NOT FOUND!')
+			mat[len(mat)-1].append('CDR3 NOT FOUND!')
 		return mat
 			
 	for res1 in pept1:
 		name = res1.get_resname()
 		if (Polypeptide.is_aa(name)):
-			mat[1].append(name)
+			mat[len(mat)-1].append(name)
 	for res2 in pept2:		
 		name = res2.get_resname()
 		if (Polypeptide.is_aa(name)):
