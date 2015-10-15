@@ -65,17 +65,16 @@ def calcDistMatrix(pname, pept1, pept2, symflag):
 		if (flag):
 			mat[len(mat)-1].append('CDR3 NOT FOUND!')
 		return mat
-			
 	for res1 in pept1:
 		name = res1.get_resname()
-		if (Polypeptide.is_aa(name)):
-			mat[len(mat)-1].append(name)
+		if (Polypeptide.is_aa(name, standard=True)):
+			mat[len(mat)-1].append(Polypeptide.three_to_one(name))
 	for res2 in pept2:		
 		name = res2.get_resname()
-		if (Polypeptide.is_aa(name)):
+		if (Polypeptide.is_aa(name, standard=True)):
 			mat.append([])
 			if (not symflag):
-				mat[len(mat)-1].append(name)
+				mat[len(mat)-1].append(Polypeptide.three_to_one(name))
 			for res1 in pept1:
 				if (Polypeptide.is_aa(res1.get_resname())):
 					mat[len(mat)-1].append(residuesCaDist(res1, res2))
@@ -145,7 +144,8 @@ def writeInFile_CDR3_Pept(parser, datadist, item, f):
 			m = calcDistMatrix(item, cdr3res, list(peptide), False)
 			fwriteMatrix(f2, m)
 			f2.write('\n')
-			f2.close()	
+			f2.close()
+			f.write(item+'\n')	
 			fwriteMatrix(f, m)
 			f.write('\n')
 			i += 1
@@ -163,6 +163,7 @@ def writeInFile_CDR3_CDR3(parser, datadist, item, f):
 		fwriteMatrix(f2, m)
 		f2.write('\n')
 		f2.close()
+		f.write(item+'\n')
 		fwriteMatrix(f, m)
 		f.write('\n')
 		i += 1

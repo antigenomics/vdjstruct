@@ -4,3 +4,4 @@ target/
 *.iml
 pdbs/
 pdbs
+.Rproj.user
