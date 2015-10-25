@@ -6,7 +6,7 @@ savepath <- "../../../generated/pdbcdr3"
 alphabet <- c('A', 'R', 'N', 'D', 'C', 'Q', 'E', 
               'G', 'H', 'I', 'L', 'K', 'M', 'F', 
               'P', 'S', 'T', 'W', 'Y', 'V')
-my_palette <- colorRampPalette(c("white", "yellow", "red"))(n = 299)
+my_palette <- colorRampPalette(c("white", "darkred"))(n = 299)
 
 mkIntTable <- function(tablelist)
 {
@@ -55,7 +55,7 @@ mkNormTable <- function(table, freqtable)
       c = freqtable$cdr3all[j]
       if(p != 0 && c != 0)
         table[alphabet[i], alphabet[j]] = 
-          table[alphabet[i], alphabet[j]]/p/c*10000
+          table[alphabet[i], alphabet[j]]/p/c*1000
        # print(freqtable$pept[i])
     }
   return(table)
