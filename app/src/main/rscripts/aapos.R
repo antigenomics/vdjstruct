@@ -1,6 +1,6 @@
 #!/bin/Rscript
 
-
+range <- 10
 thresh <- 8
 savepath <- "../../../generated/pdbcdr3"
 alphabet <- c('A', 'R', 'N', 'D', 'C', 'Q', 'E', 
@@ -39,12 +39,12 @@ mkPeptidePosList <- function(tablelist)
     table = as.matrix(tablelist[[i]])
     pept = table[,1]
     cdr3 = table[1,]
-    for (j in 2:length(pept))
-      for (i in 2:length(cdr3))
+    for (i in 2:length(pept))
+      for (j in 2:length(cdr3))
       {
-        if (as.numeric(table[j, i]) < thresh)
+        if (as.numeric(table[i, j]) < thresh)
         {
-          aapos <- append(aapos, i-round((length(cdr3)-1)/2+0.1))
+          aapos <- append(aapos, i-round((length(pept)-1)/2+0.1))
           break;
         }
       }
@@ -55,9 +55,9 @@ mkPeptidePosList <- function(tablelist)
 
 mkDistTable <- function(tablelist)
 {
-  d <- matrix(0, ncol = 21, nrow = 21)
-  colnames(d) <- -10:10
-  rownames(d) <- -10:10
+  d <- matrix(0, ncol = range*2+1, nrow = range*2+1)
+  colnames(d) <- -range:range
+  rownames(d) <- -range:range
   for (i in 1:length(tablelist))
   {
     table = as.matrix(tablelist[[i]])
@@ -70,7 +70,7 @@ mkDistTable <- function(tablelist)
         {
           a = j-round((length(r)-1)/2+0.1)
           b = k-round((length(c)-1)/2+0.1)
-          d[a+11, b+11] = d[a+11, b+11]+1
+          d[a+range+1, b+range+1] = d[a+range+1, b+range+1]+1
         }
       }
   }
@@ -136,6 +136,6 @@ mkHist(a_peptlist, "Interacting aa position relative to the center in peptide (a
 mkHist(a_cdr3list, "Interacting aa position relative to the center in cdr3 (alpha)")
 mkHist(b_peptlist, "Interacting aa position relative to the center in peptide (beta)")
 mkHist(b_cdr3list, "Interacting aa position relative to the center in cdr3 (beta)")
-heatTable(a_dist_table, "y - relative aa peptide position\nx - x - relative aa CDR3 position (alpha)")
-heatTable(b_dist_table, "y - relative aa peptide position\nx - x - relative aa CDR3 position (beta)")
+heatTable(a_dist_table, "y - relative aa peptide position\nx - relative aa CDR3 position (alpha)")
+heatTable(b_dist_table, "y - relative aa peptide position\nx - relative aa CDR3 position (beta)")
 dev.off()
