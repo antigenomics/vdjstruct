@@ -1,7 +1,7 @@
 #!/bin/Rscript
 
 range <- 10
-ran <- 5
+ran <- 3
 thresh <- 8
 savepath <- "../../../generated/pdbcdr3"
 alphabet <- c('A', 'R', 'N', 'D', 'C', 'Q', 'E', 
@@ -189,12 +189,70 @@ mkPlot <- function(m, name)
   library(ggplot2)
   print(ggplot(cdata, aes(x=pos, y=mean)) +
           xlab("Peptide aa position") +
-          ylab("Relative distance to CDR3") +
+          ylab("Relative distance to CDR3 (distance/global min distance)") +
           ggtitle(name) +
-          geom_errorbar(aes(ymin=mean-se*1.96, ymax=mean+se*1.96), width=.1) +
+          geom_errorbar(aes(ymin=mean-se*3, ymax=mean+se*3), width=.1) +
           geom_line() +
           geom_point())
 }
+
+# =================== Compute coefficients =================
+getX <- function(table, dlist, map)
+{
+  X = matrix(0, length(alphabet), length(alphabet))
+  cuttable = apply(table[-1, -1], c(1, 2), as.numeric)
+  #if (min(cuttable) < thresh)
+  sum = 0 # flipping flag
+  glmin = min(cuttable)
+  mininds = which(cuttable == glmin, arr.ind = T)
+  rmin = mininds[1, 1]
+  cmin = mininds[1, 2]
+  
+  iup = max(1, (rmin-ran))
+  idown = min(nrow(cuttable),(rmin+ran))
+  jleft =max(1,cmin-ran)
+  jright = min(ncol(cuttable),(cmin+ran))
+  
+  for (i in iup:idown)
+  {
+    j = which(cuttable[i,] == min(cuttable[i, jleft:jright]))
+    imod = i-(rmin-ran)+1
+    jmod = j-(cmin-ran)+1
+    sum = sum + sign(as.numeric(c(-ran:ran)[imod]) * as.numeric(c(-ran:ran)[jmod]))
+  }
+  
+  cdr3 = sapply(table[1, (jleft+1):(jright+1)], as.character)
+  pept = sapply(table[(iup+1):(idown+1), 1], as.character)
+  
+  if (sum <= 0) # if cdr3 is 180 grad rotated then flip cdr3 from left to right
+    cdr3 = rev(cdr3)
+  
+  for (i in iup:idown)
+    for (j in jleft:jright)
+    {
+      imod = i-(rmin-ran)+1
+      jmod = j-(cmin-ran)+1
+      aapept = which(alphabet == pept[imod])
+      aacdr3 = which(alphabet == cdr3[jmod])
+      add = map[imod,jmod]/dlist[imod]
+      X[aapept, aacdr3] = X[aapept, aacdr3]+add
+      X[aacdr3, aapept] = X[aacdr3, aapept]+add
+    }
+  #colnames(X) = alphabet
+  #rownames(X) = alphabet
+  
+  return(as.numeric(unlist(sapply(1:nrow(X), function(x) X[x,x:nrow(X)]))))
+}
+
+getXmat <- function(tablelist, dlist, map)
+{
+  result = matrix(NA, 0, (1+length(alphabet))*length(alphabet)/2)
+  for (i in 1:length(tablelist))
+    result = rbind(result, getX(tablelist[[i]], dlist, map))
+  return(result)
+}
+
+getXmat(matlist_a, dlist, map)
 
 # =================== Reading matrices =====================
 temp_a <- list.files(path = p, pattern = "*0).txt")
@@ -241,7 +299,6 @@ sink()
 a_rel_dist = a_rel_dist_table$distance
 b_rel_dist = b_rel_dist_table$distance
 
-
 pdf(paste(savepath, "interacting_aa_positions.pdf", sep = '/'))
 mkHist(a_peptlist, "Interacting aa position relative to the center in peptide (alpha)")
 mkHist(a_cdr3list, "Interacting aa position relative to the center in cdr3 (alpha)")
@@ -251,9 +308,20 @@ heatTable(a_dist_table, "y - relative aa peptide position\nx - relative aa CDR3 
 heatTable(b_dist_table, "y - relative aa peptide position\nx - relative aa CDR3 position (beta)")
 heatTable(a_rel_dist_table$map, "Relative position from the \nmost interating CDR3 aa\n y - peptide aa pos; x - CDR3 (alpha)")
 heatTable(b_rel_dist_table$map, "Relative position from the \nmost interating CDR3 aa\n y - peptide aa pos; x - CDR3 (beta)")
-heatTable(a_rel_dist, "y - Distance from peptide aa in \nposition 'x' form the center to\n CDR3; x - Peptide aa position (alpha)")
-heatTable(b_rel_dist, "y - Distance from peptide aa in \nposition 'x' form the center to\n CDR3; x - Peptide aa position (beta)")
+heatTable(a_rel_dist, "Color - Distance from peptide aa in \nposition 'x' form the center to\n CDR3; x - Peptide aa position (alpha)")
+heatTable(b_rel_dist, "Color - Distance from peptide aa in \nposition 'x' form the center to\n CDR3; x - Peptide aa position (beta)")
 mkPlot(a_rel_dist, "Distance from peptide aa to CDR3 (alpha)")
 mkPlot(b_rel_dist, "Distance from peptide aa to CDR3 (beta)")
 
 dev.off()
+
+nn = data.frame(pos = c(rep(-ran:ran, length(a_rel_dist))), val = c(t(a_rel_dist)))
+library(plyr)
+cdata <- ddply(nn, 'pos', summarise,
+               N    = sum(!is.na(val)),
+               mean = mean(val, na.rm=T),
+               sd   = sd(val, na.rm=T),
+               se   = sd / sqrt(N)
+)
+dlist = cdata$mean
+map = a_rel_dist_table$map
