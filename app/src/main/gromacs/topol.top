@@ -1,0 +1,20 @@
+;
+;	File 'topol.top' was generated
+;	By user: mikhail (1000)
+;	On host: mikhail-ThinkPad-Edge-E530
+;	At date: Wed Nov 18 20:50:42 2015
+;
+;	This is a standalone topology file
+;
+;	Created by:
+;	GROMACS:      gmx pdb2gmx, VERSION 5.0.1
+;	Executable:   /usr/local/gromacs/bin/gmx
+;	Library dir:  /usr/local/gromacs/share/gromacs/top
+;	Command line:
+;	  gmx pdb2gmx -f ../../../../pdbs/3ffc.pdb -o 3ffc.gro -water spce -ff oplsaa -missing
+;	Force field was read from the standard Gromacs share directory.
+;
+
+; Include forcefield parameters
+#include "oplsaa.ff/forcefield.itp"
+

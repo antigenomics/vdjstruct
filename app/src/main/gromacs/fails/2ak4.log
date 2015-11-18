@@ -1,0 +1,1 @@
+error with gmx pdb2gmx -f ../../../../pdbs/2ak4.pdb -o 2ak4.gro -water spce -ff oplsaa -missing

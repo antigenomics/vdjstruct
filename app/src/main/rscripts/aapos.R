@@ -3,6 +3,7 @@
 range <- 10
 ran <- 3
 thresh <- 8
+lambda <- 10.0
 savepath <- "../../../generated/pdbcdr3"
 alphabet <- c('A', 'R', 'N', 'D', 'C', 'Q', 'E', 
               'G', 'H', 'I', 'L', 'K', 'M', 'F', 
@@ -114,11 +115,11 @@ mkRelDistTable <- function(tablelist)
         j = which(cuttable[i,] == min(cuttable[i, jdown:jup]))-(cmin-ran)+1
         
         bufer[imod, j] = bufer[imod, j]+1;
-        sum = sum + sign(as.numeric(colnames(d)[imod]) * as.numeric(rownames(d)[j]))
+        #sum = sum + sign(as.numeric(colnames(d)[imod]) * as.numeric(rownames(d)[j]))
         dist[m, imod] = cuttable[i, j+(cmin-ran)-1]/glmin
       }
-      if (sum <= 0) # if cdr3 is 180 grad rotated then flip matrix from left to right
-        bufer = t(apply(t(bufer), 2, rev))
+      #if (sum <= 0) # if cdr3 is 180 grad rotated then flip matrix from left to right
+      #  bufer = t(apply(t(bufer), 2, rev))
       
       d = d + bufer
       
@@ -152,6 +153,32 @@ mkRelDistTable <- function(tablelist)
   print(d)
   print(xymat)
   return(list("distance" = dist, "map" = d, "graph" = xymat))
+}
+
+mkMinsDistList <- function(atablelist, btablelist)
+{
+  dists = c()
+  for (m in 1:length(atablelist))
+  {
+    a_table = as.matrix(atablelist[[m]])
+    b_table = as.matrix(btablelist[[m]])
+    a_cuttable = apply(a_table[-1, -1], c(1, 2), as.numeric)
+    b_cuttable = apply(b_table[-1, -1], c(1, 2), as.numeric)
+    
+    #if (min(a_cuttable) < thresh && min(b_cuttable) < thresh)
+      #if (ncol(cuttable) > 13)
+    #{
+      a_glmin = min(a_cuttable)
+      b_glmin = min(b_cuttable)
+      a_mininds = which(a_cuttable == a_glmin, arr.ind = T)
+      b_mininds = which(b_cuttable == b_glmin, arr.ind = T)
+      a_rmin = a_mininds[1, 1]
+      b_rmin = b_mininds[1, 1]
+      dists <- append(dists, (as.numeric(b_rmin)-as.numeric(a_rmin)))
+   # }
+  }
+  #print(dists)
+  return(dists)
 }
 
 mkHist <- function(list, name)
@@ -197,35 +224,39 @@ mkPlot <- function(m, name)
 }
 
 # =================== Compute coefficients =================
-getX <- function(table, dlist, map)
+getX <- function(table, dlist, map, num)
 {
   X = matrix(0, length(alphabet), length(alphabet))
   cuttable = apply(table[-1, -1], c(1, 2), as.numeric)
-  #if (min(cuttable) < thresh)
+  if (min(cuttable) > thresh)
+    return(c(rep(NA, (1+length(alphabet))*length(alphabet)/2)))
+  
   sum = 0 # flipping flag
   glmin = min(cuttable)
   mininds = which(cuttable == glmin, arr.ind = T)
   rmin = mininds[1, 1]
   cmin = mininds[1, 2]
   
+  rmin = rmin + num
+  
   iup = max(1, (rmin-ran))
   idown = min(nrow(cuttable),(rmin+ran))
   jleft =max(1,cmin-ran)
   jright = min(ncol(cuttable),(cmin+ran))
   
-  for (i in iup:idown)
-  {
-    j = which(cuttable[i,] == min(cuttable[i, jleft:jright]))
-    imod = i-(rmin-ran)+1
-    jmod = j-(cmin-ran)+1
-    sum = sum + sign(as.numeric(c(-ran:ran)[imod]) * as.numeric(c(-ran:ran)[jmod]))
-  }
+  #for (i in iup:idown)
+  #{
+    #j = which(cuttable[i,] == min(cuttable[i, jleft:jright]))
+    #imod = i-(rmin-ran)+1
+    #jmod = j-(cmin-ran)+1
+    #sum = sum + sign(as.numeric(c(-ran:ran)[imod]) * as.numeric(c(-ran:ran)[jmod]))
+  #}
   
   cdr3 = sapply(table[1, (jleft+1):(jright+1)], as.character)
   pept = sapply(table[(iup+1):(idown+1), 1], as.character)
   
-  if (sum <= 0) # if cdr3 is 180 grad rotated then flip cdr3 from left to right
-    cdr3 = rev(cdr3)
+  #if (sum <= 0) # if cdr3 is 180 grad rotated then flip cdr3 from left to right
+  #  cdr3 = rev(cdr3)
   
   for (i in iup:idown)
     for (j in jleft:jright)
@@ -240,41 +271,57 @@ getX <- function(table, dlist, map)
     }
   #colnames(X) = alphabet
   #rownames(X) = alphabet
-  
+  #print(X)
   return(as.numeric(unlist(sapply(1:nrow(X), function(x) X[x,x:nrow(X)]))))
 }
 
-getXmat <- function(tablelist, dlist, map)
+getRealX <- function(table, dlist, map)
 {
-  result = matrix(NA, 0, (1+length(alphabet))*length(alphabet)/2)
-  for (i in 1:length(tablelist))
-    result = rbind(result, getX(tablelist[[i]], dlist, map))
-  return(result)
+  return(getX(table, dlist, map, 0))
 }
 
-getXmat(matlist_a, dlist, map)
+getFalseX <- function(table, dlist, map)
+{
+  return(getX(table, dlist, map, 2))
+}
+
+getXmat <- function(tablelist_a, tablelist_b, dlist_a, dlist_b, map_a, map_b)
+{
+  result = matrix(NA, 0, (1+length(alphabet))*length(alphabet)/2)
+  y = c()
+  for (i in 1:length(tablelist_a))
+  {
+    result = rbind(result, getRealX(tablelist_a[[i]], dlist_a, map_a)+
+                     getRealX(tablelist_b[[i]], dlist_b, map_b))
+    y = append(y, 1)
+  }
+  for (i in 1:length(tablelist_a))
+  {
+    result = rbind(result, getFalseX(tablelist_a[[i]], dlist_a, map_a)+
+                     getFalseX(tablelist_b[[i]], dlist_b, map_b))
+    y = append(y, 0)
+  }
+  return(list('X' = result, 'Y' = y))
+}
+
+
+#getXmat(matlist_a, dlist, map)
 
 # =================== Reading matrices =====================
 temp_a <- list.files(path = p, pattern = "*0).txt")
-matlist_a <- list()
-count <- 0
-for (i in 1:(length(temp_a)))
-{
-  bufer <- read.table(paste(p, temp_a[i], sep = '/'))
-  if (nrow(bufer) > 1)
-    matlist_a[[i-count]] <- bufer
-  else
-    count <- count+1
-}
-# ==========================================================
 temp_b <- list.files(path = p, pattern = "*1).txt")
+matlist_a <- list()
 matlist_b <- list()
 count <- 0
-for (i in 1:(length(temp_b)))
+for (i in 1:(min(length(temp_a), length(temp_b))))
 {
-  bufer <- read.table(paste(p, temp_b[i], sep = '/'))
-  if (nrow(bufer) > 1)
-    matlist_b[[i-count]] <- bufer
+  abufer <- read.table(paste(p, temp_a[i], sep = '/'))
+  bbufer <- read.table(paste(p, temp_b[i], sep = '/'))
+  if ((nrow(abufer) > 1) && (nrow(bbufer) > 1))
+  {
+    matlist_a[[i-count]] <- abufer
+    matlist_b[[i-count]] <- bbufer
+  }
   else
     count <- count+1
 }
@@ -288,6 +335,8 @@ a_dist_table <- mkDistTable(matlist_a)
 b_dist_table <- mkDistTable(matlist_b)
 a_rel_dist_table <- mkRelDistTable(matlist_a)
 b_rel_dist_table <- mkRelDistTable(matlist_b)
+
+mins_dist <- mkMinsDistList(matlist_a, matlist_b)
 
 sink(paste(savepath, "relative_from_most_interacting_cdr_aa_positition_matrices.txt", sep = '/'))
 print("Alpha table")
@@ -304,6 +353,7 @@ mkHist(a_peptlist, "Interacting aa position relative to the center in peptide (a
 mkHist(a_cdr3list, "Interacting aa position relative to the center in cdr3 (alpha)")
 mkHist(b_peptlist, "Interacting aa position relative to the center in peptide (beta)")
 mkHist(b_cdr3list, "Interacting aa position relative to the center in cdr3 (beta)")
+mkHist(mins_dist, "Distance between most interacting \npeptide aa with alpha and beta")
 heatTable(a_dist_table, "y - relative aa peptide position\nx - relative aa CDR3 position (alpha)")
 heatTable(b_dist_table, "y - relative aa peptide position\nx - relative aa CDR3 position (beta)")
 heatTable(a_rel_dist_table$map, "Relative position from the \nmost interating CDR3 aa\n y - peptide aa pos; x - CDR3 (alpha)")
@@ -315,13 +365,69 @@ mkPlot(b_rel_dist, "Distance from peptide aa to CDR3 (beta)")
 
 dev.off()
 
-nn = data.frame(pos = c(rep(-ran:ran, length(a_rel_dist))), val = c(t(a_rel_dist)))
 library(plyr)
-cdata <- ddply(nn, 'pos', summarise,
+nn_a = data.frame(pos = c(rep(-ran:ran, length(a_rel_dist))), val = c(t(a_rel_dist)))
+cdata_a <- ddply(nn_a, 'pos', summarise,
                N    = sum(!is.na(val)),
                mean = mean(val, na.rm=T),
                sd   = sd(val, na.rm=T),
                se   = sd / sqrt(N)
 )
-dlist = cdata$mean
-map = a_rel_dist_table$map
+dlist_a = cdata_a$mean
+map_a = a_rel_dist_table$map
+
+nn_b = data.frame(pos = c(rep(-ran:ran, length(b_rel_dist))), val = c(t(b_rel_dist)))
+cdata_b <- ddply(nn_b, 'pos', summarise,
+                 N    = sum(!is.na(val)),
+                 mean = mean(val, na.rm=T),
+                 sd   = sd(val, na.rm=T),
+                 se   = sd / sqrt(N)
+)
+dlist_b = cdata_b$mean
+map_b = b_rel_dist_table$map
+
+p = sample(1:1000, 210, replace=T)/10000000.
+
+mat = getXmat(matlist_a, matlist_b, dlist_a, dlist_b, map_a, map_b)
+X = mat$X
+Y = mat$Y
+X = na.omit(X)
+m = nrow(X)
+
+counter = 0
+
+costfun <- function(params) {
+  J = 0
+  #print(counter)
+  #counter = counter+1
+  for (i in 1:m)
+  {
+    theta = t(params)
+    ix = X[i,]
+    mult = as.numeric(theta%*%ix)
+    add = Y[i]*log(mult) + (1 - Y[i])*log(1 - mult)
+    J = J - add
+  }
+  J = J + lambda/2.*as.numeric(theta%*%t(theta))
+  J = J/m
+  return(J)
+}
+
+grad <- function(params) { ## Gradient of 'fr'
+  buf = c()
+  for (i in 1:m)
+  {
+    theta = t(params)
+    ix = X[i,]
+    mult = as.numeric(theta%*%ix)
+    buf = append(buf, 1./(1. + exp(-mult)))
+  }
+  return(t(X)%*%buf + lambda*params)
+}
+
+#print(costfun(p))
+#grad(p)
+
+opt = optim(p, costfun, grad, method = "CG")
+
+

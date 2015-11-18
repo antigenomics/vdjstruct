@@ -1,0 +1,73 @@
+GROMACS:    gmx solvate, VERSION 5.0.1
+
+GROMACS is written by:
+Emile Apol         Rossen Apostolov   Herman J.C. Berendsen Par Bjelkmar       
+Aldert van Buuren  Rudi van Drunen    Anton Feenstra     Sebastian Fritsch  
+Gerrit Groenhof    Christoph Junghans Peter Kasson       Carsten Kutzner    
+Per Larsson        Justin A. Lemkul   Magnus Lundborg    Pieter Meulenhoff  
+Erik Marklund      Teemu Murtola      Szilard Pall       Sander Pronk       
+Roland Schulz      Alexey Shvetsov    Michael Shirts     Alfons Sijbers     
+Peter Tieleman     Christian Wennberg Maarten Wolf       
+and the project leaders:
+Mark Abraham, Berk Hess, Erik Lindahl, and David van der Spoel
+
+Copyright (c) 1991-2000, University of Groningen, The Netherlands.
+Copyright (c) 2001-2014, The GROMACS development team at
+Uppsala University, Stockholm University and
+the Royal Institute of Technology, Sweden.
+check out http://www.gromacs.org for more information.
+
+GROMACS is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License
+as published by the Free Software Foundation; either version 2.1
+of the License, or (at your option) any later version.
+
+GROMACS:      gmx solvate, VERSION 5.0.1
+Executable:   /usr/local/gromacs/bin/gmx
+Library dir:  /usr/local/gromacs/share/gromacs/top
+Command line:
+  gmx solvate -cp 2bnr.gro -cs spc216.gro -o 2bnr.gro -p topol.top
+
+Reading solute configuration
+HLA CLASS I HISTOCOMPATIBILITY ANTIGEN; BETA-2-MICROGLOBULIN; SYNTHETIC PEPTIDE; T-CELL RECEPTOR ALPHA CHAIN V REGION; T-CELL RECEPTOR BETA CHAIN C REGION
+Containing 14465 atoms in 1349 residues
+Initialising inter-atomic distances...
+Reading solvent configuration
+"216H2O,WATJP01,SPC216,SPC-MODEL,300K,BOX(M)=1.86206NM,WFVG,MAR. 1984"
+solvent configuration contains 648 atoms in 216 residues
+
+Initialising inter-atomic distances...
+Will generate new solvent configuration of 9x9x9 boxes
+Generating configuration
+Sorting configuration
+Found 1 molecule type:
+    SOL (   3 atoms): 157464 residues
+Calculating Overlap...
+box_margin = 0.25992
+Removed 43836 atoms that were outside the box
+
+NOTE: This file uses the deprecated 'group' cutoff_scheme. This will be
+removed in a future release when 'verlet' supports all interaction forms.
+
+Successfully made neighbourlist
+nri = 505445, nrj = 5410512
+Checking Protein-Solvent overlap: tested 63871 pairs, removed 13674 atoms.
+Checking Solvent-Solvent overlap: tested 334292 pairs, removed 18159 atoms.
+Added 132241 molecules
+Generated solvent containing 396723 atoms in 132241 residues
+Writing generated configuration to 2bnr.gro
+
+Back Off! I just backed up 2bnr.gro to ./#2bnr.gro.2#
+HLA CLASS I HISTOCOMPATIBILITY ANTIGEN; BETA-2-MICROGLOBULIN; SYNTHETIC PEPTIDE; T-CELL RECEPTOR ALPHA CHAIN V REGION; T-CELL RECEPTOR BETA CHAIN C REGION
+
+Output configuration contains 411188 atoms in 133590 residues
+Volume                 :     4110.47 (nm^3)
+Density                :      1006.7 (g/l)
+Number of SOL molecules:  132761   
+
+Processing topology
+
+Back Off! I just backed up topol.top to ./#topol.top.1#
+
+gcq#347: "If There Is No Guitar In The House, You Know It's Owner Can Not Be Trusted" (Gogol Bordello)
+

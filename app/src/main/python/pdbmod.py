@@ -5,6 +5,220 @@ from Bio.PDB import Polypeptide
 #flag = True if you wanna write useless stuff
 flag = False
 
+class Interaction:
+	def __init__(self, struct, chains, cdr3_a, cdr3_b):
+		self.__name = struct.get_id()		
+		self.__struct = struct
+		self.__chains = chains
+		self.__cdr3_a_seq = cdr3_a
+		self.__cdr3_b_seq = cdr3_b
+		self.__a_flanked = []
+		self.__b_flanked = []
+		self.__p_flanked = []
+		self.__peptide = []
+		self.__cdr3_a = []
+		self.__cdr3_b = []
+		self.__d_matrix_a = []
+		self.__d_matrix_b = []
+		self.__info = ''
+		self.getCDR3Indices()
+		self.definePeptideChain()
+		self.calcDistMatrices()
+		
+	def __str__(self):
+		s = '\nprotein name: ' + self.__name + \
+			'\npeptide: ' + self.getPeptideSeq() + \
+			'\ncdr3 alpha: ' + self.__cdr3_a_seq + \
+			'\ncdr3 beta: ' + self.__cdr3_b_seq + '\n'
+		return s
+		
+		
+	def isEmpty(self):
+		if not self.__cdr3_a:
+			return True
+		if not self.__cdr3_b:
+			return True
+		if not self.__peptide:
+			return True
+		
+	def getCDR3Indices(self):
+		ppb=PPBuilder()
+		res = []
+		bltpep = ppb.build_peptides(self.__struct[0])
+		cdr3_a_beg = 1
+		cdr3_a_end = 1
+		cdr3_b_beg = 1
+		cdr3_b_end = 1
+		for pp in bltpep: 
+			s = str(pp.get_sequence())
+			ind = s.find(self.__cdr3_a_seq, 0, len(s))
+			if (ind != -1):
+				for i in range(ind, ind + len(self.__cdr3_a_seq)):
+					res.append(pp[i])
+				self.__cdr3_a = res
+				cdr3_a_beg = cdr3_a_beg + ind
+				cdr3_a_end = cdr3_a_beg + len(self.__cdr3_a_seq) - 1
+				self.__a_flanked = [cdr3_a_beg, cdr3_a_end]
+				break
+			cdr3_a_beg = cdr3_a_beg + len(pp)
+				
+		if not res:	
+			line = '\n' + self.__cdr3_a_seq + ' not found in '+str(self.__struct.get_id()) + '!\n'
+			self.__info = self.__info + line
+			print 'getCDR3Indices(): ' + line
+		
+		res = []
+		for pp in bltpep: 
+			s = str(pp.get_sequence())
+			ind = s.find(self.__cdr3_b_seq, 0, len(s))
+			if (ind != -1):
+				for i in range(ind, ind+len(self.__cdr3_b_seq)):
+					res.append(pp[i])
+				self.__cdr3_b = res
+				cdr3_b_beg = cdr3_b_beg + ind
+				cdr3_b_end = cdr3_b_beg + len(self.__cdr3_b_seq) - 1
+				self.__b_flanked = [cdr3_b_beg, cdr3_b_end]
+				break
+			cdr3_b_beg = cdr3_b_beg + len(pp)
+			
+		if not res:
+			line = '\n'+self.__cdr3_b_seq+' not found in '+str(self.__struct.get_id())+'!\n'
+			self.__info = self.__info + line
+			print 'getCDR3Indices(): ' + line
+				
+	def definePeptideChain(self):
+		l = 'INFINITY'
+		for chid in self.__chains:
+			buf = len(PPBuilder().build_peptides(self.__struct[0][chid])[0])
+			if (buf <= l):
+				l = buf
+				i = chid
+		pp = list(self.__struct[0][i])
+		if (len(pp) > 20):
+			line = self.__name + '\t: TOO MANY AMINO ACIDS (' + str(len(pp)) + ') TO BE A PEPTIDE :(\n'
+			print 'definePeptideChain(): ' + line
+			self.__info = self.__info + line
+		else:
+			rnum = 1
+			for chain in self.__struct[0]:
+				if chain != self.__struct[0][i]:
+					rnum = rnum + len(PPBuilder().build_peptides(chain)[0])
+				else:
+					break
+			cdr3_p_beg = rnum	
+			newpp = []
+			for r in pp:
+				if (Polypeptide.is_aa(r.get_resname(), standard=True)):
+					newpp.append(r)
+			self.__peptide = newpp
+			cdr3_p_end = cdr3_p_beg + len(self.__peptide) - 1
+			self.__p_flanked = [cdr3_p_beg, cdr3_p_end]
+						
+	def calcDistMatrices(self):
+		mat = []
+		if not self.__peptide:
+			print 'calcDistMatrices(): PEPTIDE IS EMPTY'
+			return
+		if not self.__cdr3_a:
+			print 'calcDistMatrices(): ALPHA CDR3 IS EMPTY'
+		else:
+			for res1 in list(self.__peptide):
+				mat.append([])	
+				for res2 in self.__cdr3_a:	
+					mat[len(mat)-1].append(residuesMinDist(res1, res2))
+			self.__d_matrix_a = mat
+		mat = []
+		if not self.__cdr3_b:
+			print 'calcDistMatrices(): BETA CDR3 IS EMPTY'
+		else:
+			for res1 in list(self.__peptide):
+				mat.append([])		
+				for res2 in self.__cdr3_b:
+					mat[len(mat)-1].append(residuesMinDist(res1, res2))
+			self.__d_matrix_b = mat
+		
+	def getPeptideSeq(self):
+		if not self.__peptide:
+			print 'getPeptideSeq(): PEPTIDE (' + self.__name +') IS EMPTY'
+			return	
+		s = ''
+		for r in list(self.__peptide):
+			s = s + Polypeptide.three_to_one(r.get_resname())
+		return s
+		
+	def getCDR3AlphaSeq(self):
+		return self.__cdr3_a_seq
+		
+	def getCDR3BetaSeq(self):
+		return self.__cdr3_b_seq
+		
+	def matToStr(self, pep, cdr3, mat):
+		s = '/'
+		for r in cdr3:
+			s = s + '\t' + Polypeptide.three_to_one(r.get_resname())
+		s = s + '\n'
+		for i in range(0, len(mat)):
+			s = s + Polypeptide.three_to_one(pep[i].get_resname())
+			for j in range(0, len(mat[i])):
+				s = s +'\t' + str(mat[i][j])
+			s = s + '\n'
+		return s
+		
+	def a_matToStr(self):
+		if not self.__d_matrix_a:
+			print 'a_matToStr(): ALPHA MATRIX IS EMPTY'
+			return
+		s = self.matToStr(self.__peptide, self.__cdr3_a, self.__d_matrix_a)
+		return s
+		
+	def b_matToStr(self):
+		if not self.__d_matrix_b:
+			print 'b_matToStr(): BETA MATRIX IS EMPTY'
+			return
+		s = self.matToStr(self.__peptide, self.__cdr3_b, self.__d_matrix_b)
+		return s
+	
+	def writeInFile_CDR3_Pept(self, f):
+		if self.isEmpty():
+			f.write(self.__info)
+			f.write('\n')
+			return
+			
+		for i in range(0, 2):
+			f2 = open('generated/pdbcdr3/dist_mats/cdr3+pep/'+self.__name+'('+str(i)+').txt', 'w')
+			if (i == 0):
+				f.write(self.a_matToStr())
+				f2.write(self.a_matToStr())
+			if (i == 1):
+				f.write(self.b_matToStr())
+				f2.write(self.b_matToStr())
+			f.write('\n')
+			f2.write('\n')
+			f2.close()
+			
+	def indicesToStr(self):
+		s = ''
+		if self.isEmpty():
+			f.write(self.__info)
+			return s
+		for r in self.__peptide:
+			s = s + str(r.get_id())+' '
+		s = s + '\n'
+		for r in self.__cdr3_a:
+			s = s + str(r.get_id())+' '
+		s = s + '\n'
+		for r in self.__cdr3_b:
+			s = s + str(r.get_id())+' '
+		s = s + '\n\n'
+		return s
+		
+	def printIndices(self, f):
+		f.write(self.indicesToStr())
+		
+	def utilGromacs(self):
+		print [self.__p_flanked, self.__a_flanked, self.__b_flanked]
+		
+	
 def residuesMeanDist(res1, res2):
 	dist = 0
 	num = 0
@@ -16,7 +230,7 @@ def residuesMeanDist(res1, res2):
 				dist += (at1-at2)
 				num += 1
 		return dist/num
-		
+	
 def residuesMinDist(res1, res2):
 	dist = 'INFINITY'
 	if (res1 == res2):
@@ -29,78 +243,12 @@ def residuesMinDist(res1, res2):
 					dist = buf		
 		return dist
 		
-def residuesCaDist(res1, res2):
-	dist = 'INFINITY'
+def residuesCaDist(res2, res1):
 	if (res1 == res2):
 		return 0;
 	else:
 		return res1['CA']-res2['CA']
-
-def getCDR3Indices(struct, cdr3):
-	ppb=PPBuilder()
-	chid = 0
-	res = []
-	for pp in ppb.build_peptides(struct): 
-		s = str(pp.get_sequence())
-		ind = s.find(cdr3, 0, len(s))
-		if (ind != -1):
-			for i in range(ind, ind+len(cdr3)):
-				res.append(pp[i])
-			return res
-		chid += 1
-	print '\n'+cdr3+' not found in '+str(struct.get_id())+'!\n'
-	return []
-
-def calcDistMatrix(pname, pept1, pept2, symflag):
-	mat = [[pname]]
-	indlist = []
-	if (not symflag):
-		#mat.append(['/'])
-		mat[0] = ['/']
-	else:
-		#mat.append([])
-		mat[0] = []
 		
-	if (len(pept1) == 0):
-		if (flag):
-			mat[len(mat)-1].append('CDR3 NOT FOUND!')
-		return mat
-	for res1 in pept1:
-		name = res1.get_resname()
-		if (Polypeptide.is_aa(name, standard=True)):
-			mat[len(mat)-1].append(Polypeptide.three_to_one(name))
-	for res2 in pept2:		
-		name = res2.get_resname()
-		if (Polypeptide.is_aa(name, standard=True)):
-			mat.append([])
-			if (not symflag):
-				mat[len(mat)-1].append(Polypeptide.three_to_one(name))
-			for res1 in pept1:
-				if (Polypeptide.is_aa(res1.get_resname())):
-					mat[len(mat)-1].append(residuesCaDist(res1, res2))
-	return mat
-
-def definePeptideChain(chains, struct):
-	l = len(struct[0][chains[0]])
-	for chid in chains:
-		buf = len(struct[0][chid])
-		if (buf <= l):
-			l = buf
-			i = chid
-	return i
-
-def deleteNonAmino(p):
-	for r in p:
-		if (Polypeptide.is_aa(r.get_resname())):
-			print ""
-		else:
-			del r
-
-def getPeptideAminoList(p):
-	l = []
-	for r in p:
-		l.append(r.get_resname())
-	return l
 
 def parseDataFile(path):
 	f = open(path, 'r')
@@ -118,38 +266,7 @@ def parseDataFile(path):
 				d[pname].append(s[17])
 	f.close()
 	return d
-	
-def fwriteMatrix(f, m):
-	for i in range(0, len(m)):
-		for j in range(0, len(m[i])):
-			f.write(str(m[i][j])+'\t')
-		f.write('\n')
 
-def writeInFile_CDR3_Pept(parser, datadist, item, f):
-	structure = parser.get_structure(item, '../pdbs/'+item+'.pdb')
-	cdr3seqlist = datadist[item]
-	peptide = structure[0][definePeptideChain(cdr3seqlist[0], structure)]
-	if (len(peptide) > 20):
-		if (flag == True):
-			line = item+'\tTOO MANY AMINO ACIDS ('+str(len(peptide))+') TO BE A PEPTIDE :(\n\n'
-			print line
-			f.write(line)
-	else:
-		cdr3reslist = []
-		for i in range(1, len(cdr3seqlist)):
-			cdr3reslist.append(getCDR3Indices(structure, cdr3seqlist[i]))
-		i = 0
-		for cdr3res in cdr3reslist:
-			f2 = open('generated/pdbcdr3/dist_mats/cdr3+pep/'+item+'('+str(i)+').txt', 'w')
-			m = calcDistMatrix(item, cdr3res, list(peptide), False)
-			fwriteMatrix(f2, m)
-			f2.write('\n')
-			f2.close()
-			f.write(item+'\n')	
-			fwriteMatrix(f, m)
-			f.write('\n')
-			i += 1
-			
 def writeInFile_CDR3_CDR3(parser, datadist, item, f):
 	structure = parser.get_structure(item, '../pdbs/'+item+'.pdb')
 	cdr3seqlist = datadist[item]
@@ -167,5 +284,3 @@ def writeInFile_CDR3_CDR3(parser, datadist, item, f):
 		fwriteMatrix(f, m)
 		f.write('\n')
 		i += 1
-
-

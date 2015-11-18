@@ -1,0 +1,1 @@
+error with gmx grompp -f params/minim.mdp -c 3vxr.gro -p topol.top -n index.ndx -o em3vxr.tpr
