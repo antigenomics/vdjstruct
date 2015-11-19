@@ -1,1 +1,412 @@
-error with gmx pdb2gmx -f ../../../../pdbs/3ffc.pdb -o 3ffc.gro -water spce -ff oplsaa -missing
+GROMACS:    gmx pdb2gmx, VERSION 5.0.1
+
+GROMACS is written by:
+Emile Apol         Rossen Apostolov   Herman J.C. Berendsen Par Bjelkmar       
+Aldert van Buuren  Rudi van Drunen    Anton Feenstra     Sebastian Fritsch  
+Gerrit Groenhof    Christoph Junghans Peter Kasson       Carsten Kutzner    
+Per Larsson        Justin A. Lemkul   Magnus Lundborg    Pieter Meulenhoff  
+Erik Marklund      Teemu Murtola      Szilard Pall       Sander Pronk       
+Roland Schulz      Alexey Shvetsov    Michael Shirts     Alfons Sijbers     
+Peter Tieleman     Christian Wennberg Maarten Wolf       
+and the project leaders:
+Mark Abraham, Berk Hess, Erik Lindahl, and David van der Spoel
+
+Copyright (c) 1991-2000, University of Groningen, The Netherlands.
+Copyright (c) 2001-2014, The GROMACS development team at
+Uppsala University, Stockholm University and
+the Royal Institute of Technology, Sweden.
+check out http://www.gromacs.org for more information.
+
+GROMACS is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License
+as published by the Free Software Foundation; either version 2.1
+of the License, or (at your option) any later version.
+
+GROMACS:      gmx pdb2gmx, VERSION 5.0.1
+Executable:   /usr/local/gromacs/bin/gmx
+Library dir:  /usr/local/gromacs/share/gromacs/top
+Command line:
+  gmx pdb2gmx -f ../../../../pdbs/3ffc.pdb -o 3ffc.gro -water spce -ff oplsaa -missing
+
+Opening force field file /usr/local/gromacs/share/gromacs/top/oplsaa.ff/aminoacids.r2b
+WARNING: all CONECT records are ignored
+
+WARNING: there were 0 atoms with zero occupancy and 437 atoms with
+         occupancy unequal to one (out of 13519 atoms). Check your pdb file.
+
+Opening force field file /usr/local/gromacs/share/gromacs/top/oplsaa.ff/atomtypes.atp
+Atomtype 1Atomtype 2Atomtype 3Atomtype 4Atomtype 5Atomtype 6Atomtype 7Atomtype 8Atomtype 9Atomtype 10Atomtype 11Atomtype 12Atomtype 13Atomtype 14Atomtype 15Atomtype 16Atomtype 17Atomtype 18Atomtype 19Atomtype 20Atomtype 21Atomtype 22Atomtype 23Atomtype 24Atomtype 25Atomtype 26Atomtype 27Atomtype 28Atomtype 29Atomtype 30Atomtype 31Atomtype 32Atomtype 33Atomtype 34Atomtype 35Atomtype 36Atomtype 37Atomtype 38Atomtype 39Atomtype 40Atomtype 41Atomtype 42Atomtype 43Atomtype 44Atomtype 45Atomtype 46Atomtype 47Atomtype 48Atomtype 49Atomtype 50Atomtype 51Atomtype 52Atomtype 53Atomtype 54Atomtype 55Atomtype 56Atomtype 57Atomtype 58Atomtype 59Atomtype 60Atomtype 61Atomtype 62Atomtype 63Atomtype 64Atomtype 65Atomtype 66Atomtype 67Atomtype 68Atomtype 69Atomtype 70Atomtype 71Atomtype 72Atomtype 73Atomtype 74Atomtype 75Atomtype 76Atomtype 77Atomtype 78Atomtype 79Atomtype 80Atomtype 81Atomtype 82Atomtype 83Atomtype 84Atomtype 85Atomtype 86Atomtype 87Atomtype 88Atomtype 89Atomtype 90Atomtype 91Atomtype 92Atomtype 93Atomtype 94Atomtype 95Atomtype 96Atomtype 97Atomtype 98Atomtype 99Atomtype 100Atomtype 101Atomtype 102Atomtype 103Atomtype 104Atomtype 105Atomtype 106Atomtype 107Atomtype 108Atomtype 109Atomtype 110Atomtype 111Atomtype 112Atomtype 113Atomtype 114Atomtype 115Atomtype 116Atomtype 117Atomtype 118Atomtype 119Atomtype 120Atomtype 121Atomtype 122Atomtype 123Atomtype 124Atomtype 125Atomtype 126Atomtype 127Atomtype 128Atomtype 129Atomtype 130Atomtype 131Atomtype 132Atomtype 133Atomtype 134Atomtype 135Atomtype 136Atomtype 137Atomtype 138Atomtype 139Atomtype 140Atomtype 141Atomtype 142Atomtype 143Atomtype 144Atomtype 145Atomtype 146Atomtype 147Atomtype 148Atomtype 149Atomtype 150Atomtype 151Atomtype 152Atomtype 153Atomtype 154Atomtype 155Atomtype 156Atomtype 157Atomtype 158Atomtype 159Atomtype 160Atomtype 161Atomtype 162Atomtype 163Atomtype 164Atomtype 165Atomtype 166Atomtype 167Atomtype 168Atomtype 169Atomtype 170Atomtype 171Atomtype 172Atomtype 173Atomtype 174Atomtype 175Atomtype 176Atomtype 177Atomtype 178Atomtype 179Atomtype 180Atomtype 181Atomtype 182Atomtype 183Atomtype 184Atomtype 185Atomtype 186Atomtype 187Atomtype 188Atomtype 189Atomtype 190Atomtype 191Atomtype 192Atomtype 193Atomtype 194Atomtype 195Atomtype 196Atomtype 197Atomtype 198Atomtype 199Atomtype 200Atomtype 201Atomtype 202Atomtype 203Atomtype 204Atomtype 205Atomtype 206Atomtype 207Atomtype 208Atomtype 209Atomtype 210Atomtype 211Atomtype 212Atomtype 213Atomtype 214Atomtype 215Atomtype 216Atomtype 217Atomtype 218Atomtype 219Atomtype 220Atomtype 221Atomtype 222Atomtype 223Atomtype 224Atomtype 225Atomtype 226Atomtype 227Atomtype 228Atomtype 229Atomtype 230Atomtype 231Atomtype 232Atomtype 233Atomtype 234Atomtype 235Atomtype 236Atomtype 237Atomtype 238Atomtype 239Atomtype 240Atomtype 241Atomtype 242Atomtype 243Atomtype 244Atomtype 245Atomtype 246Atomtype 247Atomtype 248Atomtype 249Atomtype 250Atomtype 251Atomtype 252Atomtype 253Atomtype 254Atomtype 255Atomtype 256Atomtype 257Atomtype 258Atomtype 259Atomtype 260Atomtype 261Atomtype 262Atomtype 263Atomtype 264Atomtype 265Atomtype 266Atomtype 267Atomtype 268Atomtype 269Atomtype 270Atomtype 271Atomtype 272Atomtype 273Atomtype 274Atomtype 275Atomtype 276Atomtype 277Atomtype 278Atomtype 279Atomtype 280Atomtype 281Atomtype 282Atomtype 283Atomtype 284Atomtype 285Atomtype 286Atomtype 287Atomtype 288Atomtype 289Atomtype 290Atomtype 291Atomtype 292Atomtype 293Atomtype 294Atomtype 295Atomtype 296Atomtype 297Atomtype 298Atomtype 299Atomtype 300Atomtype 301Atomtype 302Atomtype 303Atomtype 304Atomtype 305Atomtype 306Atomtype 307Atomtype 308Atomtype 309Atomtype 310Atomtype 311Atomtype 312Atomtype 313Atomtype 314Atomtype 315Atomtype 316Atomtype 317Atomtype 318Atomtype 319Atomtype 320Atomtype 321Atomtype 322Atomtype 323Atomtype 324Atomtype 325Atomtype 326Atomtype 327Atomtype 328Atomtype 329Atomtype 330Atomtype 331Atomtype 332Atomtype 333Atomtype 334Atomtype 335Atomtype 336Atomtype 337Atomtype 338Atomtype 339Atomtype 340Atomtype 341Atomtype 342Atomtype 343Atomtype 344Atomtype 345Atomtype 346Atomtype 347Atomtype 348Atomtype 349Atomtype 350Atomtype 351Atomtype 352Atomtype 353Atomtype 354Atomtype 355Atomtype 356Atomtype 357Atomtype 358Atomtype 359Atomtype 360Atomtype 361Atomtype 362Atomtype 363Atomtype 364Atomtype 365Atomtype 366Atomtype 367Atomtype 368Atomtype 369Atomtype 370Atomtype 371Atomtype 372Atomtype 373Atomtype 374Atomtype 375Atomtype 376Atomtype 377Atomtype 378Atomtype 379Atomtype 380Atomtype 381Atomtype 382Atomtype 383Atomtype 384Atomtype 385Atomtype 386Atomtype 387Atomtype 388Atomtype 389Atomtype 390Atomtype 391Atomtype 392Atomtype 393Atomtype 394Atomtype 395Atomtype 396Atomtype 397Atomtype 398Atomtype 399Atomtype 400Atomtype 401Atomtype 402Atomtype 403Atomtype 404Atomtype 405Atomtype 406Atomtype 407Atomtype 408Atomtype 409Atomtype 410Atomtype 411Atomtype 412Atomtype 413Atomtype 414Atomtype 415Atomtype 416Atomtype 417Atomtype 418Atomtype 419Atomtype 420Atomtype 421Atomtype 422Atomtype 423Atomtype 424Atomtype 425Atomtype 426Atomtype 427Atomtype 428Atomtype 429Atomtype 430Atomtype 431Atomtype 432Atomtype 433Atomtype 434Atomtype 435Atomtype 436Atomtype 437Atomtype 438Atomtype 439Atomtype 440Atomtype 441Atomtype 442Atomtype 443Atomtype 444Atomtype 445Atomtype 446Atomtype 447Atomtype 448Atomtype 449Atomtype 450Atomtype 451Atomtype 452Atomtype 453Atomtype 454Atomtype 455Atomtype 456Atomtype 457Atomtype 458Atomtype 459Atomtype 460Atomtype 461Atomtype 462Atomtype 463Atomtype 464Atomtype 465Atomtype 466Atomtype 467Atomtype 468Atomtype 469Atomtype 470Atomtype 471Atomtype 472Atomtype 473Atomtype 474Atomtype 475Atomtype 476Atomtype 477Atomtype 478Atomtype 479Atomtype 480Atomtype 481Atomtype 482Atomtype 483Atomtype 484Atomtype 485Atomtype 486Atomtype 487Atomtype 488Atomtype 489Atomtype 490Atomtype 491Atomtype 492Atomtype 493Atomtype 494Atomtype 495Atomtype 496Atomtype 497Atomtype 498Atomtype 499Atomtype 500Atomtype 501Atomtype 502Atomtype 503Atomtype 504Atomtype 505Atomtype 506Atomtype 507Atomtype 508Atomtype 509Atomtype 510Atomtype 511Atomtype 512Atomtype 513Atomtype 514Atomtype 515Atomtype 516Atomtype 517Atomtype 518Atomtype 519Atomtype 520Atomtype 521Atomtype 522Atomtype 523Atomtype 524Atomtype 525Atomtype 526Atomtype 527Atomtype 528Atomtype 529Atomtype 530Atomtype 531Atomtype 532Atomtype 533Atomtype 534Atomtype 535Atomtype 536Atomtype 537Atomtype 538Atomtype 539Atomtype 540Atomtype 541Atomtype 542Atomtype 543Atomtype 544Atomtype 545Atomtype 546Atomtype 547Atomtype 548Atomtype 549Atomtype 550Atomtype 551Atomtype 552Atomtype 553Atomtype 554Atomtype 555Atomtype 556Atomtype 557Atomtype 558Atomtype 559Atomtype 560Atomtype 561Atomtype 562Atomtype 563Atomtype 564Atomtype 565Atomtype 566Atomtype 567Atomtype 568Atomtype 569Atomtype 570Atomtype 571Atomtype 572Atomtype 573Atomtype 574Atomtype 575Atomtype 576Atomtype 577Atomtype 578Atomtype 579Atomtype 580Atomtype 581Atomtype 582Atomtype 583Atomtype 584Atomtype 585Atomtype 586Atomtype 587Atomtype 588Atomtype 589Atomtype 590Atomtype 591Atomtype 592Atomtype 593Atomtype 594Atomtype 595Atomtype 596Atomtype 597Atomtype 598Atomtype 599Atomtype 600Atomtype 601Atomtype 602Atomtype 603Atomtype 604Atomtype 605Atomtype 606Atomtype 607Atomtype 608Atomtype 609Atomtype 610Atomtype 611Atomtype 612Atomtype 613Atomtype 614Atomtype 615Atomtype 616Atomtype 617Atomtype 618Atomtype 619Atomtype 620Atomtype 621Atomtype 622Atomtype 623Atomtype 624Atomtype 625Atomtype 626Atomtype 627Atomtype 628Atomtype 629Atomtype 630Atomtype 631Atomtype 632Atomtype 633Atomtype 634Atomtype 635Atomtype 636Atomtype 637Atomtype 638Atomtype 639Atomtype 640Atomtype 641Atomtype 642Atomtype 643Atomtype 644Atomtype 645Atomtype 646Atomtype 647Atomtype 648Atomtype 649Atomtype 650Atomtype 651Atomtype 652Atomtype 653Atomtype 654Atomtype 655Atomtype 656Atomtype 657Atomtype 658Atomtype 659Atomtype 660Atomtype 661Atomtype 662Atomtype 663Atomtype 664Atomtype 665Atomtype 666Atomtype 667Atomtype 668Atomtype 669Atomtype 670Atomtype 671Atomtype 672Atomtype 673Atomtype 674Atomtype 675Atomtype 676Atomtype 677Atomtype 678Atomtype 679Atomtype 680Atomtype 681Atomtype 682Atomtype 683Atomtype 684Atomtype 685Atomtype 686Atomtype 687Atomtype 688Atomtype 689Atomtype 690Atomtype 691Atomtype 692Atomtype 693Atomtype 694Atomtype 695Atomtype 696Atomtype 697Atomtype 698Atomtype 699Atomtype 700Atomtype 701Atomtype 702Atomtype 703Atomtype 704Atomtype 705Atomtype 706Atomtype 707Atomtype 708Atomtype 709Atomtype 710Atomtype 711Atomtype 712Atomtype 713Atomtype 714Atomtype 715Atomtype 716Atomtype 717Atomtype 718Atomtype 719Atomtype 720Atomtype 721Atomtype 722Atomtype 723Atomtype 724Atomtype 725Atomtype 726Atomtype 727Atomtype 728Atomtype 729Atomtype 730Atomtype 731Atomtype 732Atomtype 733Atomtype 734Atomtype 735Atomtype 736Atomtype 737Atomtype 738Atomtype 739Atomtype 740Atomtype 741Atomtype 742Atomtype 743Atomtype 744Atomtype 745Atomtype 746Atomtype 747Atomtype 748Atomtype 749Atomtype 750Atomtype 751Atomtype 752Atomtype 753Atomtype 754Atomtype 755Atomtype 756Atomtype 757Atomtype 758Atomtype 759Atomtype 760Atomtype 761Atomtype 762Atomtype 763Atomtype 764Atomtype 765Atomtype 766Atomtype 767Atomtype 768Atomtype 769Atomtype 770Atomtype 771Atomtype 772Atomtype 773Atomtype 774Atomtype 775Atomtype 776Atomtype 777Atomtype 778Atomtype 779Atomtype 780Atomtype 781Atomtype 782Atomtype 783Atomtype 784Atomtype 785Atomtype 786Atomtype 787Atomtype 788Atomtype 789Atomtype 790Atomtype 791Atomtype 792Atomtype 793Atomtype 794Atomtype 795Atomtype 796Atomtype 797Atomtype 798Atomtype 799Atomtype 800Atomtype 801Atomtype 802Atomtype 803Atomtype 804Atomtype 805Atomtype 806Atomtype 807Atomtype 808Atomtype 809Atomtype 810Atomtype 811Atomtype 812Atomtype 813Atomtype 814Atomtype 815
+Opening force field file /usr/local/gromacs/share/gromacs/top/oplsaa.ff/aminoacids.rtp
+Residue 1Residue 2Residue 3Residue 4Residue 5Residue 6Residue 7Residue 8Residue 9Residue 10Residue 11Residue 12Residue 13Residue 14Residue 15Residue 16Residue 17Residue 18Residue 19Residue 20Residue 21Residue 22Residue 23Residue 24Residue 25Residue 26Residue 27Residue 28Residue 29Residue 30Residue 31Residue 32Residue 33Residue 34Residue 35Residue 36Residue 37Residue 38Residue 39Residue 40Residue 41Residue 42Residue 43Residue 44Residue 45Residue 46Residue 47Residue 48Residue 49Residue 50Residue 51Residue 52Residue 53Residue 54
+Sorting it all out...
+Opening force field file /usr/local/gromacs/share/gromacs/top/oplsaa.ff/aminoacids.hdb
+Opening force field file /usr/local/gromacs/share/gromacs/top/oplsaa.ff/aminoacids.n.tdb
+Opening force field file /usr/local/gromacs/share/gromacs/top/oplsaa.ff/aminoacids.c.tdb
+Analysing hydrogen-bonding network for automated assignment of histidine
+ protonation. 467 donors and 444 acceptors were found.
+There are 656 hydrogen bonds
+Will use HISD for residue 3
+Will use HISD for residue 93
+Will use HISE for residue 113
+Will use HISE for residue 188
+Will use HISE for residue 191
+Will use HISE for residue 192
+Will use HISE for residue 197
+Will use HISE for residue 260
+Will use HISE for residue 263
+8 out of 8 lines of specbond.dat converted successfully
+Special Atom Distance matrix:
+                    HIS3    MET5   MET12   HIS93   MET98  CYS101  HIS113
+                   NE220    SD33    SD95  NE2786   SD823   SG846  NE2936
+    MET5    SD33   1.159
+   MET12    SD95   3.400   2.537
+   HIS93  NE2786   4.010   3.119   1.034
+   MET98   SD823   1.958   1.381   1.757   2.129
+  CYS101   SG846   1.163   0.580   2.790   3.210   1.355
+  HIS113  NE2936   1.483   1.214   2.589   2.879   0.861   0.856
+  CYS164  SG1347   1.314   0.503   2.641   3.064   1.301   0.208   0.926
+  HIS188 NE21553   2.979   3.498   3.857   4.621   3.238   3.717   3.441
+  HIS191 NE21577   4.143   4.670   4.653   5.246   4.109   4.797   4.333
+  HIS192 NE21587   3.631   4.012   3.875   4.561   3.493   4.217   3.823
+  HIS197 NE21626   5.271   5.681   5.208   5.602   4.845   5.751   5.146
+  CYS203  SG1672   2.738   3.347   3.854   4.473   2.927   3.429   3.007
+  CYS259  SG2127   2.725   3.362   3.923   4.508   2.924   3.411   2.962
+  HIS260 NE22137   2.965   3.710   4.426   4.906   3.250   3.653   3.143
+  HIS263 NE22163   1.357   2.103   3.406   4.093   2.165   2.204   2.034
+                  CYS164  HIS188  HIS191  HIS192  HIS197  CYS203  CYS259
+                  SG1347 NE21553 NE21577 NE21587 NE21626  SG1672  SG2127
+  HIS188 NE21553   3.783
+  HIS191 NE21577   4.872   1.405
+  HIS192 NE21587   4.264   0.834   0.914
+  HIS197 NE21626   5.814   2.743   1.414   2.045
+  CYS203  SG1672   3.524   0.887   1.428   1.217   2.594
+  CYS259  SG2127   3.513   1.086   1.506   1.385   2.612   0.204
+  HIS260 NE22137   3.783   1.755   1.792   1.977   2.682   0.919   0.724
+  HIS263 NE22163   2.317   1.671   2.792   2.328   3.972   1.401   1.413
+                  HIS260
+                 NE22137
+  HIS263 NE22163   1.796
+Linking CYS-101 SG-846 and CYS-164 SG-1347...
+Linking CYS-203 SG-1672 and CYS-259 SG-2127...
+Making bonds...
+Number of bonds was 4420, now 4420
+Generating angles, dihedrals and pairs...
+Before cleaning: 11521 pairs
+Before cleaning: 11691 dihedrals
+Keeping all generated dihedrals
+Making cmap torsions...
+There are 11691 dihedrals,  967 impropers, 7917 angles
+          11434 pairs,     4420 bonds and     0 virtual sites
+Total mass 31957.073 a.m.u.
+Total charge -12.000 e
+Writing topology
+Analysing hydrogen-bonding network for automated assignment of histidine
+ protonation. 165 donors and 159 acceptors were found.
+There are 256 hydrogen bonds
+Will use HISE for residue 13
+Will use HISE for residue 31
+Will use HISE for residue 51
+Will use HISH for residue 84
+8 out of 8 lines of specbond.dat converted successfully
+Special Atom Distance matrix:
+                    MET0   HIS13   CYS25   HIS31   HIS51   CYS80   HIS84
+                     SD7  NE2133   SG222  NE2272  NE2434   SG685  NE2721
+   HIS13  NE2133   3.549
+   CYS25   SG222   2.112   1.802
+   HIS31  NE2272   1.018   3.212   1.910
+   HIS51  NE2434   2.653   2.081   1.187   1.986
+   CYS80   SG685   2.175   1.926   0.206   1.993   1.192
+   HIS84  NE2721   1.136   2.980   1.342   0.854   1.616   1.354
+   MET99   SD846   2.526   1.978   1.420   2.797   2.569   1.487   2.348
+                
+                
+Linking CYS-25 SG-222 and CYS-80 SG-685...
+Making bonds...
+Number of bonds was 1665, now 1665
+Generating angles, dihedrals and pairs...
+Before cleaning: 4374 pairs
+Before cleaning: 4429 dihedrals
+Keeping all generated dihedrals
+Making cmap torsions...
+There are 4429 dihedrals,  347 impropers, 3000 angles
+          4335 pairs,     1665 bonds and     0 virtual sites
+Total mass 11859.380 a.m.u.
+Total charge -1.000 e
+Writing topology
+8 out of 8 lines of specbond.dat converted successfully
+Making bonds...
+Number of bonds was 155, now 155
+Generating angles, dihedrals and pairs...
+Before cleaning: 394 pairs
+Before cleaning: 394 dihedrals
+Keeping all generated dihedrals
+Making cmap torsions...
+There are  394 dihedrals,   37 impropers,  274 angles
+           388 pairs,      155 bonds and     0 virtual sites
+Total mass 1054.261 a.m.u.
+Total charge 2.000 e
+Writing topology
+8 out of 8 lines of specbond.dat converted successfully
+Special Atom Distance matrix:
+                   MET11   CYS23   MET50   MET97  CYS100  MET102  CYS145
+                    SD67   SG163   SD342   SD679   SG709   SD721  SG1055
+   CYS23   SG163   1.346
+   MET50   SD342   1.876   1.329
+   MET97   SD679   1.189   1.282   0.942
+  CYS100   SG709   1.402   0.203   1.167   1.235
+  MET102   SD721   2.210   0.867   1.664   1.950   0.872
+  CYS145  SG1055   3.373   4.378   3.810   3.188   4.350   5.133
+  CYS170  SG1254   2.093   2.904   2.235   1.775   2.831   3.639   1.720
+  MET174  SD1284   2.885   3.768   3.142   2.861   3.676   4.510   2.078
+  MET177  SD1309   3.299   4.130   3.538   3.368   4.026   4.845   2.710
+  CYS195  SG1448   3.466   4.496   3.932   3.321   4.465   5.260   0.205
+                  CYS170  MET174  MET177
+                  SG1254  SD1284  SD1309
+  MET174  SD1284   1.278
+  MET177  SD1309   1.939   0.705
+  CYS195  SG1448   1.792   2.017   2.620
+Linking CYS-23 SG-163 and CYS-100 SG-709...
+Linking CYS-145 SG-1055 and CYS-195 SG-1448...
+Making bonds...
+Number of bonds was 3100, now 3100
+Generating angles, dihedrals and pairs...
+Before cleaning: 8111 pairs
+Before cleaning: 8161 dihedrals
+Keeping all generated dihedrals
+Making cmap torsions...
+There are 8161 dihedrals,  655 impropers, 5554 angles
+          8033 pairs,     3100 bonds and     0 virtual sites
+Total mass 22523.907 a.m.u.
+Total charge -8.000 e
+Writing topology
+Analysing hydrogen-bonding network for automated assignment of histidine
+ protonation. 383 donors and 371 acceptors were found.
+There are 607 hydrogen bonds
+Will use HISE for residue 29
+Will use HISE for residue 153
+Will use HISE for residue 170
+Will use HISE for residue 183
+Will use HISE for residue 223
+8 out of 8 lines of specbond.dat converted successfully
+Special Atom Distance matrix:
+                    MET2   CYS23   HIS29  CYS104  HIS153  CYS161  HIS170
+                     SD7   SG181  NE2224   SG725 NE21099  SG1157 NE21229
+   CYS23   SG181   1.247
+   HIS29  NE2224   0.804   1.099
+  CYS104   SG725   1.284   0.205   1.084
+  HIS153 NE21099   5.225   5.199   5.286   5.021
+  CYS161  SG1157   3.596   3.316   3.803   3.183   2.494
+  HIS170 NE21229   2.765   1.870   2.758   1.768   4.155   1.982
+  HIS183 NE21341   2.774   3.127   3.106   3.002   2.716   1.759   2.824
+  CYS187  SG1364   3.463   3.289   3.476   3.109   1.923   1.281   2.361
+  HIS223 NE21660   3.759   3.779   4.183   3.687   2.900   1.179   2.774
+  CYS226  SG1688   3.438   3.213   3.672   3.083   2.541   0.203   1.979
+                  HIS183  CYS187  HIS223
+                 NE21341  SG1364 NE21660
+  CYS187  SG1364   1.565
+  HIS223 NE21660   1.679   2.138
+  CYS226  SG1688   1.578   1.267   1.075
+Linking CYS-23 SG-181 and CYS-104 SG-725...
+Linking CYS-161 SG-1157 and CYS-226 SG-1688...
+Making bonds...
+Number of bonds was 3913, now 3913
+Generating angles, dihedrals and pairs...
+Before cleaning: 10277 pairs
+Before cleaning: 10417 dihedrals
+Keeping all generated dihedrals
+Making cmap torsions...
+There are 10417 dihedrals,  812 impropers, 7056 angles
+          10196 pairs,     3913 bonds and     0 virtual sites
+Total mass 27780.260 a.m.u.
+Total charge -3.000 e
+Writing topology
+Analysing hydrogen-bonding network for automated assignment of histidine
+ protonation. 460 donors and 438 acceptors were found.
+There are 655 hydrogen bonds
+Will use HISD for residue 3
+Will use HISD for residue 93
+Will use HISE for residue 113
+Will use HISE for residue 188
+Will use HISE for residue 191
+Will use HISE for residue 192
+Will use HISE for residue 197
+Will use HISE for residue 260
+Will use HISE for residue 263
+8 out of 8 lines of specbond.dat converted successfully
+Special Atom Distance matrix:
+                    HIS3    MET5   MET12   HIS93   MET98  CYS101  HIS113
+                   NE220    SD33    SD95  NE2766   SD803   SG826  NE2916
+    MET5    SD33   1.169
+   MET12    SD95   3.378   2.521
+   HIS93  NE2766   4.003   3.103   1.057
+   MET98   SD803   1.969   1.380   1.714   2.106
+  CYS101   SG826   1.157   0.566   2.779   3.204   1.371
+  HIS113  NE2916   1.491   1.222   2.596   2.886   0.908   0.862
+  CYS164  SG1327   1.305   0.480   2.632   3.059   1.313   0.206   0.934
+  HIS188 NE21533   2.990   3.529   3.840   4.636   3.243   3.726   3.466
+  HIS191 NE21557   4.119   4.675   4.649   5.275   4.102   4.778   4.328
+  HIS192 NE21567   3.604   4.011   3.853   4.571   3.468   4.192   3.813
+  HIS197 NE21606   4.963   5.361   4.857   5.278   4.489   5.411   4.808
+  CYS203  SG1652   2.708   3.344   3.845   4.501   2.933   3.409   3.012
+  CYS259  SG2107   2.707   3.370   3.918   4.538   2.939   3.402   2.974
+  HIS260 NE22117   2.435   3.268   4.254   4.775   2.954   3.165   2.719
+  HIS263 NE22143   1.342   2.112   3.390   4.106   2.181   2.197   2.053
+                  CYS164  HIS188  HIS191  HIS192  HIS197  CYS203  CYS259
+                  SG1327 NE21533 NE21557 NE21567 NE21606  SG1652  SG2107
+  HIS188 NE21533   3.788
+  HIS191 NE21557   4.853   1.387
+  HIS192 NE21567   4.239   0.804   0.923
+  HIS197 NE21606   5.469   2.512   1.300   1.820
+  CYS203  SG1652   3.503   0.876   1.428   1.203   2.371
+  CYS259  SG2107   3.503   1.076   1.486   1.358   2.372   0.204
+  HIS260 NE22117   3.308   1.891   2.238   2.254   2.993   1.073   0.897
+  HIS263 NE22143   2.306   1.690   2.784   2.313   3.704   1.386   1.413
+                  HIS260
+                 NE22117
+  HIS263 NE22143   1.406
+Linking CYS-101 SG-826 and CYS-164 SG-1327...
+Linking CYS-203 SG-1652 and CYS-259 SG-2107...
+Making bonds...
+Number of bonds was 4409, now 4409
+Generating angles, dihedrals and pairs...
+Before cleaning: 11493 pairs
+Before cleaning: 11663 dihedrals
+Keeping all generated dihedrals
+Making cmap torsions...
+There are 11663 dihedrals,  965 impropers, 7898 angles
+          11406 pairs,     4409 bonds and     0 virtual sites
+Total mass 31869.995 a.m.u.
+Total charge -12.000 e
+Writing topology
+Analysing hydrogen-bonding network for automated assignment of histidine
+ protonation. 161 donors and 158 acceptors were found.
+There are 244 hydrogen bonds
+Will use HISE for residue 13
+Will use HISE for residue 31
+Will use HISE for residue 51
+Will use HISH for residue 84
+8 out of 8 lines of specbond.dat converted successfully
+Special Atom Distance matrix:
+                    MET0   HIS13   CYS25   HIS31   HIS51   CYS80   HIS84
+                     SD7  NE2122   SG211  NE2261  NE2423   SG674  NE2710
+   HIS13  NE2122   4.106
+   CYS25   SG211   2.559   1.777
+   HIS31  NE2261   1.043   3.221   1.914
+   HIS51  NE2423   2.593   2.044   1.200   2.023
+   CYS80   SG674   2.552   1.907   0.204   1.984   1.205
+   HIS84  NE2710   1.218   2.962   1.345   0.826   1.659   1.347
+   MET99   SD835   3.507   1.976   1.464   2.834   2.619   1.535   2.380
+                
+                
+Linking CYS-25 SG-211 and CYS-80 SG-674...
+Making bonds...
+Number of bonds was 1665, now 1665
+Generating angles, dihedrals and pairs...
+Before cleaning: 4374 pairs
+Before cleaning: 4429 dihedrals
+Keeping all generated dihedrals
+Making cmap torsions...
+There are 4429 dihedrals,  347 impropers, 3000 angles
+          4335 pairs,     1665 bonds and     0 virtual sites
+Total mass 11859.380 a.m.u.
+Total charge -1.000 e
+Writing topology
+8 out of 8 lines of specbond.dat converted successfully
+Making bonds...
+Number of bonds was 155, now 155
+Generating angles, dihedrals and pairs...
+Before cleaning: 394 pairs
+Before cleaning: 394 dihedrals
+Keeping all generated dihedrals
+Making cmap torsions...
+There are  394 dihedrals,   37 impropers,  274 angles
+           388 pairs,      155 bonds and     0 virtual sites
+Total mass 1054.261 a.m.u.
+Total charge 2.000 e
+Writing topology
+8 out of 8 lines of specbond.dat converted successfully
+Special Atom Distance matrix:
+                   MET11   CYS23   MET50   MET97  CYS100  MET102  CYS145
+                    SD67   SG163   SD351   SD699   SG729   SD741  SG1075
+   CYS23   SG163   1.278
+   MET50   SD351   1.815   1.356
+   MET97   SD699   1.151   1.293   0.919
+  CYS100   SG729   1.321   0.204   1.190   1.232
+  MET102   SD741   2.120   0.848   1.697   1.936   0.873
+  CYS145  SG1075   3.478   4.431   3.787   3.222   4.382   5.154
+  CYS170  SG1274   2.201   3.021   2.321   1.878   2.937   3.744   1.612
+  MET174  SD1304   2.887   3.758   3.123   2.850   3.656   4.500   2.053
+  MET177  SD1329   3.298   4.143   3.588   3.398   4.034   4.874   2.703
+  CYS195  SG1468   3.567   4.548   3.918   3.356   4.498   5.284   0.206
+                  CYS170  MET174  MET177
+                  SG1274  SD1304  SD1329
+  MET174  SD1304   1.233
+  MET177  SD1329   1.960   0.751
+  CYS195  SG1468   1.692   2.006   2.621
+Linking CYS-23 SG-163 and CYS-100 SG-729...
+Linking CYS-145 SG-1075 and CYS-195 SG-1468...
+Making bonds...
+Number of bonds was 3100, now 3100
+Generating angles, dihedrals and pairs...
+Before cleaning: 8111 pairs
+Before cleaning: 8161 dihedrals
+Keeping all generated dihedrals
+Making cmap torsions...
+There are 8161 dihedrals,  655 impropers, 5554 angles
+          8033 pairs,     3100 bonds and     0 virtual sites
+Total mass 22523.907 a.m.u.
+Total charge -8.000 e
+Writing topology
+Analysing hydrogen-bonding network for automated assignment of histidine
+ protonation. 384 donors and 374 acceptors were found.
+There are 614 hydrogen bonds
+Will use HISE for residue 29
+Will use HISE for residue 153
+Will use HISE for residue 170
+Will use HISE for residue 183
+Will use HISE for residue 223
+8 out of 8 lines of specbond.dat converted successfully
+Special Atom Distance matrix:
+                    MET2   CYS23   HIS29  CYS104  HIS153  CYS161  HIS170
+                     SD7   SG181  NE2224   SG734 NE21108  SG1166 NE21238
+   CYS23   SG181   0.995
+   HIS29  NE2224   0.943   1.077
+  CYS104   SG734   1.062   0.202   1.084
+  HIS153 NE21108   5.153   5.213   5.301   5.039
+  CYS161  SG1166   3.341   3.294   3.772   3.158   2.514
+  HIS170 NE21238   2.455   1.887   2.763   1.774   4.174   1.959
+  HIS183 NE21350   2.761   3.157   3.132   3.036   2.640   1.726   2.835
+  CYS187  SG1373   3.246   3.182   3.381   3.004   2.048   1.253   2.271
+  HIS223 NE21669   3.441   3.689   4.074   3.599   2.940   1.185   2.716
+  CYS226  SG1697   3.183   3.181   3.637   3.050   2.585   0.202   1.941
+                  HIS183  CYS187  HIS223
+                 NE21350  SG1373 NE21669
+  CYS187  SG1373   1.487
+  HIS223 NE21669   1.624   2.115
+  CYS226  SG1697   1.566   1.255   1.067
+Linking CYS-23 SG-181 and CYS-104 SG-734...
+Linking CYS-161 SG-1166 and CYS-226 SG-1697...
+Making bonds...
+Number of bonds was 3913, now 3913
+Generating angles, dihedrals and pairs...
+Before cleaning: 10277 pairs
+Before cleaning: 10417 dihedrals
+Keeping all generated dihedrals
+Making cmap torsions...
+There are 10417 dihedrals,  812 impropers, 7056 angles
+          10196 pairs,     3913 bonds and     0 virtual sites
+Total mass 27780.260 a.m.u.
+Total charge -3.000 e
+Writing topology
+8 out of 8 lines of specbond.dat converted successfully
+
+-------------------------------------------------------
+Program gmx, VERSION 5.0.1
+Source code file: /home/mikhail/Development/Programs/gromacs-5.0.1/src/gromacs/gmxpreprocess/resall.c, line: 647
+
+Fatal error:
+Residue 'CD' not found in residue topology database
+For more information and tips for troubleshooting, please check the GROMACS
+website at http://www.gromacs.org/Documentation/Errors
+-------------------------------------------------------
+

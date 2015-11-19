@@ -1,4 +1,4 @@
-GROMACS:    gmx solvate, VERSION 5.0.1
+GROMACS:    gmx enemat, VERSION 5.0.1
 
 GROMACS is written by:
 Emile Apol         Rossen Apostolov   Herman J.C. Berendsen Par Bjelkmar       
@@ -22,52 +22,22 @@ under the terms of the GNU Lesser General Public License
 as published by the Free Software Foundation; either version 2.1
 of the License, or (at your option) any later version.
 
-GROMACS:      gmx solvate, VERSION 5.0.1
+GROMACS:      gmx enemat, VERSION 5.0.1
 Executable:   /usr/local/gromacs/bin/gmx
 Library dir:  /usr/local/gromacs/share/gromacs/top
 Command line:
-  gmx solvate -cp 2bnr.gro -cs spc216.gro -o 2bnr.gro -p topol.top
+  gmx enemat -groups groups2bnr.dat -nlevels 1500 -emat 2bnr.xpm -f em2bnr.edr
 
-Reading solute configuration
-HLA CLASS I HISTOCOMPATIBILITY ANTIGEN; BETA-2-MICROGLOBULIN; SYNTHETIC PEPTIDE; T-CELL RECEPTOR ALPHA CHAIN V REGION; T-CELL RECEPTOR BETA CHAIN C REGION
-Containing 14465 atoms in 1349 residues
-Initialising inter-atomic distances...
-Reading solvent configuration
-"216H2O,WATJP01,SPC216,SPC-MODEL,300K,BOX(M)=1.86206NM,WFVG,MAR. 1984"
-solvent configuration contains 648 atoms in 216 residues
-
-Initialising inter-atomic distances...
-Will generate new solvent configuration of 9x9x9 boxes
-Generating configuration
-Sorting configuration
-Found 1 molecule type:
-    SOL (   3 atoms): 157464 residues
-Calculating Overlap...
-box_margin = 0.25992
-Removed 43836 atoms that were outside the box
-
-NOTE: This file uses the deprecated 'group' cutoff_scheme. This will be
-removed in a future release when 'verlet' supports all interaction forms.
-
-Successfully made neighbourlist
-nri = 505445, nrj = 5410512
-Checking Protein-Solvent overlap: tested 63871 pairs, removed 13674 atoms.
-Checking Solvent-Solvent overlap: tested 334292 pairs, removed 18159 atoms.
-Added 132241 molecules
-Generated solvent containing 396723 atoms in 132241 residues
-Writing generated configuration to 2bnr.gro
-
-Back Off! I just backed up 2bnr.gro to ./#2bnr.gro.2#
-HLA CLASS I HISTOCOMPATIBILITY ANTIGEN; BETA-2-MICROGLOBULIN; SYNTHETIC PEPTIDE; T-CELL RECEPTOR ALPHA CHAIN V REGION; T-CELL RECEPTOR BETA CHAIN C REGION
-
-Output configuration contains 411188 atoms in 133590 residues
-Volume                 :     4110.47 (nm^3)
-Density                :      1006.7 (g/l)
-Number of SOL molecules:  132761   
-
-Processing topology
-
-Back Off! I just backed up topol.top to ./#topol.top.1#
-
-gcq#347: "If There Is No Guitar In The House, You Know It's Owner Can Not Be Trusted" (Gogol Bordello)
+Opened em2bnr.edr as single precision energy file
+Will read groupnames from inputfile
+Read 38 groups
+group 0group 1group 2group 3group 4group 5group 6group 7group 8group 9group 10group 11group 12group 13group 14group 15group 16group 17group 18group 19group 20group 21group 22group 23group 24group 25group 26group 27group 28group 29group 30group 31group 32group 33group 34group 35group 36group 37
+Will select half-matrix of energies with 1482 elements
+Reading energy frame      0 time    0.000         Read frame: 0, Time: 0.000Reading energy frame      1 time    1.000         Read frame: 1, Time: 1.000Last energy frame read 1 time    1.000         
+Will build energy half-matrix of 38 groups, 1482 elements, over 2 frames
+Matrix of Coul-SR energy ranges from -388.031311 to 622.556396
+  2%  5%  7% 10% 13% 15% 18% 21% 23% 26% 28% 31% 34% 36% 39% 42% 44% 47% 50% 52% 55% 57% 60% 63% 65% 68% 71% 73% 76% 78% 81% 84% 86% 89% 92% 94% 97%100%Matrix of LJ-SR energy ranges from -16.640476 to 167.930817
+  2%  5%  7% 10% 13% 15% 18% 21% 23% 26% 28% 31% 34% 36% 39% 42% 44% 47% 50% 52% 55% 57% 60% 63% 65% 68% 71% 73% 76% 78% 81% 84% 86% 89% 92% 94% 97%100%Matrix of total energy ranges from -386.697723 to 621.925049
+  2%  5%  7% 10% 13% 15% 18% 21% 23% 26% 28% 31% 34% 36% 39% 42% 44% 47% 50% 52% 55% 57% 60% 63% 65% 68% 71% 73% 76% 78% 81% 84% 86% 89% 92% 94% 97%100%
+gcq#5: "We Can Dance Like Iggy Pop" (Red Hot Chili Peppers)
 

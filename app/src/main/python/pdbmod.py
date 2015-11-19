@@ -20,10 +20,13 @@ class Interaction:
 		self.__cdr3_b = []
 		self.__d_matrix_a = []
 		self.__d_matrix_b = []
+		self.__e_matrix_a = []
+		self.__e_matrix_b = []
 		self.__info = ''
 		self.getCDR3Indices()
 		self.definePeptideChain()
 		self.calcDistMatrices()
+		self.verbose = False
 		
 	def __str__(self):
 		s = '\nprotein name: ' + self.__name + \
@@ -32,6 +35,9 @@ class Interaction:
 			'\ncdr3 beta: ' + self.__cdr3_b_seq + '\n'
 		return s
 		
+	def printerr(self, err):
+		if self.verbose:
+			print err
 		
 	def isEmpty(self):
 		if not self.__cdr3_a:
@@ -65,7 +71,7 @@ class Interaction:
 		if not res:	
 			line = '\n' + self.__cdr3_a_seq + ' not found in '+str(self.__struct.get_id()) + '!\n'
 			self.__info = self.__info + line
-			print 'getCDR3Indices(): ' + line
+			self.printerr('\ngetCDR3Indices(): ' + line)
 		
 		res = []
 		for pp in bltpep: 
@@ -83,8 +89,8 @@ class Interaction:
 			
 		if not res:
 			line = '\n'+self.__cdr3_b_seq+' not found in '+str(self.__struct.get_id())+'!\n'
+			self.printerr('\ngetCDR3Indices(): ' + line)
 			self.__info = self.__info + line
-			print 'getCDR3Indices(): ' + line
 				
 	def definePeptideChain(self):
 		l = 'INFINITY'
@@ -96,7 +102,7 @@ class Interaction:
 		pp = list(self.__struct[0][i])
 		if (len(pp) > 20):
 			line = self.__name + '\t: TOO MANY AMINO ACIDS (' + str(len(pp)) + ') TO BE A PEPTIDE :(\n'
-			print 'definePeptideChain(): ' + line
+			self.printerr('\ndefinePeptideChain(): ' + line)
 			self.__info = self.__info + line
 		else:
 			rnum = 1
@@ -117,10 +123,10 @@ class Interaction:
 	def calcDistMatrices(self):
 		mat = []
 		if not self.__peptide:
-			print 'calcDistMatrices(): PEPTIDE IS EMPTY'
+			self.printerr('\ncalcDistMatrices(): PEPTIDE IS EMPTY\n')
 			return
 		if not self.__cdr3_a:
-			print 'calcDistMatrices(): ALPHA CDR3 IS EMPTY'
+			self.printerr('\ncalcDistMatrices(): ALPHA CDR3 IS EMPTY\n')
 		else:
 			for res1 in list(self.__peptide):
 				mat.append([])	
@@ -129,17 +135,30 @@ class Interaction:
 			self.__d_matrix_a = mat
 		mat = []
 		if not self.__cdr3_b:
-			print 'calcDistMatrices(): BETA CDR3 IS EMPTY'
+			self.printerr('\ncalcDistMatrices(): BETA CDR3 IS EMPTY\n')
 		else:
 			for res1 in list(self.__peptide):
 				mat.append([])		
 				for res2 in self.__cdr3_b:
 					mat[len(mat)-1].append(residuesMinDist(res1, res2))
 			self.__d_matrix_b = mat
+			
+	def getNrgMatrices(self, path):
+		# check
+		a, b, annot = extractXPM(path)
+		slist = [self.__name, self.getPeptideSeq(), self.getCDR3AlphaSeq(), self.getCDR3BetaSeq()]
+		if annot != slist:
+			line = slist + '\n' + annot +  '\nMISMATCH\n'
+			self.printerr('\nextractXPM(): \n' + line)
+			self.__info = self.__info + line
+			return
+
+		self.__e_matrix_a = a
+		self.__e_matrix_b = b
 		
 	def getPeptideSeq(self):
 		if not self.__peptide:
-			print 'getPeptideSeq(): PEPTIDE (' + self.__name +') IS EMPTY'
+			self.printerr('\ngetPeptideSeq(): PEPTIDE (' + self.__name +') IS EMPTY\n')
 			return	
 		s = ''
 		for r in list(self.__peptide):
@@ -151,8 +170,9 @@ class Interaction:
 		
 	def getCDR3BetaSeq(self):
 		return self.__cdr3_b_seq
-		
-	def matToStr(self, pep, cdr3, mat):
+	
+	@staticmethod	
+	def matToStr(pep, cdr3, mat):
 		s = '/'
 		for r in cdr3:
 			s = s + '\t' + Polypeptide.three_to_one(r.get_resname())
@@ -166,16 +186,30 @@ class Interaction:
 		
 	def a_matToStr(self):
 		if not self.__d_matrix_a:
-			print 'a_matToStr(): ALPHA MATRIX IS EMPTY'
+			self.printerr('\na_matToStr(): ALPHA MATRIX IS EMPTY\n')
 			return
-		s = self.matToStr(self.__peptide, self.__cdr3_a, self.__d_matrix_a)
+		s = Interaction.matToStr(self.__peptide, self.__cdr3_a, self.__d_matrix_a)
 		return s
 		
 	def b_matToStr(self):
 		if not self.__d_matrix_b:
-			print 'b_matToStr(): BETA MATRIX IS EMPTY'
+			self.printerr('\nb_matToStr(): BETA MATRIX IS EMPTY\n')
 			return
-		s = self.matToStr(self.__peptide, self.__cdr3_b, self.__d_matrix_b)
+		s = Interaction.matToStr(self.__peptide, self.__cdr3_b, self.__d_matrix_b)
+		return s
+		
+	def a_e_matToStr(self):
+		if not self.__e_matrix_a:
+			self.printerr('\na_matToStr(): ALPHA MATRIX IS EMPTY\n')
+			return
+		s = Interaction.matToStr(self.__peptide, self.__cdr3_a, self.__e_matrix_a)
+		return s
+		
+	def b_e_matToStr(self):
+		if not self.__e_matrix_b:
+			self.printerr('\nb_matToStr(): BETA MATRIX IS EMPTY\n')
+			return
+		s = Interaction.matToStr(self.__peptide, self.__cdr3_b, self.__e_matrix_b)
 		return s
 	
 	def writeInFile_CDR3_Pept(self, f):
@@ -195,6 +229,20 @@ class Interaction:
 			f.write('\n')
 			f2.write('\n')
 			f2.close()
+			
+	def writeInFile_CDR3_Pept_Nrg(self):
+		if self.isEmpty():
+			self.printerr(self.__info)
+			return
+			
+		for i in range(0, 2):
+			f = open('generated/pdbcdr3/energy_mats/'+self.__name+'('+str(i)+').txt', 'w')
+			if (i == 0):
+				f.write(self.a_e_matToStr())
+			if (i == 1):
+				f.write(self.b_e_matToStr())
+			f.write('\n')
+			f.close()
 			
 	def indicesToStr(self):
 		s = ''
@@ -266,6 +314,63 @@ def parseDataFile(path):
 				d[pname].append(s[17])
 	f.close()
 	return d
+	
+def extractXPM(path):
+	xpm = open(path, 'r')
+	lines = list(xpm)
+	xpm.close()
+	ind = 0
+	for line in lines:
+		pline = line.split()
+		if pline[0] == 'static':
+		    break
+		ind += 1
+
+	ind += 1 
+	print lines[ind].split('"')[0]
+	snum = int(lines[ind].split('"')[1].split()[3])
+	ind += 1 
+
+	alphabet = {}
+	while(True):
+		if lines[ind][0] == '/':
+		    break
+		pline = lines[ind].split('"')
+		code = pline[1].split()[0]
+		alphabet.update([(code, pline[3])])
+		ind += 1
+	ind += 2
+
+	mat = []
+	while(True):
+		if lines[ind][0] == '/':
+		    break
+		line = lines[ind].split('"')[1]
+		l = []
+		ins = ''
+		for i in range(0, len(line)):
+		    ins += line[i]
+		    if (i+1)%snum == 0:
+			l.append(float(alphabet[ins]))
+			ins = ''
+		mat.append(l)
+		ind += 1
+		
+	lline = lines[ind]
+	annot = lline.replace('/', ' ').replace('*', ' ').split()
+	mat = list(reversed(mat))
+		
+	a_mat = []
+	a_bs = [len(annot[1]), len(annot[1]) + len(annot[2])]
+	for line in mat[:len(annot[1])]:
+		a_mat.append(line[a_bs[0]:a_bs[1]])
+		
+	b_mat = []
+	b_bs = [a_bs[1], a_bs[1] + len(annot[3])]
+	for line in mat[:len(annot[1])]:
+		b_mat.append(line[b_bs[0]:b_bs[1]])
+		
+	return a_mat, b_mat, annot
 
 def writeInFile_CDR3_CDR3(parser, datadist, item, f):
 	structure = parser.get_structure(item, '../pdbs/'+item+'.pdb')

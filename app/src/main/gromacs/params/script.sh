@@ -1,10 +1,10 @@
 #!/bin/bash
 
 function test {
-    "$@"
+    "$@" 2>$logpath
     local status=$?
     if [ $status -ne 0 ]; then
-        echo "error with $@" > $logpath
+        echo "error with $@"
         exit $status
     fi
     return $status
@@ -15,8 +15,9 @@ name=$1
 logpath=fails/$name.log
 bigpath=src/main/gromacs
 
+
 cd $bigpath
-rm -f *
+rm -f * 
 
 test gmx pdb2gmx -f ../../../../pdbs/$name.pdb -o $name.gro -water spce -ff oplsaa -missing
 test gmx editconf -f $name.gro -o $name.gro -c -d 1.0 -bt cubic
@@ -28,12 +29,13 @@ test gmx solvate -cp $name.gro -cs spc216.gro -o $name.gro -p topol.top
 #read
 cd -
 
-python src/main/python/enemat.py $name
+seqs=$(python src/main/python/enemat.py $name)
 
 cd $bigpath
 test gmx grompp -f params/minim.mdp -c $name.gro -p topol.top -n index.ndx -o em$name.tpr
 test gmx mdrun -v -deffnm em$name
-test gmx enemat -groups groups$name.dat -nlevels 200 -emat $name.xpm -f em$name.edr
+test gmx enemat -groups groups$name.dat -nlevels 2000 -emat $name.xpm -f em$name.edr
+echo $seqs >> total*.xpm
 
 mv *.xpm ../../../generated/pdbcdr3/energy_mats
 mv em$name.edr groups$name.dat trash

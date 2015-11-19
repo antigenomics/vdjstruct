@@ -141,8 +141,15 @@ structure = PDBParser().get_structure(item, '../pdbs/'+item+'.pdb')
 protein = pdbmod.Interaction(structure, l[0], l[1], l[2])
 
 st, atlist, aas = parseGro(indpath + item + '.gro')
-p, a, b = findSeqsInGro(st, protein.getPeptideSeq(), protein.getCDR3AlphaSeq(), protein.getCDR3BetaSeq())
+
+pseq = protein.getPeptideSeq()
+aseq = protein.getCDR3AlphaSeq()
+bseq = protein.getCDR3BetaSeq()
+p, a, b = findSeqsInGro(st, pseq, aseq, bseq)
 names = appendSeqs(indpath + 'index.ndx', [p, a, b], atlist, aas)
 appendToMDP(path + 'minim.mdp', names)
 appendToGroupsDat(indpath + 'groups' + item + '.dat', names)
+
+print "/*%s*/\n/*%s*/\n/*%s*/\n/*%s*/\n" % (item, pseq, aseq, bseq)
+
 
