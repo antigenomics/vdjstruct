@@ -34,7 +34,7 @@ NOTE 1 [file params/minim.mdp]:
   that with the Verlet scheme, nstlist has no effect on the accuracy of
   your simulation.
 
-Setting the LD random seed to 1504092827
+Setting the LD random seed to 3052068767
 Generated 331705 of the 331705 non-bonded parameter combinations
 Generating 1-4 interactions: fudge = 0.5
 Generated 331705 of the 331705 1-4 parameter combinations

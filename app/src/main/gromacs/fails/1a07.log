@@ -26,7 +26,7 @@ GROMACS:      gmx grompp, VERSION 5.0.1
 Executable:   /usr/local/gromacs/bin/gmx
 Library dir:  /usr/local/gromacs/share/gromacs/top
 Command line:
-  gmx grompp -f params/minim.mdp -c 1ao7.gro -p topol.top -n index.ndx -o em1ao7.tpr
+  gmx grompp -f params/minim.mdp -c 1a07.gro -p topol.top -n index.ndx -o em1a07.tpr
 
 
 NOTE 1 [file params/minim.mdp]:
@@ -34,14 +34,14 @@ NOTE 1 [file params/minim.mdp]:
   that with the Verlet scheme, nstlist has no effect on the accuracy of
   your simulation.
 
-Setting the LD random seed to 639409379
+Setting the LD random seed to 597205213
 
 -------------------------------------------------------
 Program gmx, VERSION 5.0.1
-Source code file: /home/mikhail/Development/Programs/gromacs-5.0.1/src/gromacs/gmxpreprocess/grompp.c, line: 558
+Source code file: /home/mikhail/Development/Programs/gromacs-5.0.1/src/gromacs/gmxpreprocess/grompp.c, line: 1628
 
 Fatal error:
-No molecules were defined in the system
+topol.top does not exist
 For more information and tips for troubleshooting, please check the GROMACS
 website at http://www.gromacs.org/Documentation/Errors
 -------------------------------------------------------

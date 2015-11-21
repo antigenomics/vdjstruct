@@ -26,7 +26,7 @@ GROMACS:      gmx enemat, VERSION 5.0.1
 Executable:   /usr/local/gromacs/bin/gmx
 Library dir:  /usr/local/gromacs/share/gromacs/top
 Command line:
-  gmx enemat -groups groups2ian.dat -nlevels 1500 -emat 2ian.xpm -f em2ian.edr
+  gmx enemat -groups groups2ian.dat -nlevels 10000 -emat 2ian.xpm -f em2ian.edr
 
 Opened em2ian.edr as single precision energy file
 Will read groupnames from inputfile
@@ -36,8 +36,9 @@ Will select half-matrix of energies with 1560 elements
 Reading energy frame      0 time    0.000         Read frame: 0, Time: 0.000Reading energy frame      1 time    1.000         Read frame: 1, Time: 1.000Last energy frame read 1 time    1.000         
 Will build energy half-matrix of 39 groups, 1560 elements, over 2 frames
 Matrix of Coul-SR energy ranges from -773.658691 to 21.026344
+Warning, too many levels (10000) in matrix, using 7744 only
   2%  5%  7% 10% 12% 15% 17% 20% 23% 25% 28% 30% 33% 35% 38% 41% 43% 46% 48% 51% 53% 56% 58% 61% 64% 66% 69% 71% 74% 76% 79% 82% 84% 87% 89% 92% 94% 97%100%Matrix of LJ-SR energy ranges from -13.468189 to 261.739380
   2%  5%  7% 10% 12% 15% 17% 20% 23% 25% 28% 30% 33% 35% 38% 41% 43% 46% 48% 51% 53% 56% 58% 61% 64% 66% 69% 71% 74% 76% 79% 82% 84% 87% 89% 92% 94% 97%100%Matrix of total energy ranges from -659.406860 to 261.141998
   2%  5%  7% 10% 12% 15% 17% 20% 23% 25% 28% 30% 33% 35% 38% 41% 43% 46% 48% 51% 53% 56% 58% 61% 64% 66% 69% 71% 74% 76% 79% 82% 84% 87% 89% 92% 94% 97%100%
-gcq#342: "Sitting on a rooftop watching molecules collide" (A Camp)
+gcq#150: "With a Lead Filled Snowshoe" (F. Zappa)
 

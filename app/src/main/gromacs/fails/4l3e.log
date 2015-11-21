@@ -26,7 +26,7 @@ GROMACS:      gmx enemat, VERSION 5.0.1
 Executable:   /usr/local/gromacs/bin/gmx
 Library dir:  /usr/local/gromacs/share/gromacs/top
 Command line:
-  gmx enemat -groups groups4l3e.dat -nlevels 1500 -emat 4l3e.xpm -f em4l3e.edr
+  gmx enemat -groups groups4l3e.dat -nlevels 10000 -emat 4l3e.xpm -f em4l3e.edr
 
 Opened em4l3e.edr as single precision energy file
 Will read groupnames from inputfile
@@ -36,8 +36,9 @@ Will select half-matrix of energies with 1260 elements
 Reading energy frame      0 time    0.000         Read frame: 0, Time: 0.000Reading energy frame      1 time    1.000         Read frame: 1, Time: 1.000Last energy frame read 1 time    1.000         
 Will build energy half-matrix of 35 groups, 1260 elements, over 2 frames
 Matrix of Coul-SR energy ranges from -403.455109 to 11.631267
+Warning, too many levels (10000) in matrix, using 7744 only
   2%  5%  8% 11% 14% 17% 20% 22% 25% 28% 31% 34% 37% 40% 42% 45% 48% 51% 54% 57% 60% 62% 65% 68% 71% 74% 77% 80% 82% 85% 88% 91% 94% 97%100%Matrix of LJ-SR energy ranges from -13.535025 to 36.721680
   2%  5%  8% 11% 14% 17% 20% 22% 25% 28% 31% 34% 37% 40% 42% 45% 48% 51% 54% 57% 60% 62% 65% 68% 71% 74% 77% 80% 82% 85% 88% 91% 94% 97%100%Matrix of total energy ranges from -402.702942 to 36.827316
   2%  5%  8% 11% 14% 17% 20% 22% 25% 28% 31% 34% 37% 40% 42% 45% 48% 51% 54% 57% 60% 62% 65% 68% 71% 74% 77% 80% 82% 85% 88% 91% 94% 97%100%
-gcq#140: "We Have No Money" (E. Clementi)
+gcq#247: "There's Nothing We Can't Fix, 'coz We Can Do It in the Mix" (Indeep)
 

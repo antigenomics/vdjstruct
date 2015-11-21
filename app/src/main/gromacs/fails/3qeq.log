@@ -26,7 +26,7 @@ GROMACS:      gmx enemat, VERSION 5.0.1
 Executable:   /usr/local/gromacs/bin/gmx
 Library dir:  /usr/local/gromacs/share/gromacs/top
 Command line:
-  gmx enemat -groups groups3qeq.dat -nlevels 1500 -emat 3qeq.xpm -f em3qeq.edr
+  gmx enemat -groups groups3qeq.dat -nlevels 10000 -emat 3qeq.xpm -f em3qeq.edr
 
 Opened em3qeq.edr as single precision energy file
 Will read groupnames from inputfile
@@ -36,8 +36,9 @@ Will select half-matrix of energies with 1190 elements
 Reading energy frame      0 time    0.000         Read frame: 0, Time: 0.000Reading energy frame      1 time    1.000         Read frame: 1, Time: 1.000Last energy frame read 1 time    1.000         
 Will build energy half-matrix of 34 groups, 1190 elements, over 2 frames
 Matrix of Coul-SR energy ranges from -407.423065 to 11.054835
+Warning, too many levels (10000) in matrix, using 7744 only
   2%  5%  8% 11% 14% 17% 20% 23% 26% 29% 32% 35% 38% 41% 44% 47% 50% 52% 55% 58% 61% 64% 67% 70% 73% 76% 79% 82% 85% 88% 91% 94% 97%100%Matrix of LJ-SR energy ranges from -14.226276 to 21.130665
   2%  5%  8% 11% 14% 17% 20% 23% 26% 29% 32% 35% 38% 41% 44% 47% 50% 52% 55% 58% 61% 64% 67% 70% 73% 76% 79% 82% 85% 88% 91% 94% 97%100%Matrix of total energy ranges from -410.826477 to 12.795840
   2%  5%  8% 11% 14% 17% 20% 23% 26% 29% 32% 35% 38% 41% 44% 47% 50% 52% 55% 58% 61% 64% 67% 70% 73% 76% 79% 82% 85% 88% 91% 94% 97%100%
-gcq#153: "Rub It Right Accross Your Eyes" (F. Zappa)
+gcq#383: "Theoretical chemistry has of course always been important and useful ... at least to theoretical chemists" (Sven Lidin)
 

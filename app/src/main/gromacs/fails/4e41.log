@@ -26,7 +26,7 @@ GROMACS:      gmx enemat, VERSION 5.0.1
 Executable:   /usr/local/gromacs/bin/gmx
 Library dir:  /usr/local/gromacs/share/gromacs/top
 Command line:
-  gmx enemat -groups groups4e41.dat -nlevels 1500 -emat 4e41.xpm -f em4e41.edr
+  gmx enemat -groups groups4e41.dat -nlevels 10000 -emat 4e41.xpm -f em4e41.edr
 
 Opened em4e41.edr as single precision energy file
 Will read groupnames from inputfile
@@ -36,8 +36,9 @@ Will select half-matrix of energies with 1722 elements
 Reading energy frame      0 time    0.000         Read frame: 0, Time: 0.000Reading energy frame      1 time    1.000         Read frame: 1, Time: 1.000Last energy frame read 1 time    1.000         
 Will build energy half-matrix of 41 groups, 1722 elements, over 2 frames
 Matrix of Coul-SR energy ranges from -787.452271 to 657.795715
+Warning, too many levels (10000) in matrix, using 7744 only
   2%  4%  7%  9% 12% 14% 17% 19% 21% 24% 26% 29% 31% 34% 36% 39% 41% 43% 46% 48% 51% 53% 56% 58% 60% 63% 65% 68% 70% 73% 75% 78% 80% 82% 85% 87% 90% 92% 95% 97%100%Matrix of LJ-SR energy ranges from -16.091225 to 28.211758
   2%  4%  7%  9% 12% 14% 17% 19% 21% 24% 26% 29% 31% 34% 36% 39% 41% 43% 46% 48% 51% 53% 56% 58% 60% 63% 65% 68% 70% 73% 75% 78% 80% 82% 85% 87% 90% 92% 95% 97%100%Matrix of total energy ranges from -759.240540 to 657.824646
   2%  4%  7%  9% 12% 14% 17% 19% 21% 24% 26% 29% 31% 34% 36% 39% 41% 43% 46% 48% 51% 53% 56% 58% 60% 63% 65% 68% 70% 73% 75% 78% 80% 82% 85% 87% 90% 92% 95% 97%100%
-gcq#388: "Let us not get carried away with our ideas and take our models too seriously" (Nancy Swanson)
+gcq#282: "'Nay. We are but men.' Rock!" (Tenacious D)
 

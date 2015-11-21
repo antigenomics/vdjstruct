@@ -26,7 +26,7 @@ GROMACS:      gmx enemat, VERSION 5.0.1
 Executable:   /usr/local/gromacs/bin/gmx
 Library dir:  /usr/local/gromacs/share/gromacs/top
 Command line:
-  gmx enemat -groups groups4jry.dat -nlevels 1500 -emat 4jry.xpm -f em4jry.edr
+  gmx enemat -groups groups4jry.dat -nlevels 10000 -emat 4jry.xpm -f em4jry.edr
 
 Opened em4jry.edr as single precision energy file
 Will read groupnames from inputfile
@@ -36,8 +36,9 @@ Will select half-matrix of energies with 1640 elements
 Reading energy frame      0 time    0.000         Read frame: 0, Time: 0.000Reading energy frame      1 time    1.000         Read frame: 1, Time: 1.000Last energy frame read 1 time    1.000         
 Will build energy half-matrix of 40 groups, 1640 elements, over 2 frames
 Matrix of Coul-SR energy ranges from -442.313934 to 644.333374
+Warning, too many levels (10000) in matrix, using 7744 only
   2%  5%  7% 10% 12% 15% 17% 20% 22% 25% 27% 30% 32% 35% 37% 40% 42% 45% 47% 50% 52% 55% 57% 60% 62% 65% 67% 70% 72% 75% 77% 80% 82% 85% 87% 90% 92% 95% 97%100%Matrix of LJ-SR energy ranges from -12.051027 to 48.255539
   2%  5%  7% 10% 12% 15% 17% 20% 22% 25% 27% 30% 32% 35% 37% 40% 42% 45% 47% 50% 52% 55% 57% 60% 62% 65% 67% 70% 72% 75% 77% 80% 82% 85% 87% 90% 92% 95% 97%100%Matrix of total energy ranges from -440.528351 to 647.396851
   2%  5%  7% 10% 12% 15% 17% 20% 22% 25% 27% 30% 32% 35% 37% 40% 42% 45% 47% 50% 52% 55% 57% 60% 62% 65% 67% 70% 72% 75% 77% 80% 82% 85% 87% 90% 92% 95% 97%100%
-gcq#177: "Whatever Happened to Pong ?" (F. Black)
+gcq#75: "Hold On Like Cliffhanger" (Urban Dance Squad)
 
