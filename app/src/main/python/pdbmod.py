@@ -23,10 +23,10 @@ class Interaction:
 		self.__e_matrix_a = []
 		self.__e_matrix_b = []
 		self.__info = ''
+		self.verbose = True
 		self.getCDR3Indices()
 		self.definePeptideChain()
 		self.calcDistMatrices()
-		self.verbose = False
 		
 	def __str__(self):
 		s = '\nprotein name: ' + self.__name + \
@@ -372,7 +372,7 @@ def extractXPM(path):
 		
 	return a_mat, b_mat, annot
 
-def writeInFile_CDR3_CDR3(parser, datadist, item, f):
+'''def writeInFile_CDR3_CDR3(parser, datadist, item, f):
 	structure = parser.get_structure(item, '../pdbs/'+item+'.pdb')
 	cdr3seqlist = datadist[item]
 	cdr3reslist = []
@@ -388,4 +388,4 @@ def writeInFile_CDR3_CDR3(parser, datadist, item, f):
 		f.write(item+'\n')
 		fwriteMatrix(f, m)
 		f.write('\n')
-		i += 1
+		i += 1'''

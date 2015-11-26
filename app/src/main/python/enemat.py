@@ -137,15 +137,20 @@ G = gromacs.cbook.IndexBuilder(indpath + item + '.gro')
 G.cat(indpath + 'index.ndx')
 
 l = datadist[item]
-structure = PDBParser().get_structure(item, '../pdbs/'+item+'.pdb')
+structure = PDBParser().get_structure(item, '../fixedpdbs/'+item+'.pdb')
 protein = pdbmod.Interaction(structure, l[0], l[1], l[2])
 
 st, atlist, aas = parseGro(indpath + item + '.gro')
 
 pseq = protein.getPeptideSeq()
+print pseq
 aseq = protein.getCDR3AlphaSeq()
+print aseq
 bseq = protein.getCDR3BetaSeq()
+print bseq
+
 p, a, b = findSeqsInGro(st, pseq, aseq, bseq)
+print p, a, b
 names = appendSeqs(indpath + 'index.ndx', [p, a, b], atlist, aas)
 appendToMDP(path + 'minim.mdp', names)
 appendToGroupsDat(indpath + 'groups' + item + '.dat', names)

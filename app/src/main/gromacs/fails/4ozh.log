@@ -26,7 +26,7 @@ GROMACS:      gmx pdb2gmx, VERSION 5.0.1
 Executable:   /usr/local/gromacs/bin/gmx
 Library dir:  /usr/local/gromacs/share/gromacs/top
 Command line:
-  gmx pdb2gmx -f ../../../../pdbs/4ozh.pdb -o 4ozh.gro -water spce -ff oplsaa -missing
+  gmx pdb2gmx -f ../../../../fixedpdbs/4ozh.pdb -o 4ozh.gro -water spce -missing -ff oplsaa
 
 Opening force field file /usr/local/gromacs/share/gromacs/top/oplsaa.ff/aminoacids.r2b
 WARNING: all CONECT records are ignored
@@ -39,6 +39,8 @@ Sorting it all out...
 Opening force field file /usr/local/gromacs/share/gromacs/top/oplsaa.ff/aminoacids.hdb
 Opening force field file /usr/local/gromacs/share/gromacs/top/oplsaa.ff/aminoacids.n.tdb
 Opening force field file /usr/local/gromacs/share/gromacs/top/oplsaa.ff/aminoacids.c.tdb
+
+Back Off! I just backed up topol.top to ./#topol.top.1#
 Analysing hydrogen-bonding network for automated assignment of histidine
  protonation. 272 donors and 275 acceptors were found.
 There are 393 hydrogen bonds
@@ -67,6 +69,8 @@ Special Atom Distance matrix:
   HIS167 NE21321   1.375
   HIS177 NE21406   1.240   2.438
 Linking CYS-107 SG-847 and CYS-163 SG-1286...
+
+Back Off! I just backed up topol_Protein_chain_A.itp to ./#topol_Protein_chain_A.itp.1#
 Making bonds...
 Number of bonds was 2887, now 2887
 Generating angles, dihedrals and pairs...
@@ -79,6 +83,8 @@ There are 7716 dihedrals,  588 impropers, 5218 angles
 Total mass 20409.016 a.m.u.
 Total charge -8.000 e
 Writing topology
+
+Back Off! I just backed up posre_Protein_chain_A.itp to ./#posre_Protein_chain_A.itp.1#
 Analysing hydrogen-bonding network for automated assignment of histidine
  protonation. 296 donors and 274 acceptors were found.
 There are 391 hydrogen bonds

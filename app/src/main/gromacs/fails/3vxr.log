@@ -29,12 +29,14 @@ Command line:
   gmx grompp -f params/minim.mdp -c 3vxr.gro -p topol.top -n index.ndx -o em3vxr.tpr
 
 
+Back Off! I just backed up mdout.mdp to ./#mdout.mdp.1#
+
 NOTE 1 [file params/minim.mdp]:
   With Verlet lists the optimal nstlist is >= 10, with GPUs >= 20. Note
   that with the Verlet scheme, nstlist has no effect on the accuracy of
   your simulation.
 
-Setting the LD random seed to 3052068767
+Setting the LD random seed to 4130892818
 Generated 331705 of the 331705 non-bonded parameter combinations
 Generating 1-4 interactions: fudge = 0.5
 Generated 331705 of the 331705 1-4 parameter combinations
@@ -48,10 +50,9 @@ Excluding 2 bonded neighbours molecule type 'SOL'
 Excluding 2 bonded neighbours molecule type 'SOL'
 Excluding 2 bonded neighbours molecule type 'SOL'
 Excluding 2 bonded neighbours molecule type 'SOL'
-Excluding 2 bonded neighbours molecule type 'SOL'
 
-NOTE 2 [file topol.top, line 57]:
-  System has non-zero total charge: -17.000002
+NOTE 2 [file topol.top, line 56]:
+  System has non-zero total charge: -21.000002
   Total charge should normally be an integer. See
   http://www.gromacs.org/Documentation/Floating_Point_Arithmetic
   for discussion on how close it should be to an integer.
@@ -65,7 +66,7 @@ Program gmx, VERSION 5.0.1
 Source code file: /home/mikhail/Development/Programs/gromacs-5.0.1/src/gromacs/gmxpreprocess/readir.c, line: 2518
 
 Fatal error:
-Group r_366-374_ALA_1 referenced in the .mdp file was not found in the index file.
+Group r_374-388_VAL_1 referenced in the .mdp file was not found in the index file.
 Group names must match either [moleculetype] names or custom index group
 names, in which case you must supply an index file to the '-n' option
 of grompp.

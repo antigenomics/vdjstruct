@@ -2,6 +2,7 @@
 target/
 .idea/
 *.iml
-pdbs/
 pdbs
+fixedpdbs
+fixedpdbs_bufer
 .Rproj.user
