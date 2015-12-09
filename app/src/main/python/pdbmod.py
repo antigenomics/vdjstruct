@@ -1,17 +1,25 @@
 from Bio.PDB import PDBParser
+from Bio.PDB import PDBIO
+from Bio.PDB import Select
 from Bio.PDB import PPBuilder
 from Bio.PDB import Polypeptide
+import pandas as pd
+import numpy as np
 
 #flag = True if you wanna write useless stuff
 flag = False
 
 class Interaction:
-	def __init__(self, struct, chains, cdr3_a, cdr3_b):
+	def __init__(self, struct, chains, mhc, cdr3_a, cdr3_b):
 		self.__name = struct.get_id()		
 		self.__struct = struct
 		self.__chains = chains
-		self.__cdr3_a_seq = cdr3_a
-		self.__cdr3_b_seq = cdr3_b
+		self.__pepchain = ''
+		self.__cdr3_a_seq = cdr3_a[0]
+		self.__cdr3_b_seq = cdr3_b[0]
+		self.__vreg_a = cdr3_a[1]
+		self.__vreg_b = cdr3_a[1]
+		self.__mhc = mhc
 		self.__a_flanked = []
 		self.__b_flanked = []
 		self.__p_flanked = []
@@ -24,9 +32,8 @@ class Interaction:
 		self.__e_matrix_b = []
 		self.__info = ''
 		self.verbose = True
-		self.getCDR3Indices()
+		self.getCDR3Residues()
 		self.definePeptideChain()
-		self.calcDistMatrices()
 		
 	def __str__(self):
 		s = '\nprotein name: ' + self.__name + \
@@ -38,6 +45,7 @@ class Interaction:
 	def printerr(self, err):
 		if self.verbose:
 			print err
+			exit(1)
 		
 	def isEmpty(self):
 		if not self.__cdr3_a:
@@ -46,8 +54,29 @@ class Interaction:
 			return True
 		if not self.__peptide:
 			return True
+		return False
 		
-	def getCDR3Indices(self):
+	def getSeqLocation(self, seq):
+		ppb=PPBuilder()
+		bltpep = ppb.build_peptides(self.__struct[0])
+		for pp in bltpep: 
+			beg = 0
+			end = 0
+			s = str(pp.get_sequence())
+			ind = s.find(seq, 0, len(s))
+			if (ind != -1):
+				beg = beg + ind
+				end = beg + len(seq) - 1
+				chain = pp[0].get_parent().get_id()
+				break	
+		if beg == end == 0:	
+			line = '\n' + seq + ' not found in '+str(self.__struct.get_id()) + '!\n'
+			self.__info = self.__info + line
+			print line
+			return None, None, None
+		return beg, end, chain
+		
+	def getCDR3Residues(self):
 		ppb=PPBuilder()
 		res = []
 		bltpep = ppb.build_peptides(self.__struct[0])
@@ -101,10 +130,13 @@ class Interaction:
 				i = chid
 		pp = list(self.__struct[0][i])
 		if (len(pp) > 20):
-			line = self.__name + '\t: TOO MANY AMINO ACIDS (' + str(len(pp)) + ') TO BE A PEPTIDE :(\n'
+			line = self.__name + '\t;TOO MANY AMINO ACIDS (' + str(len(pp)) + ') TO BE A PEPTIDE :(\n'
 			self.printerr('\ndefinePeptideChain(): ' + line)
 			self.__info = self.__info + line
+			raw_input()
+			exit(1)
 		else:
+			self.__pepchain = i
 			rnum = 1
 			for chain in self.__struct[0]:
 				if chain != self.__struct[0][i]:
@@ -212,21 +244,21 @@ class Interaction:
 		s = Interaction.matToStr(self.__peptide, self.__cdr3_b, self.__e_matrix_b)
 		return s
 	
-	def writeInFile_CDR3_Pept(self, f):
+	def writeInFile_CDR3_Pept_Dist(self, path = 'generated/pdbcdr3/dist_mats/cdr3+pep/'):#, f):
 		if self.isEmpty():
-			f.write(self.__info)
-			f.write('\n')
+#			f.write(self.__info)
+#			f.write('\n')
 			return
 			
 		for i in range(0, 2):
-			f2 = open('generated/pdbcdr3/dist_mats/cdr3+pep/'+self.__name+'('+str(i)+').txt', 'w')
+			f2 = open(path + self.__name+'('+str(i)+').txt', 'w')
 			if (i == 0):
-				f.write(self.a_matToStr())
+#				f.write(self.a_matToStr())
 				f2.write(self.a_matToStr())
 			if (i == 1):
-				f.write(self.b_matToStr())
+#				f.write(self.b_matToStr())
 				f2.write(self.b_matToStr())
-			f.write('\n')
+#			f.write('\n')
 			f2.write('\n')
 			f2.close()
 			
@@ -266,6 +298,89 @@ class Interaction:
 	def utilGromacs(self):
 		print [self.__p_flanked, self.__a_flanked, self.__b_flanked]
 		
+	class _ResSelect(Select):
+	    def __init__(self, cdr3_a, cdr3_b, cdr3_peptide):
+	    	self.__sub_cdr3_a = cdr3_a
+	    	self.__sub_cdr3_b = cdr3_b
+	    	self.__sub_cdr3_peptide = cdr3_peptide
+	    def accept_residue(self, residue):
+		if residue in (self.__sub_cdr3_a + self.__sub_cdr3_b + self.__sub_cdr3_peptide):
+		    return 1
+		else:
+		    return 0
+	
+	def pushToPDB(self, path = "../truncpdbs/"):
+		if self.isEmpty():
+			self.printerr(self.__info)
+			return
+		io = PDBIO()
+		io.set_structure(self.__struct)
+		io.save(path + self.__name + ".pdb", self._ResSelect(self.__cdr3_a, self.__cdr3_b, self.__peptide))
+		
+	def overallMat(self):
+		if self.isEmpty() or self.__d_matrix_a or self.__d_matrix_b or self.__e_matrix_a or self.__e_matrix_b:
+			print "def overallMat(self): Get more info first! Closing...\n"
+			exit(1)
+		acdr3len = len(self.__cdr3_a)
+		bcdr3len = len(self.__cdr3_b)
+		peptlen = len(self.__peptide)
+		tb = pd.DataFrame(columns = ['complex',
+			'TRA/TRB',
+			'VReg',
+			'mutations',
+			'MHC',
+			'CDR3',
+			'CDR3 length',
+			'Peptide length',
+			'CDR3 position',
+			'Peptide position',
+			'CDR3 aa',
+			'Peptise aa',
+			'Distance',
+			'Energy'],
+			)
+			
+	def convertTable(self):	
+		if self.isEmpty():
+			self.printerr(self.__info)
+			
+		acdr3 = self.getSeqLocation(self.__cdr3_a_seq)
+		bcdr3 = self.getSeqLocation(self.__cdr3_b_seq)
+		avreg = self.getSeqLocation(self.__vreg_a)
+		bvreg = self.getSeqLocation(self.__vreg_b)
+		achain = acdr3[2]
+		bchain = bcdr3[2]
+		regnum = 4
+		tb = pd.DataFrame(columns = ['complex',
+			'chain',
+			'type',
+			'name',
+			'id',
+			'region',
+			'start',
+			'end'])
+		chains = self.__chains
+		achainpos = chains.index(achain)
+		chains = chains[:achainpos] + regnum * [achain] + chains[achainpos + 1:]
+		bchainpos = chains.index(bchain)
+		chains = chains[:bchainpos] + regnum * [bchain] + chains[bchainpos + 1:]
+		
+		tb.loc[:, 'chain'] = chains
+		tb.loc[:, 'complex'] = self.__name
+		tb.loc[tb['chain'].isin(self.__mhc.keys()), 'type'] = 'MHC'
+		tb.loc[tb['chain'].isin([achain, bchain]), 'type'] = 'TCR'
+		tb.loc[tb['chain'] == self.__pepchain, 'type'] = 'Antigen'
+		tb.loc[tb['chain'] == achain, 'name'] = 'alpha'
+		tb.loc[tb['chain'] == bchain, 'name'] = 'beta'
+		tb.loc[tb['chain'].isin(self.__mhc.keys()), 'name'] = list(self.__mhc.values())
+		tb.loc[tb['name'] == 'alpha', 'region'] = ['cdr1', 'cdr2', 'cdr3', 'vreg']
+		tb.loc[tb['name'] == 'beta', 'region'] = ['cdr1', 'cdr2', 'cdr3', 'vreg']
+		tb.loc[(tb['name'] == 'alpha') & (tb['region'] == 'cdr3'), ['start', 'end']] = acdr3[:2]
+		tb.loc[(tb['name'] == 'beta') & (tb['region'] == 'cdr3'), ['start', 'end']] = bcdr3[:2]
+		tb.loc[(tb['name'] == 'alpha') & (tb['region'] == 'vreg'), ['start', 'end']] = avreg[:2]
+		tb.loc[(tb['name'] == 'beta') & (tb['region'] == 'vreg'), ['start', 'end']] = bvreg[:2]
+		return tb
+		
 	
 def residuesMeanDist(res1, res2):
 	dist = 0
@@ -298,7 +413,7 @@ def residuesCaDist(res2, res1):
 		return res1['CA']-res2['CA']
 		
 
-def parseDataFile(path):
+'''def parseDataFile(path):
 	f = open(path, 'r')
 	l = list(f)
 	d = {}
@@ -307,13 +422,56 @@ def parseDataFile(path):
 		if (len(s) == 20):
 			pname = s[0].lower()
 			if (d.get(pname) == None):
-				d.update({pname : [[s[1]]]})
+				d.update({pname : [[s[1].strip()]]})
 			else:
-				d[pname][0].append(s[1])
+				d[pname][0].append(s[1].strip())
 			if (s[17].isalpha()):
-				d[pname].append(s[17])
+				d[pname].append(s[17].strip())
+			else
+				d[pname].append('Nan')
+			if
 	f.close()
-	return d
+	return d'''
+	
+def parseDataFile(path):
+	fr = pd.DataFrame(pd.read_table(path, sep='\t'))
+	fr['PDB ID'] = map(lambda x: x.lower(), fr['PDB ID']) 
+	
+	return fr
+	
+def getProtein(frame, name):
+	smframe = frame[frame['PDB ID'] == name]
+	if smframe.shape[0] == 0:
+		print "Protein is not listed in the table! Closing...\n"
+		exit(1)
+	
+	# get the names of the chains listed in table
+	pepchains = map(lambda x: x.strip(), smframe['Chain ID'].dropna())
+
+	#get the dict with MHC types for each chain listed in table
+	buframe = smframe[frame['HLA Type'].notnull()]
+	mhc = dict(zip(buframe['Chain ID'], buframe['HLA Type']))
+
+	#get CDR3 and V Region
+	buframe = smframe[smframe['cdr3'].notnull()]
+
+	if buframe.shape[0] != 2:
+		print "Number CDR3 listed does not equal 2! Closing...\n"
+		exit(1)
+
+	it = buframe.iterrows()
+	index, row = next(it)
+	cdr3_a = [row['cdr3'].strip(), row['v'].strip()]
+	index, row = next(it)
+	cdr3_b = [row['cdr3'].strip(), row['v'].strip()]
+
+	tra_crit = buframe['v'].map(lambda x: x.startswith('TRA'))
+	trb_crit = buframe['v'].map(lambda x: x.startswith('TRB'))
+	if any(tra_crit) and any(trb_crit):
+		cdr3_a = [buframe.loc[tra_crit, 'cdr3'].values[0].strip(), buframe.loc[tra_crit, 'v'].values[0].strip()]
+		cdr3_b = [buframe.loc[trb_crit, 'cdr3'].values[0].strip(), buframe.loc[trb_crit, 'v'].values[0].strip()]
+
+	return pepchains, mhc, cdr3_a, cdr3_b
 	
 def extractXPM(path):
 	xpm = open(path, 'r')

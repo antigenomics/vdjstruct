@@ -1,45 +1,29 @@
 #!/bin/bash
 
-path=generated/pdbcdr3/dist_mats/cdr3+pep
-path=src/main/gromacs/fails
-
+#path=generated/pdbcdr3/dist_mats/cdr3+pep
+#path=src/main/gromacs/fails
+path=../pdbs
+logpath=getnrgfails/
 function test {
     "$@"
     local status=$?
-    if [ $status == 0 ]; then
-    	rm src/main/gromacs/fails/$name.log
+    if [ $status -ne 0 ]; then
+    	echo
+    	"$@" >> getnrgfails/$name.log
+        echo "error with $@"
+        echo
         continue
+        #exit $status
     fi
     return $status
 }
 
-for file in `find $path -type f -name "*3vxr.log"`  #`find $path -type f -name "*(0).txt"`
+for file in `find $path -type f -name "*.pdb"`  #`find $path -type f -name "*(0).txt"`
 do
-	#mod=${file#$path'/'}
-	#name=${mod/'(0).txt'/''}
 	mod=${file#$path'/'}
-	name=${mod/'.log'/''}
+	name=${mod/'.pdb'/''}
 	echo 'Running '$name'...'
 	
-	test ./src/main/gromacs/params/script.sh $name
-	
-	echo
-	echo "Error occured: processing $name..."
-	echo
-	
-	read
-	cd ../fixedpdbs
-	python fix.py $name
-	err=$?
-	if [ "$err" == '1' ]; then
-		echo "Seems there are problems with .edr file $name..."
-		echo
-		cp ../pdbs/$name.pdb ./
-	fi 
-	cd -
-	read
-	test ./src/main/gromacs/params/script.sh $name
-	
-	echo
-	echo "Error occured, while getting energies"
+	test python src/main/python/pdbstat.py $name comp
+        ./src/main/gromacs/params/script.sh $name
 done

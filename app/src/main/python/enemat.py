@@ -21,22 +21,23 @@ def parseGro(f):
     atlist = []
     aas = []
     prevnum = '0'
-    for i in range(2, len(pp)):
+    for i in range(2, len(pp) - 1):
         line = pp[i].split()
         num = line[0][:-3]
         aa = line[0][-3:]
-        
-        if not Polypeptide.is_aa(aa):
-            break;
             
         if (num != prevnum):
-            shortaa = Polypeptide.three_to_one(aa)
+            if not Polypeptide.is_aa(aa):
+            	shortaa = 'X'
+            else:
+            	shortaa = Polypeptide.three_to_one(aa)
             atlist.append(i - 1)
             aas.append(aa + '_' + num)
             prevnum = num
             res = res + shortaa
             
     fp.close()
+    atlist.append(len(pp) - 3)
     return res, atlist, aas
 
 
@@ -129,28 +130,27 @@ def appendSeqs(path, idlist, atlist, aas):
     return names
 
 item = sys.argv[1]
-
 indpath = 'src/main/gromacs/'
 path = indpath + 'params/'
-datadist = pdbmod.parseDataFile("../pdbs/data.txt")
 G = gromacs.cbook.IndexBuilder(indpath + item + '.gro')
 G.cat(indpath + 'index.ndx')
 
-l = datadist[item]
-structure = PDBParser().get_structure(item, '../fixedpdbs/'+item+'.pdb')
-protein = pdbmod.Interaction(structure, l[0], l[1], l[2])
+data = pdbmod.parseDataFile("../pdbs/data.txt")
+info = pdbmod.getProtein(data, item)
+structure = PDBParser().get_structure(item, '../pdbs/'+item+'.pdb')
+protein = pdbmod.Interaction(structure, *info)
 
 st, atlist, aas = parseGro(indpath + item + '.gro')
 
 pseq = protein.getPeptideSeq()
-print pseq
+#print pseq
 aseq = protein.getCDR3AlphaSeq()
-print aseq
+#print aseq
 bseq = protein.getCDR3BetaSeq()
-print bseq
+#print bseq
 
 p, a, b = findSeqsInGro(st, pseq, aseq, bseq)
-print p, a, b
+#print p, a, b
 names = appendSeqs(indpath + 'index.ndx', [p, a, b], atlist, aas)
 appendToMDP(path + 'minim.mdp', names)
 appendToGroupsDat(indpath + 'groups' + item + '.dat', names)

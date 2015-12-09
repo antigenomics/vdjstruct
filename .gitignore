@@ -4,5 +4,7 @@ target/
 *.iml
 pdbs
 fixedpdbs
+aux
+truncpdbs
 fixedpdbs_bufer
 .Rproj.user
