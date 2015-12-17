@@ -9,29 +9,40 @@ import subprocess
 
 class Interaction:
 	def __init__(self, table, pdb):
-		table.index = table.reset_index(drop=True)
-		struct = PDBParser().get_structure(table['pdb_id'][0], pdb)
+		table = table.reset_index(drop=True)
+		struct = PDBParser().get_structure(table['pdb_id'][0], pdb)		
 		table = table.fillna('')
-		table.insert(table.columns.get_loc('tcr_chain'), 'tcr_chain_name', ['alpha'] * 3 + ['beta'] * 3)
-		
+		alpha_num = sum([1 for x in table['tcr_v_allele'].tolist() if x.find('TRA') != -1])
+		beta_num = table.shape[0] - alpha_num
+		table.insert(table.columns.get_loc('tcr_chain'), 'tcr_chain_name', ['alpha'] * alpha_num + ['beta'] * beta_num)
+	
+		print table
 		self.__table = table
 		self.__name = str(struct.get_id())		
 		self.__struct = struct
 		self.__chains = [chain.get_id() for chain in struct[0]]
 		self.__regions = table.groupby(['tcr_chain_name', 'tcr_region'])
-		self.__regions_res = self.__regions.groups
-		for key in self.__regions_res.keys():
+	
+		# Dictionary of regions residues;
+		# looks like : { ('alpha', 'CDR1') : [residue list],
+		# ('alpha', 'CDR2') : [residue list], ... } 
+		self.__regions_res = self.__regions.groups 	
+		for key in self.__regions_res.keys():	
 			self.__regions_res[key] = []
-		self.__peptide = []
-		self.__d_matrices = {}
-		self.__e_matrices = {}
-		self.__info = ''
+	
+		# Pepdide residue list	
+		self.__peptide = []				
+	
+		# Dictionaries with pairwise region matrices;
+		# look like : { (('alpha', 'CDR1'), ('alpha', 'CDR2')) : dataframe, 
+		# (('alpha', 'CDR1'), ('alpha', 'CDR3')) : dataframe, ... }
+		self.__d_matrices = {}	
+		self.__e_matrices = {}	
 		self.verbose = True
 		if not self.getRegionsResidues():
 			print 'SOME REGION WAS NOT FOUND IN PDB'
-			#return 0
 		if not self.definePeptideChain():
-			return 0
+			print 'PEPTIDE WAS NOT FOUND IN PDB'
 		
 	def __str__(self):
 		s = '\nprotein name: ' + self.__name + \
@@ -44,7 +55,7 @@ class Interaction:
 		if self.verbose:
 			print err
 		
-	def getSeqLocation(self, seq):
+	def getSeqLocation(self, seq):		# return sequence position and chain id
 		ppb=PPBuilder()
 		bltpep = ppb.build_peptides(self.__struct[0])
 		for pp in bltpep: 
@@ -59,13 +70,12 @@ class Interaction:
 				break	
 		if beg == end == 0:	
 			line = '\n' + seq + ' not found in '+str(self.__struct.get_id()) + '!\n'
-			self.__info = self.__info + line
-			print line
+			self.printerr(line)
 			return None, None, None
 		return beg, end, chain
 		
-	def getRegionsResidues(self):
-		ppb=PPBuilder()
+	def getRegionsResidues(self):		# fill self.__regions_res dictionary with list of residues
+		ppb=PPBuilder()			# for every region contained in self.__regions_res
 		res = []
 		bltpep = ppb.build_peptides(self.__struct[0])
 		for key in self.__regions_res:
@@ -80,20 +90,20 @@ class Interaction:
 					break
 			if not res:	
 				line = '\n' + reg_seq + ' not found in '+ self.__name + '!\n'
-				self.__info = self.__info + line
-				self.printerr('\ngetRegionResidues(): ' + line)
+				self.printerr('getRegionResidues(): ' + line)
 				return 0
 			res = []
 		return 1
 				
-	def definePeptideChain(self):
-		l = 'INFINITY'
+	def definePeptideChain(self):		# find peptide chain if not stated in self.__table and fill self.__peptide
+		l = 'INFINITY'			# with list of peptide residues if length is less than 30
 		if not self.__table['chain_antigen'][0]:
 			for i in self.__chains:
 				buf = len(PPBuilder().build_peptides(self.__struct[0][i])[0])
 				if (buf <= l):
 					l = buf
 					chid = i
+			self.__table.loc['chain_antigen', :] = chid
 		else:
 			chid = self.__table['chain_antigen'][0]
 					
@@ -101,8 +111,7 @@ class Interaction:
 		
 		if (len(pp) > 30):
 			line = self.__name + '\t;TOO MANY AMINO ACIDS (' + str(len(pp)) + ') TO BE A PEPTIDE :(\n'
-			self.printerr('\ndefinePeptideChain(): ' + line)
-			self.__info = self.__info + line
+			self.printerr('definePeptideChain(): ' + line)
 			return 0
 				
 		pep_res = []
@@ -113,12 +122,12 @@ class Interaction:
 		self.__regions_res.update({'peptide':pep_res})
 		return 1
 						
-	def calcDistMatrices(self, key1, key2):
-		res_list_1 = self.getRegion(key1)
+	def calcDistMatrices(self, key1, key2): 	# calculate and store distance matrix to self.__d_matrices for a pair of regions
+		res_list_1 = self.getRegion(key1)	# key1 and key2 refer to keys of self.__regions_res dictionary
 		res_list_2 = self.getRegion(key2)
 		
 		if not res_list_1 or not res_list_2:
-			self.printerr('\ncalcDistMatrices(): RESIDUE LIST IS EMPTY\n')
+			self.printerr('calcDistMatrices(): RESIDUE LIST IS EMPTY\n')
 			return 0
 			
 		values = []
@@ -133,22 +142,25 @@ class Interaction:
 		self.__d_matrices.update({(key1, key2): mat})
 		return 1
 			
-	def calcNrgMatrices(self, path, *keys):
-		res_list = [self.getRegion(key) for key in keys]
+	def calcNrgMatrices(self, gromacs_dir, xpm_dir, *keys): 	# calculate and store energy matrices to self.__e_matrices for pairs of 
+		res_list = [self.getRegion(key) for key in keys]	# regions; keys is a list of keys from self.__regions_res dictionary
 		if not all(res_list):
-			self.printerr('\ncalcNrgMatrices: RESIDUE LIST IS EMPTY\n')
+			self.printerr('calcNrgMatrices: RESIDUE LIST IS EMPTY\n')
 			return 0
 	
-		# Truncate pdb
-		self.pushToPDB("../truncpdbs/", *keys)
-		string_of_seqs = " ".join([''.join(map(lambda res: Polypeptide.three_to_one(res.get_resname()), x)) for x in res_list])
+		# Create pdb containing only desirable regions
+		self.pushToPDB(gromacs_dir, *keys)
 		
 		# Execute Gromacs script
-		bashCommand = "./src/main/gromacs/params/script.sh " + self.__name + " " + string_of_seqs
+		list_of_seqs = [''.join(map(lambda res: Polypeptide.three_to_one(res.get_resname()), x)) for x in res_list]
+		bashCommand = " ".join(["./grom_script.sh", gromacs_dir, xpm_dir, self.__name] + list_of_seqs)
 		exitcode = subprocess.call(bashCommand, shell=True)
+		if not exitcode:
+			self.printerr('calcNrgMatrices: GROMACS FAILURE\n')
+			return 0
 		
 		# Extract DataFrames from xpm files
-		bad_mat, annotation = extractXPM(path)
+		bad_mat, annotation = extractXPM(''.join([xpm_dir, '/', 'total', self.__name, '.xpm']))
 		if len(annotation) > 2: 
 			aminos = reduce(lambda x, y: list(x) + list(y), annotation[1:])
 		else:
@@ -170,7 +182,7 @@ class Interaction:
 		
 	def getClearPeptideSeq(self):
 		if not self.__peptide:
-			self.printerr('\ngetPeptideSeq(): PEPTIDE (' + self.__name +') IS EMPTY\n')
+			self.printerr('getClearPeptideSeq(): PEPTIDE (' + self.__name +') IS EMPTY\n')
 			return 0
 		s = ''
 		for r in list(self.__peptide):
@@ -184,43 +196,61 @@ class Interaction:
 		return list(self.__regions.get_group(('beta', 'CDR3'))['tcr_region_seq'])[0]
 	
 	def getRegion(self, key):
-		return self.__regions_res[key]
+		try:
+			res = self.__regions_res[key]
+		except KeyError:
+			print 'NO ENERGY MATRIX FOR SUCH KEY: ', key
+			return []
+		else:
+			return res
 	
 	def getDistMatrix(self, key):
-		return self.__d_matrices[key]
+		try:
+			res = self.__d_matrices[key]
+		except KeyError:
+			print 'NO DISTANCE MATRIX FOR SUCH KEY: ', key
+			return pd.DataFrame()
+		else:
+			return res
 		
 	def getNrgMatrix(self, key):
-		return self.__e_matrices[key]
+		try:
+			res = self.__e_matrices[key]
+		except KeyError:
+			print 'NO ENERGY MATRIX FOR SUCH KEY: ', key
+			return pd.DataFrame()
+		else:
+			return res
 	
-	def writeInFile_CDR3_Pept_Dist(self, path = 'generated/pdbcdr3/dist_mats/cdr3+pep/'):
+	def writeInFile_CDR3_Pept_Dist(self, path = '.'):
 		if self.getDistMatrix(('peptide', ('alpha', 'CDR3'))).empty or self.getDistMatrix(('peptide', ('beta', 'CDR3'))).empty:
-			self.printerr('\nwriteInFile_CDR3_Pept_Dist: DISTANCE MATRIX IS EMPTY\n')
+			self.printerr('writeInFile_CDR3_Pept_Dist: DISTANCE MATRIX IS EMPTY\n')
 			return 0
 			
-		f = open(path + self.__name+'(0).txt', 'w')
+		f = open(path + '/' + self.__name+'(0).txt', 'w')
 		self.getDistMatrix(('peptide', ('alpha', 'CDR3'))).to_csv(f, sep = '\t')
 		f.close()
-		f = open(path + self.__name+'(1).txt', 'w')
+		f = open(path + '/' + self.__name+'(1).txt', 'w')
 		self.getDistMatrix(('peptide', ('beta', 'CDR3'))).to_csv(f, sep = '\t')
 		f.close()
 		return 1
 			
-	def writeInFile_CDR3_Pept_Nrg(self, path = 'generated/pdbcdr3/energy_mats/'):
+	def writeInFile_CDR3_Pept_Nrg(self, path = '.'):
 		if self.getNrgMatrix(('peptide', ('alpha', 'CDR3'))).empty or self.getNrgMatrix(('peptide', ('beta', 'CDR3'))).empty:
-			self.printerr('\nwriteInFile_CDR3_Pept_Nrg: ENERGY MATRIX IS EMPTY\n')
+			self.printerr('writeInFile_CDR3_Pept_Nrg: ENERGY MATRIX IS EMPTY\n')
 			return 0
 			
-		f = open(path + self.__name+'(0).txt', 'w')
+		f = open(path + '/' + self.__name+'(0).txt', 'w')
 		self.getNrgMatrix(('peptide', ('alpha', 'CDR3'))).to_csv(f, sep = '\t')
 		f.close()
-		f = open(path + self.__name+'(1).txt', 'w')
+		f = open(path + '/' + self.__name+'(1).txt', 'w')
 		self.getNrgMatrix(('peptide', ('beta', 'CDR3'))).to_csv(f, sep = '\t')
 		f.close()
 		return 1
 			
-	def indicesToStr(self):
+	def ResiduesToStr(self):
 		if not self.__peptide or not self.__regions_res[('alpha', 'CDR3')] or not self.__regions_res[('beta', 'CDR3')]:
-			self.printerr('\nwriteInFile_CDR3_Pept_Dist: RESIDUE LIST IS EMPTY\n')
+			self.printerr('ResiduesToStr: RESIDUE LIST IS EMPTY\n')
 			return 0
 			
 		s = ''	
@@ -238,9 +268,6 @@ class Interaction:
 	def printIndices(self, f):
 		f.write(self.indicesToStr())
 		
-	#def utilGromacs(self):
-	#	print [self.__p_flanked, self.__a_flanked, self.__b_flanked]
-		
 	class _ResSelect(Select):
 	    def __init__(self, *res_lists):
 	    	self.__res_list = reduce(lambda x, y: x + y, res_lists)
@@ -253,38 +280,80 @@ class Interaction:
 	def pushToPDB(self, path, *keys):
 		seq_list = [self.getRegion(key) for key in keys]
 		if not all(seq_list):
-			self.printerr('\nwriteInFile_CDR3_Pept_Dist: RESIDUE LIST IS EMPTY\n')
+			self.printerr('pushToPDB: RESIDUE LIST IS EMPTY\n')
 			return 0
 
 		io = PDBIO()
 		io.set_structure(self.__struct)
-		print seq_list
-		io.save(path + self.__name + ".pdb", self._ResSelect(*seq_list))
+		io.save(path + '/' +self.__name + ".pdb", self._ResSelect(*seq_list))
+		return 1
+	
+	def overallTable(self, main_key, *keys):
+		seq_list = [self.getRegion(key) for key in keys] + self.getRegion(main_key)
+		if not all(seq_list):
+			self.printerr('overallTable: RESIDUE LIST IS EMPTY\n')
+			return 0
+		
+		table = self.__table.copy()	
+		table.drop(['chain_mhc_a', 
+		    'chain_mhc_b', 
+		    'chain_mhc_b', 
+		    'tcr_region_start', 
+		    'tcr_region_end', 
+		    'chain_antigen'], axis=1, inplace=True)
+		
+		table.insert(table.shape[1], 'len_tcr_region', '')
+		table.insert(table.shape[1], 'pos_tcr_region', '')
+		table.insert(table.shape[1],  'aa_tcr_region', '')
+		
+		region_name = str(main_key)
+		table.insert(table.shape[1], 'len_' + region_name, '')
+		table.insert(table.shape[1], 'pos_' + region_name, '')
+		table.insert(table.shape[1],  'aa_' + region_name, '')
+		table.insert(table.shape[1], 'nrg_' + region_name, '')
+		table.insert(table.shape[1], 'dst_' + region_name, '')
+		
+		for key in keys:
+			cond = (table['tcr_chain_name'] == key[0]) & (table['tcr_region'] == key[1])
+			cut_index = table[cond].index.tolist()[0]
+			
+			nrg_table = self.getNrgMatrix((main_key, key))
+			dst_table = self.getDistMatrix((main_key, key))
+			if nrg_table.empty or dst_table.empty:
+				continue
+		
+			nrg_table_mod 		= nrg_table.copy()
+			nrg_table_mod.index 	= range(len(nrg_table.index))
+			nrg_table_mod.columns 	= range(len(nrg_table.columns))
+			
+			dst_table_mod 		= dst_table.copy()
+			dst_table_mod.index 	= range(len(dst_table.index))
+			dst_table_mod.columns 	= range(len(dst_table.columns))
+			
+			nrg_melt_table 		= pd.melt(nrg_table.reset_index(), id_vars = ['index'])
+			dst_melt_table		= pd.melt(dst_table.reset_index(), id_vars = ['index'])
+			nrg_melt_table_mod 	= pd.melt(nrg_table_mod.reset_index(), id_vars = ['index'])
+			dst_melt_table_mod 	= pd.melt(dst_table_mod.reset_index(), id_vars = ['index'])
+			
+			table.loc[:, 'len_tcr_region'] = len(self.getRegion(key))
+			
+			small = pd.concat(nrg_melt_table.shape[0]*[table[cond]])
+			small.loc[:, 'pos_tcr_region'] 		= nrg_melt_table_mod['variable'].tolist()
+			small.loc[:, 'pos_' + region_name] 	= nrg_melt_table_mod['index'].tolist()
+			small.loc[:, 'aa_tcr_region'] 		= nrg_melt_table['variable'].tolist()
+			small.loc[:, 'aa_' + region_name] 	= nrg_melt_table['index'].tolist()
+			small.loc[:, 'len_' + region_name] 	= len(self.getRegion(main_key))
+			small.loc[:, 'dst_' + region_name] 	= dst_melt_table['value'].tolist()
+			small.loc[:, 'nrg_' + region_name] 	= nrg_melt_table['value'].tolist()
+			#small = small.reset_index(drop=True)
+			#small.to_csv('sad.dat', sep='\t')
+
+			table = pd.concat([table.iloc[:cut_index, :], small, table.iloc[cut_index + 1:, :]])
+			table = table.reset_index(drop=True)
+		self.summary_table = table
 		return 1
 		
-	def overallMat(self):
-		if not self.__peptide or not self.__regions_res[('alpha', 'CDR3')] or not self.__regions_res[('beta', 'CDR3')]:
-			self.printerr('\nwriteInFile_CDR3_Pept_Dist: RESIDUE LIST IS EMPTY\n')
-			return 0
-			
-		acdr3len = len(self.__regions_res[('alpha', 'CDR3')])
-		bcdr3len = len(self.__regions_res[('beta', 'CDR3')])
-		peptlen = len(self.__peptide)
-		tb = pd.DataFrame(columns = ['complex',
-			'TRA/TRB',
-			'VReg',
-			'mutations',
-			'MHC',
-			'CDR3',
-			'CDR3 length',
-			'Peptide length',
-			'CDR3 position',
-			'Peptide position',
-			'CDR3 aa',
-			'Peptise aa',
-			'Distance',
-			'Energy'])
-			
+		
 	'''def convertTable(self):	
 		if self.isEmpty():
 			self.printerr(self.__info)

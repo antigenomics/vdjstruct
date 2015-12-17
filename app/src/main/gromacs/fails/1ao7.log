@@ -1,4 +1,4 @@
-GROMACS:    gmx pdb2gmx, VERSION 5.0.1
+GROMACS:    gmx grompp, VERSION 5.0.1
 
 GROMACS is written by:
 Emile Apol         Rossen Apostolov   Herman J.C. Berendsen Par Bjelkmar       
@@ -22,21 +22,44 @@ under the terms of the GNU Lesser General Public License
 as published by the Free Software Foundation; either version 2.1
 of the License, or (at your option) any later version.
 
-GROMACS:      gmx pdb2gmx, VERSION 5.0.1
+GROMACS:      gmx grompp, VERSION 5.0.1
 Executable:   /usr/local/gromacs/bin/gmx
 Library dir:  /usr/local/gromacs/share/gromacs/top
 Command line:
-  gmx pdb2gmx -f ../../../../truncpdbs/1ao7.pdb -o 1ao7.gro -water spce -missing -ff oplsaa
+  gmx grompp -f params/minim.mdp -c 1ao7.gro -p topol.top -n index.ndx -o em1ao7.tpr
 
-Opening force field file /usr/local/gromacs/share/gromacs/top/oplsaa.ff/aminoacids.r2b
-Warning: Number of atoms in ../../../../truncpdbs/1ao7.pdb is 0
+
+Back Off! I just backed up mdout.mdp to ./#mdout.mdp.1#
+
+NOTE 1 [file params/minim.mdp]:
+  With Verlet lists the optimal nstlist is >= 10, with GPUs >= 20. Note
+  that with the Verlet scheme, nstlist has no effect on the accuracy of
+  your simulation.
+
+Setting the LD random seed to 756242937
+Generated 331705 of the 331705 non-bonded parameter combinations
+Generating 1-4 interactions: fudge = 0.5
+Generated 331705 of the 331705 1-4 parameter combinations
+Excluding 3 bonded neighbours molecule type 'Protein_chain_C'
+Excluding 3 bonded neighbours molecule type 'Protein_chain_D'
+Excluding 3 bonded neighbours molecule type 'Protein_chain_E'
+
+NOTE 2 [file topol.top, line 47]:
+  System has non-zero total charge: 1.000000
+  Total charge should normally be an integer. See
+  http://www.gromacs.org/Documentation/Floating_Point_Arithmetic
+  for discussion on how close it should be to an integer.
+  
+
+
+Removing all charge groups because cutoff-scheme=Verlet
 
 -------------------------------------------------------
 Program gmx, VERSION 5.0.1
-Source code file: /home/mikhail/Development/Programs/gromacs-5.0.1/src/gromacs/fileio/pdbio.c, line: 523
+Source code file: /home/mikhail/Development/Programs/gromacs-5.0.1/src/gromacs/fileio/futil.cpp, line: 545
 
-Software inconsistency error:
-Trying to deduce atomnumbers when no pdb information is present
+File input/output error:
+index.ndx
 For more information and tips for troubleshooting, please check the GROMACS
 website at http://www.gromacs.org/Documentation/Errors
 -------------------------------------------------------

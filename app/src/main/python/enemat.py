@@ -133,40 +133,40 @@ def appendSeqs(path, idlist, atlist, aas):
     fl.close()
     return names
 
-item = sys.argv[1]
-if len(sys.argv) < 3:
+item = sys.argv[3]
+if len(sys.argv) < 5:
 	print 'NEED MORE PARAMETERS TO EXECUTE'		
 	exit(1)
 	
-indpath = 'src/main/gromacs/'
-path = indpath + 'params/'
-pdb_path = '../pdbs/'
-data_path = '../pdbs/final.annotations.txt'
-G = gromacs.cbook.IndexBuilder(indpath + item + '.gro')
-G.cat(indpath + 'index.ndx')
+index_file_dir = sys.argv[1]
+mdp_file_dir = index_file_dir + '/params'
 
-data = pd.DataFrame(pd.read_table(data_path, sep='\t'))
-info = data[data['pdb_id'] == item]
-if info.empty:
-	exit(1)
-protein = pdbmod.Interaction(info, pdb_path + item + '.pdb')
+#data_path = '../pdbs/final.annotations.txt'
+G = gromacs.cbook.IndexBuilder(index_file_dir + '/' + item + '.gro')
+G.cat(index_file_dir + '/index.ndx')
 
-st, atlist, aas = parseGro(indpath + item + '.gro')
+#data = pd.DataFrame(pd.read_table(data_path, sep='\t'))
+#info = data[data['pdb_id'] == item]
+#if info.empty:
+#	exit(1)
+#protein = pdbmod.Interaction(info, pdb_path + item + '.pdb')
 
-pseq = protein.getClearPeptideSeq()
+st, atlist, aas = parseGro(index_file_dir + '/' +item + '.gro')
+
+#pseq = protein.getClearPeptideSeq()
 #print pseq
-aseq = protein.getCDR3AlphaSeq()
+#aseq = protein.getCDR3AlphaSeq()
 #print aseq
-bseq = protein.getCDR3BetaSeq()
+#bseq = protein.getCDR3BetaSeq()
 #print bseq
-seq_list = [pseq, aseq, bseq]
-seq_list = sys.argv[2:]
+#seq_list = [pseq, aseq, bseq]
+seq_list = sys.argv[4:]
 
 borders_list = findSeqsInGro(st, seq_list)
 #print p, a, b
-names = appendSeqs(indpath + 'index.ndx', borders_list, atlist, aas)
-appendToMDP(path + 'minim.mdp', names)
-appendToGroupsDat(indpath + 'groups' + item + '.dat', names)
+names = appendSeqs(index_file_dir + '/index.ndx', borders_list, atlist, aas)
+appendToMDP(mdp_file_dir + '/minim.mdp', names)
+appendToGroupsDat(index_file_dir + '/groups' + item + '.dat', names)
 
 print '/*' + '*/ /*'.join([item] + seq_list) + '*/'
 
