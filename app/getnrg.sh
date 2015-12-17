@@ -9,21 +9,21 @@ function test {
     local status=$?
     if [ $status -ne 0 ]; then
     	echo
-    	"$@" >> getnrgfails/$name.log
+    	"$@" >> getnrgfails/log
         echo "error with $@"
         echo
-        continue
         #exit $status
     fi
     return $status
 }
 
-for file in `find $path -type f -name "*.pdb"`  #`find $path -type f -name "*(0).txt"`
+test python src/main/python/pdbstat.py `find $path -type f -name "*.pdb"` comp
+echo finish
+read
+for file in `find $path -type f -name "*.pdb"`
 do
 	mod=${file#$path'/'}
 	name=${mod/'.pdb'/''}
 	echo 'Running '$name'...'
-	
-	test python src/main/python/pdbstat.py $name comp
         ./src/main/gromacs/params/script.sh $name
 done

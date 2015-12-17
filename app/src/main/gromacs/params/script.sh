@@ -30,7 +30,7 @@ test gmx editconf -f $name.gro -o $name.gro -c -d 1.0 -bt cubic
 #gmx genion -s ions.tpr -o $name.gro -p topol.top -pname NA -nname CL -nn 8
 cd -
 
-seqs=$(python src/main/python/enemat.py $name)
+seqs=$(python src/main/python/enemat.py $*)
 #python src/main/python/enemat.py $name
 cd $bigpath
 test gmx grompp -f params/minim.mdp -c $name.gro -p topol.top -n index.ndx -o em$name.tpr

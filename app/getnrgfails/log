@@ -1,0 +1,433 @@
+['3o4l.pdb', '3uts.pdb', '3kxf.pdb', '3vxs.pdb', '2iam.pdb', '1oga.pdb', '3kpr.pdb', '4p5t.pdb', '4jfh.pdb', '4jfe.pdb', '2p5e.pdb', '4nqc.pdb', '3mv9.pdb', '3qdj.pdb', '4lcw.pdb', '3vxu.pdb', '1ao7.pdb', '4jfd.pdb', '1zgl.pdb', '3sjv.pdb', '3vwj.pdb', '4pj7.pdb', '4ozg.pdb', '4x6c.pdb', '3gsn.pdb', '3qib.pdb', '2bnr.pdb', '1fyt.pdb', '4pjh.pdb', '4qok.pdb', '3d39.pdb', '2vlk.pdb', '1qrn.pdb', '4e42.pdb', '3h9s.pdb', '4prp.pdb', '1j8h.pdb', '3mv8.pdb', '4pj9.pdb', '1qse.pdb', '1mi5.pdb', '3vxm.pdb', '3t0e.pdb', '3qeq.pdb', '3hg1.pdb', '4ozh.pdb', '3vwk.pdb', '4mji.pdb', '3qdm.pdb', '4pji.pdb', '4pj5.pdb', '2ypl.pdb', '4pjb.pdb', '2f53.pdb', '3utt.pdb', '4jff.pdb', '3d3v.pdb', '4l3e.pdb', '3qfj.pdb', '4pri.pdb', '4pjf.pdb', '4prh.pdb', '4jrx.pdb', '2gj6.pdb', '3huj.pdb', '2pye.pdb', '2f54.pdb', '2po6.pdb', '3sdx.pdb', '2vlj.pdb', '4en3.pdb', '2p5w.pdb', '1qsf.pdb', '4pjx.pdb', '2vlr.pdb', '4lcc.pdb', '4nqe.pdb', '4ftv.pdb', '3pwp.pdb', '4eup.pdb', '4g9f.pdb', '3mv7.pdb', '3pl6.pdb', '4ozi.pdb', '2wbj.pdb', '1bd2.pdb', '4qrp.pdb', '4x6d.pdb', '4g8g.pdb', '3kps.pdb', '3ffc.pdb', '4e41.pdb', '3qdg.pdb', '4l4t.pdb', '4l4v.pdb', '4pj8.pdb', '4ozf.pdb', '3vxr.pdb', '4jry.pdb', '2ak4.pdb', '2bnq.pdb', '3tzv.pdb', '2nx5.pdb', '4wo4.pdb', '4pje.pdb', '4grl.pdb', '4pja.pdb', '4may.pdb', '4nqd.pdb', '4pjc.pdb', '3dxa.pdb', '1ymm.pdb', '4pjd.pdb', '2ian.pdb', '4gg6.pdb', '4p4k.pdb', '3o6f.pdb', '2esv.pdb', '4pjg.pdb', '3w0w.pdb']
+['3o4l.pdb', '3uts.pdb', '3kxf.pdb', '3vxs.pdb', '2iam.pdb', '1oga.pdb', '3kpr.pdb', '4p5t.pdb', '4jfh.pdb', '4jfe.pdb', '2p5e.pdb', '4nqc.pdb', '3mv9.pdb', '3qdj.pdb', '4lcw.pdb', '3vxu.pdb', '1ao7.pdb', '4jfd.pdb', '1zgl.pdb', '3sjv.pdb', '3vwj.pdb', '4pj7.pdb', '4ozg.pdb', '4x6c.pdb', '3gsn.pdb', '3qib.pdb', '2bnr.pdb', '1fyt.pdb', '4pjh.pdb', '4qok.pdb', '3d39.pdb', '2vlk.pdb', '1qrn.pdb', '4e42.pdb', '3h9s.pdb', '4prp.pdb', '1j8h.pdb', '3mv8.pdb', '4pj9.pdb', '1qse.pdb', '1mi5.pdb', '3vxm.pdb', '3t0e.pdb', '3qeq.pdb', '3hg1.pdb', '4ozh.pdb', '3vwk.pdb', '4mji.pdb', '3qdm.pdb', '4pji.pdb', '4pj5.pdb', '2ypl.pdb', '4pjb.pdb', '2f53.pdb', '3utt.pdb', '4jff.pdb', '3d3v.pdb', '4l3e.pdb', '3qfj.pdb', '4pri.pdb', '4pjf.pdb', '4prh.pdb', '4jrx.pdb', '2gj6.pdb', '3huj.pdb', '2pye.pdb', '2f54.pdb', '2po6.pdb', '3sdx.pdb', '2vlj.pdb', '4en3.pdb', '2p5w.pdb', '1qsf.pdb', '4pjx.pdb', '2vlr.pdb', '4lcc.pdb', '4nqe.pdb', '4ftv.pdb', '3pwp.pdb', '4eup.pdb', '4g9f.pdb', '3mv7.pdb', '3pl6.pdb', '4ozi.pdb', '2wbj.pdb', '1bd2.pdb', '4qrp.pdb', '4x6d.pdb', '4g8g.pdb', '3kps.pdb', '3ffc.pdb', '4e41.pdb', '3qdg.pdb', '4l4t.pdb', '4l4v.pdb', '4pj8.pdb', '4ozf.pdb', '3vxr.pdb', '4jry.pdb', '2ak4.pdb', '2bnq.pdb', '3tzv.pdb', '2nx5.pdb', '4wo4.pdb', '4pje.pdb', '4grl.pdb', '4pja.pdb', '4may.pdb', '4nqd.pdb', '4pjc.pdb', '3dxa.pdb', '1ymm.pdb', '4pjd.pdb', '2ian.pdb', '4gg6.pdb', '4p4k.pdb', '3o6f.pdb', '2esv.pdb', '4pjg.pdb', '3w0w.pdb']
+Protein is not listed in the table! Closing...
+
+['3o4l.pdb', '3uts.pdb', '3kxf.pdb', '3vxs.pdb', '2iam.pdb', '1oga.pdb', '3kpr.pdb', '4p5t.pdb', '4jfh.pdb', '4jfe.pdb', '2p5e.pdb', '4nqc.pdb', '3mv9.pdb', '3qdj.pdb', '4lcw.pdb', '3vxu.pdb', '1ao7.pdb', '4jfd.pdb', '1zgl.pdb', '3sjv.pdb', '3vwj.pdb', '4pj7.pdb', '4ozg.pdb', '4x6c.pdb', '3gsn.pdb', '3qib.pdb', '2bnr.pdb', '1fyt.pdb', '4pjh.pdb', '4qok.pdb', '3d39.pdb', '2vlk.pdb', '1qrn.pdb', '4e42.pdb', '3h9s.pdb', '4prp.pdb', '1j8h.pdb', '3mv8.pdb', '4pj9.pdb', '1qse.pdb', '1mi5.pdb', '3vxm.pdb', '3t0e.pdb', '3qeq.pdb', '3hg1.pdb', '4ozh.pdb', '3vwk.pdb', '4mji.pdb', '3qdm.pdb', '4pji.pdb', '4pj5.pdb', '2ypl.pdb', '4pjb.pdb', '2f53.pdb', '3utt.pdb', '4jff.pdb', '3d3v.pdb', '4l3e.pdb', '3qfj.pdb', '4pri.pdb', '4pjf.pdb', '4prh.pdb', '4jrx.pdb', '2gj6.pdb', '3huj.pdb', '2pye.pdb', '2f54.pdb', '2po6.pdb', '3sdx.pdb', '2vlj.pdb', '4en3.pdb', '2p5w.pdb', '1qsf.pdb', '4pjx.pdb', '2vlr.pdb', '4lcc.pdb', '4nqe.pdb', '4ftv.pdb', '3pwp.pdb', '4eup.pdb', '4g9f.pdb', '3mv7.pdb', '3pl6.pdb', '4ozi.pdb', '2wbj.pdb', '1bd2.pdb', '4qrp.pdb', '4x6d.pdb', '4g8g.pdb', '3kps.pdb', '3ffc.pdb', '4e41.pdb', '3qdg.pdb', '4l4t.pdb', '4l4v.pdb', '4pj8.pdb', '4ozf.pdb', '3vxr.pdb', '4jry.pdb', '2ak4.pdb', '2bnq.pdb', '3tzv.pdb', '2nx5.pdb', '4wo4.pdb', '4pje.pdb', '4grl.pdb', '4pja.pdb', '4may.pdb', '4nqd.pdb', '4pjc.pdb', '3dxa.pdb', '1ymm.pdb', '4pjd.pdb', '2ian.pdb', '4gg6.pdb', '4p4k.pdb', '3o6f.pdb', '2esv.pdb', '4pjg.pdb', '3w0w.pdb']
+['3o4l.pdb', '3uts.pdb', '3kxf.pdb', '3vxs.pdb', '2iam.pdb', '1oga.pdb', '3kpr.pdb', '4p5t.pdb', '4jfh.pdb', '4jfe.pdb', '2p5e.pdb', '4nqc.pdb', '3mv9.pdb', '3qdj.pdb', '4lcw.pdb', '3vxu.pdb', '1ao7.pdb', '4jfd.pdb', '1zgl.pdb', '3sjv.pdb', '3vwj.pdb', '4pj7.pdb', '4ozg.pdb', '4x6c.pdb', '3gsn.pdb', '3qib.pdb', '2bnr.pdb', '1fyt.pdb', '4pjh.pdb', '4qok.pdb', '3d39.pdb', '2vlk.pdb', '1qrn.pdb', '4e42.pdb', '3h9s.pdb', '4prp.pdb', '1j8h.pdb', '3mv8.pdb', '4pj9.pdb', '1qse.pdb', '1mi5.pdb', '3vxm.pdb', '3t0e.pdb', '3qeq.pdb', '3hg1.pdb', '4ozh.pdb', '3vwk.pdb', '4mji.pdb', '3qdm.pdb', '4pji.pdb', '4pj5.pdb', '2ypl.pdb', '4pjb.pdb', '2f53.pdb', '3utt.pdb', '4jff.pdb', '3d3v.pdb', '4l3e.pdb', '3qfj.pdb', '4pri.pdb', '4pjf.pdb', '4prh.pdb', '4jrx.pdb', '2gj6.pdb', '3huj.pdb', '2pye.pdb', '2f54.pdb', '2po6.pdb', '3sdx.pdb', '2vlj.pdb', '4en3.pdb', '2p5w.pdb', '1qsf.pdb', '4pjx.pdb', '2vlr.pdb', '4lcc.pdb', '4nqe.pdb', '4ftv.pdb', '3pwp.pdb', '4eup.pdb', '4g9f.pdb', '3mv7.pdb', '3pl6.pdb', '4ozi.pdb', '2wbj.pdb', '1bd2.pdb', '4qrp.pdb', '4x6d.pdb', '4g8g.pdb', '3kps.pdb', '3ffc.pdb', '4e41.pdb', '3qdg.pdb', '4l4t.pdb', '4l4v.pdb', '4pj8.pdb', '4ozf.pdb', '3vxr.pdb', '4jry.pdb', '2ak4.pdb', '2bnq.pdb', '3tzv.pdb', '2nx5.pdb', '4wo4.pdb', '4pje.pdb', '4grl.pdb', '4pja.pdb', '4may.pdb', '4nqd.pdb', '4pjc.pdb', '3dxa.pdb', '1ymm.pdb', '4pjd.pdb', '2ian.pdb', '4gg6.pdb', '4p4k.pdb', '3o6f.pdb', '2esv.pdb', '4pjg.pdb', '3w0w.pdb']
+Protein 3o4l.pdb is not listed in the table! Closing...
+
+['3o4l.pdb', '3uts.pdb', '3kxf.pdb', '3vxs.pdb', '2iam.pdb', '1oga.pdb', '3kpr.pdb', '4p5t.pdb', '4jfh.pdb', '4jfe.pdb', '2p5e.pdb', '4nqc.pdb', '3mv9.pdb', '3qdj.pdb', '4lcw.pdb', '3vxu.pdb', '1ao7.pdb', '4jfd.pdb', '1zgl.pdb', '3sjv.pdb', '3vwj.pdb', '4pj7.pdb', '4ozg.pdb', '4x6c.pdb', '3gsn.pdb', '3qib.pdb', '2bnr.pdb', '1fyt.pdb', '4pjh.pdb', '4qok.pdb', '3d39.pdb', '2vlk.pdb', '1qrn.pdb', '4e42.pdb', '3h9s.pdb', '4prp.pdb', '1j8h.pdb', '3mv8.pdb', '4pj9.pdb', '1qse.pdb', '1mi5.pdb', '3vxm.pdb', '3t0e.pdb', '3qeq.pdb', '3hg1.pdb', '4ozh.pdb', '3vwk.pdb', '4mji.pdb', '3qdm.pdb', '4pji.pdb', '4pj5.pdb', '2ypl.pdb', '4pjb.pdb', '2f53.pdb', '3utt.pdb', '4jff.pdb', '3d3v.pdb', '4l3e.pdb', '3qfj.pdb', '4pri.pdb', '4pjf.pdb', '4prh.pdb', '4jrx.pdb', '2gj6.pdb', '3huj.pdb', '2pye.pdb', '2f54.pdb', '2po6.pdb', '3sdx.pdb', '2vlj.pdb', '4en3.pdb', '2p5w.pdb', '1qsf.pdb', '4pjx.pdb', '2vlr.pdb', '4lcc.pdb', '4nqe.pdb', '4ftv.pdb', '3pwp.pdb', '4eup.pdb', '4g9f.pdb', '3mv7.pdb', '3pl6.pdb', '4ozi.pdb', '2wbj.pdb', '1bd2.pdb', '4qrp.pdb', '4x6d.pdb', '4g8g.pdb', '3kps.pdb', '3ffc.pdb', '4e41.pdb', '3qdg.pdb', '4l4t.pdb', '4l4v.pdb', '4pj8.pdb', '4ozf.pdb', '3vxr.pdb', '4jry.pdb', '2ak4.pdb', '2bnq.pdb', '3tzv.pdb', '2nx5.pdb', '4wo4.pdb', '4pje.pdb', '4grl.pdb', '4pja.pdb', '4may.pdb', '4nqd.pdb', '4pjc.pdb', '3dxa.pdb', '1ymm.pdb', '4pjd.pdb', '2ian.pdb', '4gg6.pdb', '4p4k.pdb', '3o6f.pdb', '2esv.pdb', '4pjg.pdb', '3w0w.pdb']
+['3o4l', '3uts', '3kxf', '3vxs', '2iam', '1oga', '3kpr', '4p5t', '4jfh', '4jfe', '2p5e', '4nqc', '3mv9', '3qdj', '4lcw', '3vxu', '1ao7', '4jfd', '1zgl', '3sjv', '3vwj', '4pj7', '4ozg', '4x6c', '3gsn', '3qib', '2bnr', '1fyt', '4pjh', '4qok', '3d39', '2vlk', '1qrn', '4e42', '3h9s', '4prp', '1j8h', '3mv8', '4pj9', '1qse', '1mi5', '3vxm', '3t0e', '3qeq', '3hg1', '4ozh', '3vwk', '4mji', '3qdm', '4pji', '4pj5', '2ypl', '4pjb', '2f53', '3utt', '4jff', '3d3v', '4l3e', '3qfj', '4pri', '4pjf', '4prh', '4jrx', '2gj6', '3huj', '2pye', '2f54', '2po6', '3sdx', '2vlj', '4en3', '2p5w', '1qsf', '4pjx', '2vlr', '4lcc', '4nqe', '4ftv', '3pwp', '4eup', '4g9f', '3mv7', '3pl6', '4ozi', '2wbj', '1bd2', '4qrp', '4x6d', '4g8g', '3kps', '3ffc', '4e41', '3qdg', '4l4t', '4l4v', '4pj8', '4ozf', '3vxr', '4jry', '2ak4', '2bnq', '3tzv', '2nx5', '4wo4', '4pje', '4grl', '4pja', '4may', '4nqd', '4pjc', '3dxa', '1ymm', '4pjd', '2ian', '4gg6', '4p4k', '3o6f', '2esv', '4pjg', '3w0w']
+
+Protein name: 3o4l
+
+
+Protein name: 3uts
+
+
+Protein name: 3kxf
+
+
+Protein name: 3vxs
+
+
+Protein name: 2iam
+
+
+Protein name: 1oga
+
+
+Protein name: 3kpr
+
+
+Protein name: 4p5t
+
+
+definePeptideChain(): 4p5t	;TOO MANY AMINO ACIDS (199) TO BE A PEPTIDE :(
+
+
+Protein name: 3o4l
+
+
+Protein name: 3uts
+
+
+Protein name: 3kxf
+
+
+Protein name: 3vxs
+
+
+Protein name: 2iam
+
+
+Protein name: 1oga
+
+
+Protein name: 3kpr
+
+
+Protein name: 4p5t
+
+
+definePeptideChain(): 4p5t	;TOO MANY AMINO ACIDS (199) TO BE A PEPTIDE :(
+
+
+Protein name: 3o4l
+
+
+Protein name: 3uts
+
+
+Protein name: 3kxf
+
+
+Protein name: 3vxs
+
+
+Protein name: 2iam
+
+
+Protein name: 1oga
+
+
+Protein name: 3kpr
+
+
+Protein name: 4p5t
+
+
+definePeptideChain(): 4p5t	;TOO MANY AMINO ACIDS (199) TO BE A PEPTIDE :(
+
+
+Protein name: 3o4l
+
+
+Protein name: 3o4l
+
+
+Protein name: 3uts
+
+
+Protein name: 3uts
+
+
+Protein name: 3kxf
+
+
+Protein name: 3kxf
+
+
+Protein name: 1oga
+
+
+Protein name: 1ao7
+
+
+Protein name: 1zgl
+
+
+Protein name: 1fyt
+
+
+Protein name: 1qrn
+
+
+Protein name: 1j8h
+
+
+Protein name: 1qse
+
+
+Protein name: 1mi5
+
+
+Protein name: 1qsf
+
+
+Protein name: 1bd2
+
+
+Protein name: 1ymm
+
+
+Protein name: 1oga
+
+
+Protein name: 1ao7
+
+
+Protein name: 1zgl
+
+
+Protein name: 1fyt
+
+
+Protein name: 1qrn
+
+
+Protein name: 1j8h
+
+
+Protein name: 1qse
+
+
+Protein name: 1mi5
+
+
+Protein name: 1qsf
+
+
+Protein name: 1bd2
+
+
+Protein name: 1ymm
+
+
+TRAV27 not found in 1oga!
+
+
+TRAV27 not found in 1oga!
+
+
+TRAV12-2 not found in 1ao7!
+
+
+TRAV12-2 not found in 1ao7!
+
+
+TRAV9-2 not found in 1zgl!
+
+
+TRAV9-2 not found in 1zgl!
+
+
+TRAV8-4 not found in 1fyt!
+
+
+TRAV8-4 not found in 1fyt!
+
+
+TRAV12-2 not found in 1qrn!
+
+
+TRAV12-2 not found in 1qrn!
+
+
+TRAV8-4 not found in 1j8h!
+
+
+TRAV8-4 not found in 1j8h!
+
+
+TRAV12-2 not found in 1qse!
+
+
+TRAV12-2 not found in 1qse!
+
+
+TRAV26-2 not found in 1mi5!
+
+
+TRAV26-2 not found in 1mi5!
+
+
+TRAV12-2 not found in 1qsf!
+
+
+TRAV12-2 not found in 1qsf!
+
+
+TRAV29DV5 not found in 1bd2!
+
+
+TRAV29DV5 not found in 1bd2!
+
+
+TRAV17 not found in 1ymm!
+
+
+TRAV17 not found in 1ymm!
+
+
+Protein name: 1oga
+
+
+Protein name: 1ao7
+
+
+Protein name: 1zgl
+
+
+Protein name: 1fyt
+
+
+Protein name: 1qrn
+
+
+Protein name: 1j8h
+
+
+Protein name: 1qse
+
+
+Protein name: 1mi5
+
+
+Protein name: 1qsf
+
+
+Protein name: 1bd2
+
+
+Protein name: 1ymm
+
+
+Protein name: 1oga
+
+
+Protein name: 1ao7
+
+
+Protein name: 1zgl
+
+
+Protein name: 1fyt
+
+
+Protein name: 1oga
+
+
+Protein name: 1ao7
+
+
+Protein name: 1zgl
+
+
+Protein name: 1fyt
+
+
+Protein name: 1qrn
+
+
+Protein name: 1j8h
+
+
+Protein name: 1qse
+
+
+Protein name: 1mi5
+
+
+Protein name: 1qsf
+
+
+Protein name: 1bd2
+
+
+Protein name: 1ymm
+
+
+Protein name: 1oga
+
+
+Protein name: 1ao7
+
+
+Protein name: 1zgl
+
+
+Protein name: 1fyt
+
+
+Protein name: 1oga
+
+
+Protein name: 1ao7
+
+
+Protein name: 1zgl
+
+
+Protein name: 1fyt
+
+
+Protein name: 1oga
+
+
+Protein name: 1ao7
+
+
+Protein name: 1zgl
+
+
+Protein name: 1fyt
+
+
+Protein name: 1qrn
+
+
+Protein name: 1oga
+
+
+Protein name: 1ao7
+
+
+Protein name: 1zgl
+
+
+Protein name: 1fyt
+
+
+Protein name: 1qrn
+
+
+Protein name: 1j8h
+
+
+Protein name: 1qse
+
+
+Protein name: 1mi5
+
+
+Protein name: 1oga
+
+
+Protein name: 1ao7
+
+
+Protein name: 1zgl
+
+
+Protein name: 1fyt
+
+
+Protein name: 1oga
+
+
+Protein name: 1ao7
+
+
+Protein name: 1zgl
+
+
+Protein name: 1fyt
+
+
+Protein name: 1oga
+
+
+Protein name: 1ao7
+
+
+Protein name: 1zgl
+
+
+Protein name: 1fyt
+
+
+Protein name: 1qrn
+
+
+Protein name: 1oga
+
+
+Protein name: 1ao7
+
+
+Protein name: 1zgl
+
+
+Protein name: 1fyt
+

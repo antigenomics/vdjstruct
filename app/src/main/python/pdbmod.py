@@ -5,39 +5,37 @@ from Bio.PDB import PPBuilder
 from Bio.PDB import Polypeptide
 import pandas as pd
 import numpy as np
-
-#flag = True if you wanna write useless stuff
-flag = False
+import subprocess
 
 class Interaction:
-	def __init__(self, struct, chains, mhc, cdr3_a, cdr3_b):
-		self.__name = struct.get_id()		
+	def __init__(self, table, pdb):
+		table.index = table.reset_index(drop=True)
+		struct = PDBParser().get_structure(table['pdb_id'][0], pdb)
+		table = table.fillna('')
+		table.insert(table.columns.get_loc('tcr_chain'), 'tcr_chain_name', ['alpha'] * 3 + ['beta'] * 3)
+		
+		self.__table = table
+		self.__name = str(struct.get_id())		
 		self.__struct = struct
-		self.__chains = chains
-		self.__pepchain = ''
-		self.__cdr3_a_seq = cdr3_a[0]
-		self.__cdr3_b_seq = cdr3_b[0]
-		self.__vreg_a = cdr3_a[1]
-		self.__vreg_b = cdr3_a[1]
-		self.__mhc = mhc
-		self.__a_flanked = []
-		self.__b_flanked = []
-		self.__p_flanked = []
+		self.__chains = [chain.get_id() for chain in struct[0]]
+		self.__regions = table.groupby(['tcr_chain_name', 'tcr_region'])
+		self.__regions_res = self.__regions.groups
+		for key in self.__regions_res.keys():
+			self.__regions_res[key] = []
 		self.__peptide = []
-		self.__cdr3_a = []
-		self.__cdr3_b = []
-		self.__d_matrix_a = []
-		self.__d_matrix_b = []
-		self.__e_matrix_a = []
-		self.__e_matrix_b = []
+		self.__d_matrices = {}
+		self.__e_matrices = {}
 		self.__info = ''
 		self.verbose = True
-		self.getCDR3Residues()
-		self.definePeptideChain()
+		if not self.getRegionsResidues():
+			print 'SOME REGION WAS NOT FOUND IN PDB'
+			#return 0
+		if not self.definePeptideChain():
+			return 0
 		
 	def __str__(self):
 		s = '\nprotein name: ' + self.__name + \
-			'\npeptide: ' + self.getPeptideSeq() + \
+			'\npeptide: ' + self.getClearPeptideSeq() + \
 			'\ncdr3 alpha: ' + self.__cdr3_a_seq + \
 			'\ncdr3 beta: ' + self.__cdr3_b_seq + '\n'
 		return s
@@ -45,16 +43,6 @@ class Interaction:
 	def printerr(self, err):
 		if self.verbose:
 			print err
-			exit(1)
-		
-	def isEmpty(self):
-		if not self.__cdr3_a:
-			return True
-		if not self.__cdr3_b:
-			return True
-		if not self.__peptide:
-			return True
-		return False
 		
 	def getSeqLocation(self, seq):
 		ppb=PPBuilder()
@@ -76,218 +64,173 @@ class Interaction:
 			return None, None, None
 		return beg, end, chain
 		
-	def getCDR3Residues(self):
+	def getRegionsResidues(self):
 		ppb=PPBuilder()
 		res = []
 		bltpep = ppb.build_peptides(self.__struct[0])
-		cdr3_a_beg = 1
-		cdr3_a_end = 1
-		cdr3_b_beg = 1
-		cdr3_b_end = 1
-		for pp in bltpep: 
-			s = str(pp.get_sequence())
-			ind = s.find(self.__cdr3_a_seq, 0, len(s))
-			if (ind != -1):
-				for i in range(ind, ind + len(self.__cdr3_a_seq)):
-					res.append(pp[i])
-				self.__cdr3_a = res
-				cdr3_a_beg = cdr3_a_beg + ind
-				cdr3_a_end = cdr3_a_beg + len(self.__cdr3_a_seq) - 1
-				self.__a_flanked = [cdr3_a_beg, cdr3_a_end]
-				break
-			cdr3_a_beg = cdr3_a_beg + len(pp)
-				
-		if not res:	
-			line = '\n' + self.__cdr3_a_seq + ' not found in '+str(self.__struct.get_id()) + '!\n'
-			self.__info = self.__info + line
-			self.printerr('\ngetCDR3Indices(): ' + line)
-		
-		res = []
-		for pp in bltpep: 
-			s = str(pp.get_sequence())
-			ind = s.find(self.__cdr3_b_seq, 0, len(s))
-			if (ind != -1):
-				for i in range(ind, ind+len(self.__cdr3_b_seq)):
-					res.append(pp[i])
-				self.__cdr3_b = res
-				cdr3_b_beg = cdr3_b_beg + ind
-				cdr3_b_end = cdr3_b_beg + len(self.__cdr3_b_seq) - 1
-				self.__b_flanked = [cdr3_b_beg, cdr3_b_end]
-				break
-			cdr3_b_beg = cdr3_b_beg + len(pp)
-			
-		if not res:
-			line = '\n'+self.__cdr3_b_seq+' not found in '+str(self.__struct.get_id())+'!\n'
-			self.printerr('\ngetCDR3Indices(): ' + line)
-			self.__info = self.__info + line
+		for key in self.__regions_res:
+			for pp in bltpep: 
+				s = str(pp.get_sequence())
+				reg_seq = list(self.__regions.get_group(key)['tcr_region_seq'])[0]
+				ind = s.find(reg_seq, 0, len(s))
+				if (ind != -1):
+					for i in range(ind, ind + len(reg_seq)):
+						res.append(pp[i])
+					self.__regions_res[key] = res
+					break
+			if not res:	
+				line = '\n' + reg_seq + ' not found in '+ self.__name + '!\n'
+				self.__info = self.__info + line
+				self.printerr('\ngetRegionResidues(): ' + line)
+				return 0
+			res = []
+		return 1
 				
 	def definePeptideChain(self):
 		l = 'INFINITY'
-		for chid in self.__chains:
-			buf = len(PPBuilder().build_peptides(self.__struct[0][chid])[0])
-			if (buf <= l):
-				l = buf
-				i = chid
-		pp = list(self.__struct[0][i])
-		if (len(pp) > 20):
+		if not self.__table['chain_antigen'][0]:
+			for i in self.__chains:
+				buf = len(PPBuilder().build_peptides(self.__struct[0][i])[0])
+				if (buf <= l):
+					l = buf
+					chid = i
+		else:
+			chid = self.__table['chain_antigen'][0]
+					
+		pp = list(self.__struct[0][chid])
+		
+		if (len(pp) > 30):
 			line = self.__name + '\t;TOO MANY AMINO ACIDS (' + str(len(pp)) + ') TO BE A PEPTIDE :(\n'
 			self.printerr('\ndefinePeptideChain(): ' + line)
 			self.__info = self.__info + line
-			raw_input()
-			exit(1)
-		else:
-			self.__pepchain = i
-			rnum = 1
-			for chain in self.__struct[0]:
-				if chain != self.__struct[0][i]:
-					rnum = rnum + len(PPBuilder().build_peptides(chain)[0])
-				else:
-					break
-			cdr3_p_beg = rnum	
-			newpp = []
-			for r in pp:
-				if (Polypeptide.is_aa(r.get_resname(), standard=True)):
-					newpp.append(r)
-			self.__peptide = newpp
-			cdr3_p_end = cdr3_p_beg + len(self.__peptide) - 1
-			self.__p_flanked = [cdr3_p_beg, cdr3_p_end]
+			return 0
+				
+		pep_res = []
+		for r in pp:
+			if (Polypeptide.is_aa(r.get_resname(), standard=True)):
+				pep_res.append(r)
+		self.__peptide = pep_res
+		self.__regions_res.update({'peptide':pep_res})
+		return 1
 						
-	def calcDistMatrices(self):
-		mat = []
-		if not self.__peptide:
-			self.printerr('\ncalcDistMatrices(): PEPTIDE IS EMPTY\n')
-			return
-		if not self.__cdr3_a:
-			self.printerr('\ncalcDistMatrices(): ALPHA CDR3 IS EMPTY\n')
-		else:
-			for res1 in list(self.__peptide):
-				mat.append([])	
-				for res2 in self.__cdr3_a:	
-					mat[len(mat)-1].append(residuesMinDist(res1, res2))
-			self.__d_matrix_a = mat
-		mat = []
-		if not self.__cdr3_b:
-			self.printerr('\ncalcDistMatrices(): BETA CDR3 IS EMPTY\n')
-		else:
-			for res1 in list(self.__peptide):
-				mat.append([])		
-				for res2 in self.__cdr3_b:
-					mat[len(mat)-1].append(residuesMinDist(res1, res2))
-			self.__d_matrix_b = mat
-			
-	def getNrgMatrices(self, path):
-		# check
-		a, b, annot = extractXPM(path)
-		slist = [self.__name, self.getPeptideSeq(), self.getCDR3AlphaSeq(), self.getCDR3BetaSeq()]
-		if annot != slist:
-			line = slist + '\n' + annot +  '\nMISMATCH\n'
-			self.printerr('\nextractXPM(): \n' + line)
-			self.__info = self.__info + line
-			return
-
-		self.__e_matrix_a = a
-		self.__e_matrix_b = b
+	def calcDistMatrices(self, key1, key2):
+		res_list_1 = self.getRegion(key1)
+		res_list_2 = self.getRegion(key2)
 		
-	def getPeptideSeq(self):
+		if not res_list_1 or not res_list_2:
+			self.printerr('\ncalcDistMatrices(): RESIDUE LIST IS EMPTY\n')
+			return 0
+			
+		values = []
+		for res1 in res_list_1:
+			values.append([])	
+			for res2 in res_list_2:	
+				values[len(values)-1].append(residuesMinDist(res1, res2))
+				
+		rows = [Polypeptide.three_to_one(x.get_resname()) for x in res_list_1]	
+		cols = [Polypeptide.three_to_one(x.get_resname()) for x in res_list_2]
+		mat = pd.DataFrame(values, index = rows, columns = cols)
+		self.__d_matrices.update({(key1, key2): mat})
+		return 1
+			
+	def calcNrgMatrices(self, path, *keys):
+		res_list = [self.getRegion(key) for key in keys]
+		if not all(res_list):
+			self.printerr('\ncalcNrgMatrices: RESIDUE LIST IS EMPTY\n')
+			return 0
+	
+		# Truncate pdb
+		self.pushToPDB("../truncpdbs/", *keys)
+		string_of_seqs = " ".join([''.join(map(lambda res: Polypeptide.three_to_one(res.get_resname()), x)) for x in res_list])
+		
+		# Execute Gromacs script
+		bashCommand = "./src/main/gromacs/params/script.sh " + self.__name + " " + string_of_seqs
+		exitcode = subprocess.call(bashCommand, shell=True)
+		
+		# Extract DataFrames from xpm files
+		bad_mat, annotation = extractXPM(path)
+		if len(annotation) > 2: 
+			aminos = reduce(lambda x, y: list(x) + list(y), annotation[1:])
+		else:
+			aminos = list(annotation[-1])
+		mat = pd.DataFrame(bad_mat, columns = aminos, index = aminos)
+		
+		ind_list = [0]
+		[ind_list.append(len(x) + ind_list[-1]) for x in annotation[1:]]
+		
+		sub_mats = []
+		sub_mats_keys = []
+		for i in range(len(res_list)):
+			for j in range(i, len(res_list)):
+				sub_mats_keys.append((keys[i], keys[j]))
+				sub_mats.append(mat.iloc[ind_list[i]:ind_list[i + 1], ind_list[j]:ind_list[j + 1]])
+				
+		self.__e_matrices.update(dict(zip(sub_mats_keys, sub_mats)))
+		return 1
+		
+	def getClearPeptideSeq(self):
 		if not self.__peptide:
 			self.printerr('\ngetPeptideSeq(): PEPTIDE (' + self.__name +') IS EMPTY\n')
-			return	
+			return 0
 		s = ''
 		for r in list(self.__peptide):
 			s = s + Polypeptide.three_to_one(r.get_resname())
 		return s
 		
 	def getCDR3AlphaSeq(self):
-		return self.__cdr3_a_seq
+		return list(self.__regions.get_group(('alpha', 'CDR3'))['tcr_region_seq'])[0]
 		
 	def getCDR3BetaSeq(self):
-		return self.__cdr3_b_seq
+		return list(self.__regions.get_group(('beta', 'CDR3'))['tcr_region_seq'])[0]
 	
-	@staticmethod	
-	def matToStr(pep, cdr3, mat):
-		s = '/'
-		for r in cdr3:
-			s = s + '\t' + Polypeptide.three_to_one(r.get_resname())
-		s = s + '\n'
-		for i in range(0, len(mat)):
-			s = s + Polypeptide.three_to_one(pep[i].get_resname())
-			for j in range(0, len(mat[i])):
-				s = s +'\t' + str(mat[i][j])
-			s = s + '\n'
-		return s
-		
-	def a_matToStr(self):
-		if not self.__d_matrix_a:
-			self.printerr('\na_matToStr(): ALPHA MATRIX IS EMPTY\n')
-			return
-		s = Interaction.matToStr(self.__peptide, self.__cdr3_a, self.__d_matrix_a)
-		return s
-		
-	def b_matToStr(self):
-		if not self.__d_matrix_b:
-			self.printerr('\nb_matToStr(): BETA MATRIX IS EMPTY\n')
-			return
-		s = Interaction.matToStr(self.__peptide, self.__cdr3_b, self.__d_matrix_b)
-		return s
-		
-	def a_e_matToStr(self):
-		if not self.__e_matrix_a:
-			self.printerr('\na_matToStr(): ALPHA MATRIX IS EMPTY\n')
-			return
-		s = Interaction.matToStr(self.__peptide, self.__cdr3_a, self.__e_matrix_a)
-		return s
-		
-	def b_e_matToStr(self):
-		if not self.__e_matrix_b:
-			self.printerr('\nb_matToStr(): BETA MATRIX IS EMPTY\n')
-			return
-		s = Interaction.matToStr(self.__peptide, self.__cdr3_b, self.__e_matrix_b)
-		return s
+	def getRegion(self, key):
+		return self.__regions_res[key]
 	
-	def writeInFile_CDR3_Pept_Dist(self, path = 'generated/pdbcdr3/dist_mats/cdr3+pep/'):#, f):
-		if self.isEmpty():
-#			f.write(self.__info)
-#			f.write('\n')
-			return
+	def getDistMatrix(self, key):
+		return self.__d_matrices[key]
+		
+	def getNrgMatrix(self, key):
+		return self.__e_matrices[key]
+	
+	def writeInFile_CDR3_Pept_Dist(self, path = 'generated/pdbcdr3/dist_mats/cdr3+pep/'):
+		if self.getDistMatrix(('peptide', ('alpha', 'CDR3'))).empty or self.getDistMatrix(('peptide', ('beta', 'CDR3'))).empty:
+			self.printerr('\nwriteInFile_CDR3_Pept_Dist: DISTANCE MATRIX IS EMPTY\n')
+			return 0
 			
-		for i in range(0, 2):
-			f2 = open(path + self.__name+'('+str(i)+').txt', 'w')
-			if (i == 0):
-#				f.write(self.a_matToStr())
-				f2.write(self.a_matToStr())
-			if (i == 1):
-#				f.write(self.b_matToStr())
-				f2.write(self.b_matToStr())
-#			f.write('\n')
-			f2.write('\n')
-			f2.close()
+		f = open(path + self.__name+'(0).txt', 'w')
+		self.getDistMatrix(('peptide', ('alpha', 'CDR3'))).to_csv(f, sep = '\t')
+		f.close()
+		f = open(path + self.__name+'(1).txt', 'w')
+		self.getDistMatrix(('peptide', ('beta', 'CDR3'))).to_csv(f, sep = '\t')
+		f.close()
+		return 1
 			
-	def writeInFile_CDR3_Pept_Nrg(self):
-		if self.isEmpty():
-			self.printerr(self.__info)
-			return
+	def writeInFile_CDR3_Pept_Nrg(self, path = 'generated/pdbcdr3/energy_mats/'):
+		if self.getNrgMatrix(('peptide', ('alpha', 'CDR3'))).empty or self.getNrgMatrix(('peptide', ('beta', 'CDR3'))).empty:
+			self.printerr('\nwriteInFile_CDR3_Pept_Nrg: ENERGY MATRIX IS EMPTY\n')
+			return 0
 			
-		for i in range(0, 2):
-			f = open('generated/pdbcdr3/energy_mats/'+self.__name+'('+str(i)+').txt', 'w')
-			if (i == 0):
-				f.write(self.a_e_matToStr())
-			if (i == 1):
-				f.write(self.b_e_matToStr())
-			f.write('\n')
-			f.close()
+		f = open(path + self.__name+'(0).txt', 'w')
+		self.getNrgMatrix(('peptide', ('alpha', 'CDR3'))).to_csv(f, sep = '\t')
+		f.close()
+		f = open(path + self.__name+'(1).txt', 'w')
+		self.getNrgMatrix(('peptide', ('beta', 'CDR3'))).to_csv(f, sep = '\t')
+		f.close()
+		return 1
 			
 	def indicesToStr(self):
-		s = ''
-		if self.isEmpty():
-			f.write(self.__info)
-			return s
+		if not self.__peptide or not self.__regions_res[('alpha', 'CDR3')] or not self.__regions_res[('beta', 'CDR3')]:
+			self.printerr('\nwriteInFile_CDR3_Pept_Dist: RESIDUE LIST IS EMPTY\n')
+			return 0
+			
+		s = ''	
 		for r in self.__peptide:
 			s = s + str(r.get_id())+' '
 		s = s + '\n'
-		for r in self.__cdr3_a:
+		for r in self.__regions_res[('alpha', 'CDR3')]:
 			s = s + str(r.get_id())+' '
 		s = s + '\n'
-		for r in self.__cdr3_b:
+		for r in self.__regions_res[('beta', 'CDR3')]:
 			s = s + str(r.get_id())+' '
 		s = s + '\n\n'
 		return s
@@ -295,34 +238,37 @@ class Interaction:
 	def printIndices(self, f):
 		f.write(self.indicesToStr())
 		
-	def utilGromacs(self):
-		print [self.__p_flanked, self.__a_flanked, self.__b_flanked]
+	#def utilGromacs(self):
+	#	print [self.__p_flanked, self.__a_flanked, self.__b_flanked]
 		
 	class _ResSelect(Select):
-	    def __init__(self, cdr3_a, cdr3_b, cdr3_peptide):
-	    	self.__sub_cdr3_a = cdr3_a
-	    	self.__sub_cdr3_b = cdr3_b
-	    	self.__sub_cdr3_peptide = cdr3_peptide
+	    def __init__(self, *res_lists):
+	    	self.__res_list = reduce(lambda x, y: x + y, res_lists)
 	    def accept_residue(self, residue):
-		if residue in (self.__sub_cdr3_a + self.__sub_cdr3_b + self.__sub_cdr3_peptide):
+		if residue in self.__res_list:
 		    return 1
 		else:
 		    return 0
 	
-	def pushToPDB(self, path = "../truncpdbs/"):
-		if self.isEmpty():
-			self.printerr(self.__info)
-			return
+	def pushToPDB(self, path, *keys):
+		seq_list = [self.getRegion(key) for key in keys]
+		if not all(seq_list):
+			self.printerr('\nwriteInFile_CDR3_Pept_Dist: RESIDUE LIST IS EMPTY\n')
+			return 0
+
 		io = PDBIO()
 		io.set_structure(self.__struct)
-		io.save(path + self.__name + ".pdb", self._ResSelect(self.__cdr3_a, self.__cdr3_b, self.__peptide))
+		print seq_list
+		io.save(path + self.__name + ".pdb", self._ResSelect(*seq_list))
+		return 1
 		
 	def overallMat(self):
-		if self.isEmpty() or self.__d_matrix_a or self.__d_matrix_b or self.__e_matrix_a or self.__e_matrix_b:
-			print "def overallMat(self): Get more info first! Closing...\n"
-			exit(1)
-		acdr3len = len(self.__cdr3_a)
-		bcdr3len = len(self.__cdr3_b)
+		if not self.__peptide or not self.__regions_res[('alpha', 'CDR3')] or not self.__regions_res[('beta', 'CDR3')]:
+			self.printerr('\nwriteInFile_CDR3_Pept_Dist: RESIDUE LIST IS EMPTY\n')
+			return 0
+			
+		acdr3len = len(self.__regions_res[('alpha', 'CDR3')])
+		bcdr3len = len(self.__regions_res[('beta', 'CDR3')])
 		peptlen = len(self.__peptide)
 		tb = pd.DataFrame(columns = ['complex',
 			'TRA/TRB',
@@ -337,17 +283,17 @@ class Interaction:
 			'CDR3 aa',
 			'Peptise aa',
 			'Distance',
-			'Energy'],
-			)
+			'Energy'])
 			
-	def convertTable(self):	
+	'''def convertTable(self):	
 		if self.isEmpty():
 			self.printerr(self.__info)
+			return 0
 			
 		acdr3 = self.getSeqLocation(self.__cdr3_a_seq)
 		bcdr3 = self.getSeqLocation(self.__cdr3_b_seq)
-		avreg = self.getSeqLocation(self.__vreg_a)
-		bvreg = self.getSeqLocation(self.__vreg_b)
+		#avreg = self.getSeqLocation(self.__vreg_a)
+		#bvreg = self.getSeqLocation(self.__vreg_b)
 		achain = acdr3[2]
 		bchain = bcdr3[2]
 		regnum = 4
@@ -377,9 +323,9 @@ class Interaction:
 		tb.loc[tb['name'] == 'beta', 'region'] = ['cdr1', 'cdr2', 'cdr3', 'vreg']
 		tb.loc[(tb['name'] == 'alpha') & (tb['region'] == 'cdr3'), ['start', 'end']] = acdr3[:2]
 		tb.loc[(tb['name'] == 'beta') & (tb['region'] == 'cdr3'), ['start', 'end']] = bcdr3[:2]
-		tb.loc[(tb['name'] == 'alpha') & (tb['region'] == 'vreg'), ['start', 'end']] = avreg[:2]
-		tb.loc[(tb['name'] == 'beta') & (tb['region'] == 'vreg'), ['start', 'end']] = bvreg[:2]
-		return tb
+		#tb.loc[(tb['name'] == 'alpha') & (tb['region'] == 'vreg'), ['start', 'end']] = avreg[:2]
+		#tb.loc[(tb['name'] == 'beta') & (tb['region'] == 'vreg'), ['start', 'end']] = bvreg[:2]
+		return tb'''
 		
 	
 def residuesMeanDist(res1, res2):
@@ -432,18 +378,21 @@ def residuesCaDist(res2, res1):
 			if
 	f.close()
 	return d'''
-	
+
+'''	
 def parseDataFile(path):
 	fr = pd.DataFrame(pd.read_table(path, sep='\t'))
 	fr['PDB ID'] = map(lambda x: x.lower(), fr['PDB ID']) 
 	
 	return fr
+'''
 	
+'''
 def getProtein(frame, name):
 	smframe = frame[frame['PDB ID'] == name]
 	if smframe.shape[0] == 0:
-		print "Protein is not listed in the table! Closing...\n"
-		exit(1)
+		print "Protein " + name + " is not listed in the table! Closing...\n"
+		return 0
 	
 	# get the names of the chains listed in table
 	pepchains = map(lambda x: x.strip(), smframe['Chain ID'].dropna())
@@ -457,7 +406,7 @@ def getProtein(frame, name):
 
 	if buframe.shape[0] != 2:
 		print "Number CDR3 listed does not equal 2! Closing...\n"
-		exit(1)
+		return 0
 
 	it = buframe.iterrows()
 	index, row = next(it)
@@ -472,6 +421,7 @@ def getProtein(frame, name):
 		cdr3_b = [buframe.loc[trb_crit, 'cdr3'].values[0].strip(), buframe.loc[trb_crit, 'v'].values[0].strip()]
 
 	return pepchains, mhc, cdr3_a, cdr3_b
+'''
 	
 def extractXPM(path):
 	xpm = open(path, 'r')
@@ -518,7 +468,7 @@ def extractXPM(path):
 	annot = lline.replace('/', ' ').replace('*', ' ').split()
 	mat = list(reversed(mat))
 		
-	a_mat = []
+	'''a_mat = []
 	a_bs = [len(annot[1]), len(annot[1]) + len(annot[2])]
 	for line in mat[:len(annot[1])]:
 		a_mat.append(line[a_bs[0]:a_bs[1]])
@@ -526,9 +476,9 @@ def extractXPM(path):
 	b_mat = []
 	b_bs = [a_bs[1], a_bs[1] + len(annot[3])]
 	for line in mat[:len(annot[1])]:
-		b_mat.append(line[b_bs[0]:b_bs[1]])
+		b_mat.append(line[b_bs[0]:b_bs[1]])'''
 		
-	return a_mat, b_mat, annot
+	return mat, annot
 
 '''def writeInFile_CDR3_CDR3(parser, datadist, item, f):
 	structure = parser.get_structure(item, '../pdbs/'+item+'.pdb')

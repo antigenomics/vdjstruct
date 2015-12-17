@@ -6,6 +6,7 @@
 from Bio.PDB import PDBParser
 from Bio.PDB import Polypeptide
 from gromacs import cbook
+import pandas as pd
 import gromacs.cbook
 import pdbmod
 import sys
@@ -43,23 +44,26 @@ def parseGro(f):
 
 # In[239]:
 
-def findSeqsInGro(seq, pep, cdr3_a, cdr3_b):
-    pbeg = seq.find(pep) + 1
-    pend = pbeg + len(pep) - 1
-    abeg = seq.find(cdr3_a) + 1
-    aend = abeg + len(cdr3_a) - 1
-    bbeg = seq.find(cdr3_b) + 1
-    bend = bbeg + len(cdr3_b) - 1
-    return [pbeg, pend], [abeg, aend], [bbeg, bend]
+def findSeqsInGro(protein_seq, seq_list):
+	begin = []
+	end = []
+	for seq in seq_list:
+		ind = protein_seq.find(seq)
+		if (ind == -1):
+			print 'SEQUENCE' + seq + 'WAS NOT FOUND IN .gro'
+			exit(1)
+		begin.append(ind + 1)
+		end.append(begin[-1] + len(seq) - 1)
+    	return zip(begin, end)
 
 
 # In[240]:
 
-def appendSeqs(path, idlist, atlist, aas):
+def appendSeqs(path, borders_list, atlist, aas):
     fl = open(path, 'a')
     groups = gromacs.cbook.get_ndx_groups(path)
     names = []
-    for pair in idlist:
+    for pair in borders_list:
         for aaid in range(pair[0] - 1, pair[1]):
             name = 'r_' + str(pair[0]) + '-' + str(pair[1]) + '_' + aas[aaid]
             names.append(name)
@@ -130,31 +134,41 @@ def appendSeqs(path, idlist, atlist, aas):
     return names
 
 item = sys.argv[1]
+if len(sys.argv) < 3:
+	print 'NEED MORE PARAMETERS TO EXECUTE'		
+	exit(1)
+	
 indpath = 'src/main/gromacs/'
 path = indpath + 'params/'
+pdb_path = '../pdbs/'
+data_path = '../pdbs/final.annotations.txt'
 G = gromacs.cbook.IndexBuilder(indpath + item + '.gro')
 G.cat(indpath + 'index.ndx')
 
-data = pdbmod.parseDataFile("../pdbs/data.txt")
-info = pdbmod.getProtein(data, item)
-structure = PDBParser().get_structure(item, '../pdbs/'+item+'.pdb')
-protein = pdbmod.Interaction(structure, *info)
+data = pd.DataFrame(pd.read_table(data_path, sep='\t'))
+info = data[data['pdb_id'] == item]
+if info.empty:
+	exit(1)
+protein = pdbmod.Interaction(info, pdb_path + item + '.pdb')
 
 st, atlist, aas = parseGro(indpath + item + '.gro')
 
-pseq = protein.getPeptideSeq()
+pseq = protein.getClearPeptideSeq()
 #print pseq
 aseq = protein.getCDR3AlphaSeq()
 #print aseq
 bseq = protein.getCDR3BetaSeq()
 #print bseq
+seq_list = [pseq, aseq, bseq]
+seq_list = sys.argv[2:]
 
-p, a, b = findSeqsInGro(st, pseq, aseq, bseq)
+borders_list = findSeqsInGro(st, seq_list)
 #print p, a, b
-names = appendSeqs(indpath + 'index.ndx', [p, a, b], atlist, aas)
+names = appendSeqs(indpath + 'index.ndx', borders_list, atlist, aas)
 appendToMDP(path + 'minim.mdp', names)
 appendToGroupsDat(indpath + 'groups' + item + '.dat', names)
 
-print "/*%s*/\n/*%s*/\n/*%s*/\n/*%s*/\n" % (item, pseq, aseq, bseq)
+print '/*' + '*/ /*'.join([item] + seq_list) + '*/'
+
 
 

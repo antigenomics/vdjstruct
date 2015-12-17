@@ -1,0 +1,837 @@
+complex	chain	type	name	id	region	start	end
+3o4l	A	MHC	A*02:01				
+3o4l	B						
+3o4l	C	Antigen					
+3o4l	D	TCR	alpha		cdr1		
+3o4l	D	TCR	alpha		cdr2		
+3o4l	D	TCR	alpha		cdr3	83	93
+3o4l	D	TCR	alpha		vreg		
+3o4l	E	TCR	beta		cdr1		
+3o4l	E	TCR	beta		cdr2		
+3o4l	E	TCR	beta		cdr3	93	105
+3o4l	E	TCR	beta		vreg		
+3uts	A	MHC	A*02:01				
+3uts	B						
+3uts	C	Antigen					
+3uts	D	TCR	alpha		cdr1		
+3uts	D	TCR	alpha		cdr2		
+3uts	D	TCR	alpha		cdr3	87	99
+3uts	D	TCR	alpha		vreg		
+3uts	E	TCR	beta		cdr1		
+3uts	E	TCR	beta		cdr2		
+3uts	E	TCR	beta		cdr3	91	106
+3uts	E	TCR	beta		vreg		
+3kxf	A	MHC	B*35:78				
+3kxf	B						
+3kxf	D	TCR	alpha		cdr1		
+3kxf	D	TCR	alpha		cdr2		
+3kxf	D	TCR	alpha		cdr3	90	103
+3kxf	D	TCR	alpha		vreg		
+3kxf	E	TCR	beta		cdr1		
+3kxf	E	TCR	beta		cdr2		
+3kxf	E	TCR	beta		cdr3	88	101
+3kxf	E	TCR	beta		vreg		
+3kxf	Q	Antigen					
+3vxs	A	MHC	A*24:02				
+3vxs	B						
+3vxs	C	Antigen					
+3vxs	D	TCR	alpha		cdr1		
+3vxs	D	TCR	alpha		cdr2		
+3vxs	D	TCR	alpha		cdr3	89	101
+3vxs	D	TCR	alpha		vreg		
+3vxs	E	TCR	beta		cdr1		
+3vxs	E	TCR	beta		cdr2		
+3vxs	E	TCR	beta		cdr3	90	102
+3vxs	E	TCR	beta		vreg		
+2iam	A	MHC	DRA*01:01DRA*01:02				
+2iam	B	MHC	DRB1*01:01				
+2iam	C	TCR	alpha		cdr1		
+2iam	C	TCR	alpha		cdr2		
+2iam	C	TCR	alpha		cdr3	85	97
+2iam	C	TCR	alpha		vreg		
+2iam	D	TCR	beta		cdr1		
+2iam	D	TCR	beta		cdr2		
+2iam	D	TCR	beta		cdr3	89	99
+2iam	D	TCR	beta		vreg		
+2iam	P	Antigen					
+1oga	A	MHC	A*02:01				
+1oga	B						
+1oga	C	Antigen					
+1oga	D	TCR	alpha		cdr1		
+1oga	D	TCR	alpha		cdr2		
+1oga	D	TCR	alpha		cdr3	87	98
+1oga	D	TCR	alpha		vreg		
+1oga	E	TCR	beta		cdr1		
+1oga	E	TCR	beta		cdr2		
+1oga	E	TCR	beta		cdr3	88	100
+1oga	E	TCR	beta		vreg		
+3kpr	A	MHC	B*44:05				
+3kpr	B						
+3kpr	C	Antigen					
+3kpr	D	TCR	alpha		cdr1		
+3kpr	D	TCR	alpha		cdr2		
+3kpr	D	TCR	alpha		cdr3	85	100
+3kpr	D	TCR	alpha		vreg		
+3kpr	E	TCR	beta		cdr1		
+3kpr	E	TCR	beta		cdr2		
+3kpr	E	TCR	beta		cdr3	89	101
+3kpr	E	TCR	beta		vreg		
+4jfe	A	MHC	A*02:01				
+4jfe	B						
+4jfe	C	Antigen					
+4jfe	D	TCR	alpha		cdr1		
+4jfe	D	TCR	alpha		cdr2		
+4jfe	D	TCR	alpha		cdr3	88	98
+4jfe	D	TCR	alpha		vreg		
+4jfe	E	TCR	beta		cdr1		
+4jfe	E	TCR	beta		cdr2		
+4jfe	E	TCR	beta		cdr3	91	105
+4jfe	E	TCR	beta		vreg		
+2p5e	A	MHC	A*02:01				
+2p5e	B						
+2p5e	C	Antigen					
+2p5e	D	TCR	alpha		cdr1		
+2p5e	D	TCR	alpha		cdr2		
+2p5e	D	TCR	alpha		cdr3	90	104
+2p5e	D	TCR	alpha		vreg		
+2p5e	E	TCR	beta		cdr1		
+2p5e	E	TCR	beta		cdr2		
+2p5e	E	TCR	beta		cdr3	88	101
+2p5e	E	TCR	beta		vreg		
+3mv9	A	MHC	B*35:01B*35:42				
+3mv9	B						
+3mv9	C	Antigen					
+3mv9	D	TCR	alpha		cdr1		
+3mv9	D	TCR	alpha		cdr2		
+3mv9	D	TCR	alpha		cdr3	85	99
+3mv9	D	TCR	alpha		vreg		
+3mv9	E	TCR	beta		cdr1		
+3mv9	E	TCR	beta		cdr2		
+3mv9	E	TCR	beta		cdr3	90	101
+3mv9	E	TCR	beta		vreg		
+3qdj	A	MHC	A*02:01				
+3qdj	B						
+3qdj	C	Antigen					
+3qdj	D	TCR	alpha		cdr1		
+3qdj	D	TCR	alpha		cdr2		
+3qdj	D	TCR	alpha		cdr3	87	98
+3qdj	D	TCR	alpha		vreg		
+3qdj	E	TCR	beta		cdr1		
+3qdj	E	TCR	beta		cdr2		
+3qdj	E	TCR	beta		cdr3	90	102
+3qdj	E	TCR	beta		vreg		
+3vxu	A	MHC	A*24:02				
+3vxu	B						
+3vxu	C	Antigen					
+3vxu	D	TCR	alpha		cdr1		
+3vxu	D	TCR	alpha		cdr2		
+3vxu	D	TCR	alpha		cdr3	87	98
+3vxu	D	TCR	alpha		vreg		
+3vxu	E	TCR	beta		cdr1		
+3vxu	E	TCR	beta		cdr2		
+3vxu	E	TCR	beta		cdr3	90	101
+3vxu	E	TCR	beta		vreg		
+1ao7	A	MHC	A*02:01				
+1ao7	B						
+1ao7	C	Antigen					
+1ao7	D	TCR	alpha		cdr1		
+1ao7	D	TCR	alpha		cdr2		
+1ao7	D	TCR	alpha		cdr3	87	99
+1ao7	D	TCR	alpha		vreg		
+1ao7	E	TCR	beta		cdr1		
+1ao7	E	TCR	beta		cdr2		
+1ao7	E	TCR	beta		cdr3	88	103
+1ao7	E	TCR	beta		vreg		
+4jfd	A	MHC	A*02:01				
+4jfd	B						
+4jfd	C	Antigen					
+4jfd	D	TCR	alpha		cdr1		
+4jfd	D	TCR	alpha		cdr2		
+4jfd	D	TCR	alpha		cdr3	88	98
+4jfd	D	TCR	alpha		vreg		
+4jfd	E	TCR	beta		cdr1		
+4jfd	E	TCR	beta		cdr2		
+4jfd	E	TCR	beta		cdr3	91	105
+4jfd	E	TCR	beta		vreg		
+1zgl	A	MHC	DRA*01:01DRA*01:02				
+1zgl	B	MHC	DRB5*01:01				
+1zgl	C	Antigen					
+1zgl	M	TCR	alpha		cdr1		
+1zgl	M	TCR	alpha		cdr2		
+1zgl	M	TCR	alpha		cdr3	88	101
+1zgl	M	TCR	alpha		vreg		
+1zgl	P	TCR	beta		cdr1		
+1zgl	P	TCR	beta		cdr2		
+1zgl	P	TCR	beta		cdr3	92	106
+1zgl	P	TCR	beta		vreg		
+3sjv	A	MHC	B*08:01				
+3sjv	B						
+3sjv	C	Antigen					
+3sjv	D	TCR	alpha		cdr1		
+3sjv	D	TCR	alpha		cdr2		
+3sjv	D	TCR	alpha		cdr3	86	95
+3sjv	D	TCR	alpha		vreg		
+3sjv	E	TCR	beta		cdr1		
+3sjv	E	TCR	beta		cdr2		
+3sjv	E	TCR	beta		cdr3	89	101
+3sjv	E	TCR	beta		vreg		
+4ozg	A	MHC	DQA1*05:01DQA1*05:05				
+4ozg	B	MHC	DQB*02:01				
+4ozg	E	TCR	alpha		cdr1		
+4ozg	E	TCR	alpha		cdr2		
+4ozg	E	TCR	alpha		cdr3	86	97
+4ozg	E	TCR	alpha		vreg		
+4ozg	F	TCR	beta		cdr1		
+4ozg	F	TCR	beta		cdr2		
+4ozg	F	TCR	beta		cdr3	89	101
+4ozg	F	TCR	beta		vreg		
+4ozg	I	Antigen					
+3gsn	A	TCR	alpha		cdr1		
+3gsn	A	TCR	alpha		cdr2		
+3gsn	A	TCR	alpha		cdr3	88	98
+3gsn	A	TCR	alpha		vreg		
+3gsn	B	TCR	beta		cdr1		
+3gsn	B	TCR	beta		cdr2		
+3gsn	B	TCR	beta		cdr3	89	103
+3gsn	B	TCR	beta		vreg		
+3gsn	H	MHC	A*02:01				
+3gsn	L						
+3gsn	P	Antigen					
+3qib	A						
+3qib	B						
+3qib	C	TCR	alpha		cdr1		
+3qib	C	TCR	alpha		cdr2		
+3qib	C	TCR	alpha		cdr3	84	98
+3qib	C	TCR	alpha		vreg		
+3qib	D	TCR	beta		cdr1		
+3qib	D	TCR	beta		cdr2		
+3qib	D	TCR	beta		cdr3	90	103
+3qib	D	TCR	beta		vreg		
+3qib	P	Antigen					
+2bnr	A	MHC	A*02:01				
+2bnr	B						
+2bnr	C	Antigen					
+2bnr	D	TCR	alpha		cdr1		
+2bnr	D	TCR	alpha		cdr2		
+2bnr	D	TCR	alpha		cdr3	88	102
+2bnr	D	TCR	alpha		vreg		
+2bnr	E	TCR	beta		cdr1		
+2bnr	E	TCR	beta		cdr2		
+2bnr	E	TCR	beta		cdr3	88	101
+2bnr	E	TCR	beta		vreg		
+1fyt	A	MHC	DRA*01:01DRA*01:02				
+1fyt	B	MHC	DRB1*01:01				
+1fyt	C	Antigen					
+1fyt	D	TCR	alpha		cdr1		
+1fyt	D	TCR	alpha		cdr2		
+1fyt	D	TCR	alpha		cdr3	89	103
+1fyt	D	TCR	alpha		vreg		
+1fyt	E	TCR	beta		cdr1		
+1fyt	E	TCR	beta		cdr2		
+1fyt	E	TCR	beta		cdr3	88	101
+1fyt	E	TCR	beta		vreg		
+4qok	A	MHC	A*02:01				
+4qok	B						
+4qok	C	Antigen					
+4qok	D	TCR	alpha		cdr1		
+4qok	D	TCR	alpha		cdr2		
+4qok	D	TCR	alpha		cdr3	87	97
+4qok	D	TCR	alpha		vreg		
+4qok	E	TCR	beta		cdr1		
+4qok	E	TCR	beta		cdr2		
+4qok	E	TCR	beta		cdr3	90	104
+4qok	E	TCR	beta		vreg		
+3d39	A	MHC	A*02:01				
+3d39	B						
+3d39	C	Antigen					
+3d39	D	TCR	alpha		cdr1		
+3d39	D	TCR	alpha		cdr2		
+3d39	D	TCR	alpha		cdr3	87	99
+3d39	D	TCR	alpha		vreg		
+3d39	E	TCR	beta		cdr1		
+3d39	E	TCR	beta		cdr2		
+3d39	E	TCR	beta		cdr3	90	105
+3d39	E	TCR	beta		vreg		
+2vlk	A	MHC	A*02:01				
+2vlk	B						
+2vlk	C	Antigen					
+2vlk	D	TCR	alpha		cdr1		
+2vlk	D	TCR	alpha		cdr2		
+2vlk	D	TCR	alpha		cdr3	87	98
+2vlk	D	TCR	alpha		vreg		
+2vlk	E	TCR	beta		cdr1		
+2vlk	E	TCR	beta		cdr2		
+2vlk	E	TCR	beta		cdr3	88	100
+2vlk	E	TCR	beta		vreg		
+1qrn	A	MHC	A*02:01				
+1qrn	B						
+1qrn	C	Antigen					
+1qrn	D	TCR	alpha		cdr1		
+1qrn	D	TCR	alpha		cdr2		
+1qrn	D	TCR	alpha		cdr3	87	99
+1qrn	D	TCR	alpha		vreg		
+1qrn	E	TCR	beta		cdr1		
+1qrn	E	TCR	beta		cdr2		
+1qrn	E	TCR	beta		cdr3	88	103
+1qrn	E	TCR	beta		vreg		
+3h9s	A	MHC	A*02:01				
+3h9s	B						
+3h9s	C	Antigen					
+3h9s	D	TCR	alpha		cdr1		
+3h9s	D	TCR	alpha		cdr2		
+3h9s	D	TCR	alpha		cdr3	87	99
+3h9s	D	TCR	alpha		vreg		
+3h9s	E	TCR	beta		cdr1		
+3h9s	E	TCR	beta		cdr2		
+3h9s	E	TCR	beta		cdr3	90	105
+3h9s	E	TCR	beta		vreg		
+4prp	A	MHC	B*35:01B*35:42				
+4prp	B						
+4prp	C	Antigen					
+4prp	D	TCR	alpha		cdr1		
+4prp	D	TCR	alpha		cdr2		
+4prp	D	TCR	alpha		cdr3	85	99
+4prp	D	TCR	alpha		vreg		
+4prp	E	TCR	beta		cdr1		
+4prp	E	TCR	beta		cdr2		
+4prp	E	TCR	beta		cdr3	90	101
+4prp	E	TCR	beta		vreg		
+1j8h	A	MHC	DRA*01:01DRA*01:02				
+1j8h	B	MHC	DRB*04:01				
+1j8h	C	Antigen					
+1j8h	D	TCR	alpha		cdr1		
+1j8h	D	TCR	alpha		cdr2		
+1j8h	D	TCR	alpha		cdr3	89	103
+1j8h	D	TCR	alpha		vreg		
+1j8h	E	TCR	beta		cdr1		
+1j8h	E	TCR	beta		cdr2		
+1j8h	E	TCR	beta		cdr3	89	102
+1j8h	E	TCR	beta		vreg		
+3mv8	A	MHC	B*35:01B*35:42				
+3mv8	B						
+3mv8	C	Antigen					
+3mv8	D	TCR	alpha		cdr1		
+3mv8	D	TCR	alpha		cdr2		
+3mv8	D	TCR	alpha		cdr3	85	99
+3mv8	D	TCR	alpha		vreg		
+3mv8	E	TCR	beta		cdr1		
+3mv8	E	TCR	beta		cdr2		
+3mv8	E	TCR	beta		cdr3	91	102
+3mv8	E	TCR	beta		vreg		
+1qse	A	MHC	A*02:01				
+1qse	B						
+1qse	C	Antigen					
+1qse	D	TCR	alpha		cdr1		
+1qse	D	TCR	alpha		cdr2		
+1qse	D	TCR	alpha		cdr3	87	99
+1qse	D	TCR	alpha		vreg		
+1qse	E	TCR	beta		cdr1		
+1qse	E	TCR	beta		cdr2		
+1qse	E	TCR	beta		cdr3	88	103
+1qse	E	TCR	beta		vreg		
+1mi5	A	MHC	B*08:01				
+1mi5	B						
+1mi5	C	Antigen					
+1mi5	D	TCR	alpha		cdr1		
+1mi5	D	TCR	alpha		cdr2		
+1mi5	D	TCR	alpha		cdr3	85	100
+1mi5	D	TCR	alpha		vreg		
+1mi5	E	TCR	beta		cdr1		
+1mi5	E	TCR	beta		cdr2		
+1mi5	E	TCR	beta		cdr3	89	101
+1mi5	E	TCR	beta		vreg		
+3vxm	A	MHC	A*24:02				
+3vxm	B						
+3vxm	C	Antigen					
+3vxm	D	TCR	alpha		cdr1		
+3vxm	D	TCR	alpha		cdr2		
+3vxm	D	TCR	alpha		cdr3	90	105
+3vxm	D	TCR	alpha		vreg		
+3vxm	E	TCR	beta		cdr1		
+3vxm	E	TCR	beta		cdr2		
+3vxm	E	TCR	beta		cdr3	90	103
+3vxm	E	TCR	beta		vreg		
+3qeq	A	MHC	A*02:01				
+3qeq	B						
+3qeq	C	Antigen					
+3qeq	D	TCR	alpha		cdr1		
+3qeq	D	TCR	alpha		cdr2		
+3qeq	D	TCR	alpha		cdr3	86	96
+3qeq	D	TCR	alpha		vreg		
+3qeq	E	TCR	beta		cdr1		
+3qeq	E	TCR	beta		cdr2		
+3qeq	E	TCR	beta		cdr3	90	103
+3qeq	E	TCR	beta		vreg		
+3hg1	A	MHC	A*02:01				
+3hg1	B						
+3hg1	C	Antigen					
+3hg1	D	TCR	alpha		cdr1		
+3hg1	D	TCR	alpha		cdr2		
+3hg1	D	TCR	alpha		cdr3	87	97
+3hg1	D	TCR	alpha		vreg		
+3hg1	E	TCR	beta		cdr1		
+3hg1	E	TCR	beta		cdr2		
+3hg1	E	TCR	beta		cdr3	90	104
+3hg1	E	TCR	beta		vreg		
+4ozh	A	MHC	DQA1*05:01DQA1*05:05				
+4ozh	B	MHC	DQB*02:01				
+4ozh	E	TCR	alpha		cdr1		
+4ozh	E	TCR	alpha		cdr2		
+4ozh	E	TCR	alpha		cdr3	86	98
+4ozh	E	TCR	alpha		vreg		
+4ozh	F	TCR	beta		cdr1		
+4ozh	F	TCR	beta		cdr2		
+4ozh	F	TCR	beta		cdr3	89	101
+4ozh	F	TCR	beta		vreg		
+4ozh	I	Antigen					
+4mji	A	MHC	B*51:01				
+4mji	B						
+4mji	C	Antigen					
+4mji	D	TCR	alpha		cdr1		
+4mji	D	TCR	alpha		cdr2		
+4mji	D	TCR	alpha		cdr3	82	94
+4mji	D	TCR	alpha		vreg		
+4mji	E	TCR	beta		cdr1		
+4mji	E	TCR	beta		cdr2		
+4mji	E	TCR	beta		cdr3	90	102
+4mji	E	TCR	beta		vreg		
+3qdm	A	MHC	A*02:01				
+3qdm	B						
+3qdm	C	Antigen					
+3qdm	D	TCR	alpha		cdr1		
+3qdm	D	TCR	alpha		cdr2		
+3qdm	D	TCR	alpha		cdr3	86	96
+3qdm	D	TCR	alpha		vreg		
+3qdm	E	TCR	beta		cdr1		
+3qdm	E	TCR	beta		cdr2		
+3qdm	E	TCR	beta		cdr3	89	102
+3qdm	E	TCR	beta		vreg		
+2ypl	A	MHC	B*57:06				
+2ypl	B						
+2ypl	C	Antigen					
+2ypl	D	TCR	alpha		cdr1		
+2ypl	D	TCR	alpha		cdr2		
+2ypl	D	TCR	alpha		cdr3	87	98
+2ypl	D	TCR	alpha		vreg		
+2ypl	E	TCR	beta		cdr1		
+2ypl	E	TCR	beta		cdr2		
+2ypl	E	TCR	beta		cdr3	88	98
+2ypl	E	TCR	beta		vreg		
+2f53	A	MHC	A*02:01				
+2f53	B						
+2f53	C	Antigen					
+2f53	D	TCR	alpha		cdr1		
+2f53	D	TCR	alpha		cdr2		
+2f53	D	TCR	alpha		cdr3	90	104
+2f53	D	TCR	alpha		vreg		
+2f53	E	TCR	beta		cdr1		
+2f53	E	TCR	beta		cdr2		
+2f53	E	TCR	beta		cdr3	90	103
+2f53	E	TCR	beta		vreg		
+3utt	A	MHC	A*02:01				
+3utt	B						
+3utt	C	Antigen					
+3utt	D	TCR	alpha		cdr1		
+3utt	D	TCR	alpha		cdr2		
+3utt	D	TCR	alpha		cdr3	86	98
+3utt	D	TCR	alpha		vreg		
+3utt	E	TCR	beta		cdr1		
+3utt	E	TCR	beta		cdr2		
+3utt	E	TCR	beta		cdr3	89	104
+3utt	E	TCR	beta		vreg		
+4jff	A	MHC	A*02:01				
+4jff	B						
+4jff	C	Antigen					
+4jff	D	TCR	alpha		cdr1		
+4jff	D	TCR	alpha		cdr2		
+4jff	D	TCR	alpha		cdr3	88	98
+4jff	D	TCR	alpha		vreg		
+4jff	E	TCR	beta		cdr1		
+4jff	E	TCR	beta		cdr2		
+4jff	E	TCR	beta		cdr3	91	105
+4jff	E	TCR	beta		vreg		
+3d3v	A	MHC	A*02:01				
+3d3v	B						
+3d3v	C	Antigen					
+3d3v	D	TCR	alpha		cdr1		
+3d3v	D	TCR	alpha		cdr2		
+3d3v	D	TCR	alpha		cdr3	87	99
+3d3v	D	TCR	alpha		vreg		
+3d3v	E	TCR	beta		cdr1		
+3d3v	E	TCR	beta		cdr2		
+3d3v	E	TCR	beta		cdr3	90	105
+3d3v	E	TCR	beta		vreg		
+4l3e	A	MHC	A*02:01				
+4l3e	B						
+4l3e	C	Antigen					
+4l3e	D	TCR	alpha		cdr1		
+4l3e	D	TCR	alpha		cdr2		
+4l3e	D	TCR	alpha		cdr3	87	98
+4l3e	D	TCR	alpha		vreg		
+4l3e	E	TCR	beta		cdr1		
+4l3e	E	TCR	beta		cdr2		
+4l3e	E	TCR	beta		cdr3	90	102
+4l3e	E	TCR	beta		vreg		
+3qfj	A	MHC	A*02:01				
+3qfj	B						
+3qfj	C	Antigen					
+3qfj	D	TCR	alpha		cdr1		
+3qfj	D	TCR	alpha		cdr2		
+3qfj	D	TCR	alpha		cdr3	87	99
+3qfj	D	TCR	alpha		vreg		
+3qfj	E	TCR	beta		cdr1		
+3qfj	E	TCR	beta		cdr2		
+3qfj	E	TCR	beta		cdr3	90	105
+3qfj	E	TCR	beta		vreg		
+4pri	A	MHC	B*35:08				
+4pri	B						
+4pri	C	Antigen					
+4pri	D	TCR	alpha		cdr1		
+4pri	D	TCR	alpha		cdr2		
+4pri	D	TCR	alpha		cdr3	87	101
+4pri	D	TCR	alpha		vreg		
+4pri	E	TCR	beta		cdr1		
+4pri	E	TCR	beta		cdr2		
+4pri	E	TCR	beta		cdr3	89	100
+4pri	E	TCR	beta		vreg		
+4prh	A	MHC	B*35:08				
+4prh	B						
+4prh	C	Antigen					
+4prh	D	TCR	alpha		cdr1		
+4prh	D	TCR	alpha		cdr2		
+4prh	D	TCR	alpha		cdr3	87	101
+4prh	D	TCR	alpha		vreg		
+4prh	E	TCR	beta		cdr1		
+4prh	E	TCR	beta		cdr2		
+4prh	E	TCR	beta		cdr3	89	100
+4prh	E	TCR	beta		vreg		
+4jrx	A	MHC	B*35:08				
+4jrx	B						
+4jrx	C	Antigen					
+4jrx	D	TCR	alpha		cdr1		
+4jrx	D	TCR	alpha		cdr2		
+4jrx	D	TCR	alpha		cdr3	90	103
+4jrx	D	TCR	alpha		vreg		
+4jrx	E	TCR	beta		cdr1		
+4jrx	E	TCR	beta		cdr2		
+4jrx	E	TCR	beta		cdr3	88	98
+4jrx	E	TCR	beta		vreg		
+2gj6	A	MHC	A*02:01				
+2gj6	B						
+2gj6	C	Antigen					
+2gj6	D	TCR	alpha		cdr1		
+2gj6	D	TCR	alpha		cdr2		
+2gj6	D	TCR	alpha		cdr3	87	99
+2gj6	D	TCR	alpha		vreg		
+2gj6	E	TCR	beta		cdr1		
+2gj6	E	TCR	beta		cdr2		
+2gj6	E	TCR	beta		cdr3	88	103
+2gj6	E	TCR	beta		vreg		
+2pye	A	MHC	A*02:01				
+2pye	B						
+2pye	C	Antigen					
+2pye	D	TCR	alpha		cdr1		
+2pye	D	TCR	alpha		cdr2		
+2pye	D	TCR	alpha		cdr3	90	104
+2pye	D	TCR	alpha		vreg		
+2pye	E	TCR	beta		cdr1		
+2pye	E	TCR	beta		cdr2		
+2pye	E	TCR	beta		cdr3	89	102
+2pye	E	TCR	beta		vreg		
+2f54	A	MHC	A*02:01				
+2f54	B						
+2f54	C	Antigen					
+2f54	D	TCR	alpha		cdr1		
+2f54	D	TCR	alpha		cdr2		
+2f54	D	TCR	alpha		cdr3	88	102
+2f54	D	TCR	alpha		vreg		
+2f54	E	TCR	beta		cdr1		
+2f54	E	TCR	beta		cdr2		
+2f54	E	TCR	beta		cdr3	88	101
+2f54	E	TCR	beta		vreg		
+2vlj	A	MHC	A*02:01				
+2vlj	B						
+2vlj	C	Antigen					
+2vlj	D	TCR	alpha		cdr1		
+2vlj	D	TCR	alpha		cdr2		
+2vlj	D	TCR	alpha		cdr3	87	98
+2vlj	D	TCR	alpha		vreg		
+2vlj	E	TCR	beta		cdr1		
+2vlj	E	TCR	beta		cdr2		
+2vlj	E	TCR	beta		cdr3	88	100
+2vlj	E	TCR	beta		vreg		
+2p5w	A	MHC	A*02:01				
+2p5w	B						
+2p5w	C	Antigen					
+2p5w	D	TCR	alpha		cdr1		
+2p5w	D	TCR	alpha		cdr2		
+2p5w	D	TCR	alpha		cdr3	89	103
+2p5w	D	TCR	alpha		vreg		
+2p5w	E	TCR	beta		cdr1		
+2p5w	E	TCR	beta		cdr2		
+2p5w	E	TCR	beta		cdr3	89	102
+2p5w	E	TCR	beta		vreg		
+1qsf	A	MHC	A*02:01				
+1qsf	B						
+1qsf	C	Antigen					
+1qsf	D	TCR	alpha		cdr1		
+1qsf	D	TCR	alpha		cdr2		
+1qsf	D	TCR	alpha		cdr3	87	99
+1qsf	D	TCR	alpha		vreg		
+1qsf	E	TCR	beta		cdr1		
+1qsf	E	TCR	beta		cdr2		
+1qsf	E	TCR	beta		cdr3	88	103
+1qsf	E	TCR	beta		vreg		
+2vlr	A	MHC	A*02:01				
+2vlr	B						
+2vlr	C	Antigen					
+2vlr	D	TCR	alpha		cdr1		
+2vlr	D	TCR	alpha		cdr2		
+2vlr	D	TCR	alpha		cdr3	87	98
+2vlr	D	TCR	alpha		vreg		
+2vlr	E	TCR	beta		cdr1		
+2vlr	E	TCR	beta		cdr2		
+2vlr	E	TCR	beta		cdr3	88	100
+2vlr	E	TCR	beta		vreg		
+4ftv	A	MHC	A*02:01				
+4ftv	B						
+4ftv	C	Antigen					
+4ftv	D	TCR	alpha		cdr1		
+4ftv	D	TCR	alpha		cdr2		
+4ftv	D	TCR	alpha		cdr3	87	99
+4ftv	D	TCR	alpha		vreg		
+4ftv	E	TCR	beta		cdr1		
+4ftv	E	TCR	beta		cdr2		
+4ftv	E	TCR	beta		cdr3	90	105
+4ftv	E	TCR	beta		vreg		
+3pwp	A	MHC	A*02:01				
+3pwp	B						
+3pwp	C	Antigen					
+3pwp	D	TCR	alpha		cdr1		
+3pwp	D	TCR	alpha		cdr2		
+3pwp	D	TCR	alpha		cdr3	87	99
+3pwp	D	TCR	alpha		vreg		
+3pwp	E	TCR	beta		cdr1		
+3pwp	E	TCR	beta		cdr2		
+3pwp	E	TCR	beta		cdr3	90	105
+3pwp	E	TCR	beta		vreg		
+4eup	A	MHC	A*02:01				
+4eup	B						
+4eup	C	Antigen					
+4eup	G	TCR	alpha		cdr1		
+4eup	G	TCR	alpha		cdr2		
+4eup	G	TCR	alpha		cdr3	87	99
+4eup	G	TCR	alpha		vreg		
+4eup	H	TCR	beta		cdr1		
+4eup	H	TCR	beta		cdr2		
+4eup	H	TCR	beta		cdr3	88	101
+4eup	H	TCR	beta		vreg		
+4g9f	A	MHC	B*27:05B*27:13				
+4g9f	B						
+4g9f	C	Antigen					
+4g9f	D	TCR	alpha		cdr1		
+4g9f	D	TCR	alpha		cdr2		
+4g9f	D	TCR	alpha		cdr3	89	103
+4g9f	D	TCR	alpha		vreg		
+4g9f	E	TCR	beta		cdr1		
+4g9f	E	TCR	beta		cdr2		
+4g9f	E	TCR	beta		cdr3	90	103
+4g9f	E	TCR	beta		vreg		
+1bd2	A	MHC	A*02:01				
+1bd2	B						
+1bd2	C	Antigen					
+1bd2	D	TCR	alpha		cdr1		
+1bd2	D	TCR	alpha		cdr2		
+1bd2	D	TCR	alpha		cdr3	88	99
+1bd2	D	TCR	alpha		vreg		
+1bd2	E	TCR	beta		cdr1		
+1bd2	E	TCR	beta		cdr2		
+1bd2	E	TCR	beta		cdr3	88	102
+1bd2	E	TCR	beta		vreg		
+4qrp	A	MHC	B*08:01				
+4qrp	B						
+4qrp	C	Antigen					
+4qrp	D	TCR	alpha		cdr1		
+4qrp	D	TCR	alpha		cdr2		
+4qrp	D	TCR	alpha		cdr3	90	101
+4qrp	D	TCR	alpha		vreg		
+4qrp	E	TCR	beta		cdr1		
+4qrp	E	TCR	beta		cdr2		
+4qrp	E	TCR	beta		cdr3	89	103
+4qrp	E	TCR	beta		vreg		
+4g8g	A	MHC	B*27:05B*27:13				
+4g8g	B						
+4g8g	C	Antigen					
+4g8g	D	TCR	alpha		cdr1		
+4g8g	D	TCR	alpha		cdr2		
+4g8g	D	TCR	alpha		cdr3	89	103
+4g8g	D	TCR	alpha		vreg		
+4g8g	E	TCR	beta		cdr1		
+4g8g	E	TCR	beta		cdr2		
+4g8g	E	TCR	beta		cdr3	88	101
+4g8g	E	TCR	beta		vreg		
+3kps	A	MHC	B*44:05				
+3kps	B						
+3kps	C	Antigen					
+3kps	D	TCR	alpha		cdr1		
+3kps	D	TCR	alpha		cdr2		
+3kps	D	TCR	alpha		cdr3	85	100
+3kps	D	TCR	alpha		vreg		
+3kps	E	TCR	beta		cdr1		
+3kps	E	TCR	beta		cdr2		
+3kps	E	TCR	beta		cdr3	89	101
+3kps	E	TCR	beta		vreg		
+3ffc	A	MHC	B*08:01				
+3ffc	B						
+3ffc	C	Antigen					
+3ffc	D	TCR	alpha		cdr1		
+3ffc	D	TCR	alpha		cdr2		
+3ffc	D	TCR	alpha		cdr3	89	101
+3ffc	D	TCR	alpha		vreg		
+3ffc	E	TCR	beta		cdr1		
+3ffc	E	TCR	beta		cdr2		
+3ffc	E	TCR	beta		cdr3	90	107
+3ffc	E	TCR	beta		vreg		
+4e41	A	MHC	DRA*01:01DRA*01:02				
+4e41	B	MHC	DRB1*01:01				
+4e41	C	Antigen					
+4e41	D	TCR	alpha		cdr1		
+4e41	D	TCR	alpha		cdr2		
+4e41	D	TCR	alpha		cdr3	85	98
+4e41	D	TCR	alpha		vreg		
+4e41	E	TCR	beta		cdr1		
+4e41	E	TCR	beta		cdr2		
+4e41	E	TCR	beta		cdr3	49	60
+4e41	E	TCR	beta		vreg		
+3qdg	A	MHC	A*02:01				
+3qdg	B						
+3qdg	C	Antigen					
+3qdg	D	TCR	alpha		cdr1		
+3qdg	D	TCR	alpha		cdr2		
+3qdg	D	TCR	alpha		cdr3	87	98
+3qdg	D	TCR	alpha		vreg		
+3qdg	E	TCR	beta		cdr1		
+3qdg	E	TCR	beta		cdr2		
+3qdg	E	TCR	beta		cdr3	90	102
+3qdg	E	TCR	beta		vreg		
+4ozf	A	MHC	DQA1*05:01DQA1*05:05				
+4ozf	B	MHC	DQB*02:01				
+4ozf	G	TCR	alpha		cdr1		
+4ozf	G	TCR	alpha		cdr2		
+4ozf	G	TCR	alpha		cdr3	86	97
+4ozf	G	TCR	alpha		vreg		
+4ozf	H	TCR	beta		cdr1		
+4ozf	H	TCR	beta		cdr2		
+4ozf	H	TCR	beta		cdr3	89	103
+4ozf	H	TCR	beta		vreg		
+4ozf	J	Antigen					
+3vxr	A	MHC	A*24:02				
+3vxr	B						
+3vxr	C	Antigen					
+3vxr	D	TCR	alpha		cdr1		
+3vxr	D	TCR	alpha		cdr2		
+3vxr	D	TCR	alpha		cdr3	89	101
+3vxr	D	TCR	alpha		vreg		
+3vxr	E	TCR	beta		cdr1		
+3vxr	E	TCR	beta		cdr2		
+3vxr	E	TCR	beta		cdr3	90	102
+3vxr	E	TCR	beta		vreg		
+4jry	A	MHC	B*35:08				
+4jry	B						
+4jry	C	Antigen					
+4jry	D	TCR	alpha		cdr1		
+4jry	D	TCR	alpha		cdr2		
+4jry	D	TCR	alpha		cdr3	88	100
+4jry	D	TCR	alpha		vreg		
+4jry	E	TCR	beta		cdr1		
+4jry	E	TCR	beta		cdr2		
+4jry	E	TCR	beta		cdr3	89	102
+4jry	E	TCR	beta		vreg		
+2ak4	A	MHC	B*35:08				
+2ak4	B						
+2ak4	C	Antigen					
+2ak4	D	TCR	alpha		cdr1		
+2ak4	D	TCR	alpha		cdr2		
+2ak4	D	TCR	alpha		cdr3	90	103
+2ak4	D	TCR	alpha		vreg		
+2ak4	E	TCR	beta		cdr1		
+2ak4	E	TCR	beta		cdr2		
+2ak4	E	TCR	beta		cdr3	88	101
+2ak4	E	TCR	beta		vreg		
+2bnq	A	MHC	A*02:01				
+2bnq	B						
+2bnq	C	Antigen					
+2bnq	D	TCR	alpha		cdr1		
+2bnq	D	TCR	alpha		cdr2		
+2bnq	D	TCR	alpha		cdr3	88	102
+2bnq	D	TCR	alpha		vreg		
+2bnq	E	TCR	beta		cdr1		
+2bnq	E	TCR	beta		cdr2		
+2bnq	E	TCR	beta		cdr3	88	101
+2bnq	E	TCR	beta		vreg		
+2nx5	A	MHC	B*35:01B*35:42				
+2nx5	B						
+2nx5	C	Antigen					
+2nx5	D	TCR	alpha		cdr1		
+2nx5	D	TCR	alpha		cdr2		
+2nx5	D	TCR	alpha		cdr3	86	99
+2nx5	D	TCR	alpha		vreg		
+2nx5	E	TCR	beta		cdr1		
+2nx5	E	TCR	beta		cdr2		
+2nx5	E	TCR	beta		cdr3	90	103
+2nx5	E	TCR	beta		vreg		
+3dxa	A	MHC	B*44:05				
+3dxa	B						
+3dxa	C	Antigen					
+3dxa	D	TCR	alpha		cdr1		
+3dxa	D	TCR	alpha		cdr2		
+3dxa	D	TCR	alpha		cdr3	86	97
+3dxa	D	TCR	alpha		vreg		
+3dxa	E	TCR	beta		cdr1		
+3dxa	E	TCR	beta		cdr2		
+3dxa	E	TCR	beta		cdr3	90	104
+3dxa	E	TCR	beta		vreg		
+1ymm	A	MHC	DRA*01:01DRA*01:02				
+1ymm	B	MHC	DRB1*15:01				
+1ymm	C	Antigen					
+1ymm	D	TCR	alpha		cdr1		
+1ymm	D	TCR	alpha		cdr2		
+1ymm	D	TCR	alpha		cdr3	80	93
+1ymm	D	TCR	alpha		vreg		
+1ymm	E	TCR	beta		cdr1		
+1ymm	E	TCR	beta		cdr2		
+1ymm	E	TCR	beta		cdr3	93	108
+1ymm	E	TCR	beta		vreg		
+2ian	A	MHC	DRA*01:01DRA*01:02				
+2ian	B	MHC	DRB1*01:01				
+2ian	C	Antigen					
+2ian	D	TCR	alpha		cdr1		
+2ian	D	TCR	alpha		cdr2		
+2ian	D	TCR	alpha		cdr3	85	97
+2ian	D	TCR	alpha		vreg		
+2ian	E	TCR	beta		cdr1		
+2ian	E	TCR	beta		cdr2		
+2ian	E	TCR	beta		cdr3	88	98
+2ian	E	TCR	beta		vreg		
+2esv	A	MHC	E*01:01				
+2esv	B						
+2esv	D	TCR	alpha		cdr1		
+2esv	D	TCR	alpha		cdr2		
+2esv	D	TCR	alpha		cdr3	85	98
+2esv	D	TCR	alpha		vreg		
+2esv	E	TCR	beta		cdr1		
+2esv	E	TCR	beta		cdr2		
+2esv	E	TCR	beta		cdr3	89	100
+2esv	E	TCR	beta		vreg		
+2esv	P	Antigen					
+3w0w	A	MHC	A*24:02				
+3w0w	B						
+3w0w	C	Antigen					
+3w0w	D	TCR	alpha		cdr1		
+3w0w	D	TCR	alpha		cdr2		
+3w0w	D	TCR	alpha		cdr3	88	99
+3w0w	D	TCR	alpha		vreg		
+3w0w	E	TCR	beta		cdr1		
+3w0w	E	TCR	beta		cdr2		
+3w0w	E	TCR	beta		cdr3	90	101
+3w0w	E	TCR	beta		vreg		
